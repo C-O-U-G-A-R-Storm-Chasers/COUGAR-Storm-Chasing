@@ -4,7 +4,7 @@ import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import { BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -54,6 +54,11 @@ export default function Navbar() {
                 <NavbarButtonStandard href="/team">
                     <UserGroupIcon className="w-5 h-5" />
                     <p className="text-xs font-semibold">Our Team</p>
+                </NavbarButtonStandard>
+
+                <NavbarButtonStandard href="/scheduled-chases">
+                    <BookmarkIcon className="w-5 h-5" />
+                    <p className="text-xs font-semibold">Upcoming Chases</p>
                 </NavbarButtonStandard>
             </NavbarSection>
         </Row>
