@@ -10,6 +10,7 @@ import InputPasswordMain from "@/components/Inputs/InputPassword";
 import FormResetButton from "@/components/Buttons/FormResetButton";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
+import InfoHeader from "@/components/Text/Headers/InfoHeader";
 
 export default function SigninForm() {
     const [serverState, action] = useActionState(SigninAction, {
@@ -33,22 +34,40 @@ export default function SigninForm() {
     }, [serverState, router]);
 
     return (
-        <form action={action} className="flex flex-col items-center w-full">
-            <Col className="max-w-1/2">
+        <form
+            action={action}
+            className="
+                flex
+                flex-col
+                items-center
+                w-1/3
+                p-2
+                
+                bg-sky-700
 
-                {
-                    error && <ErrorMessage description={error} />
-                }
+                rounded-md
+                
+                gap-2
+            "
+        >
+            <InfoHeader textContent="Sign In" />
+
+            <Col className="w-full gap-2">
+
+                {error && <ErrorMessage description={error} />}
+                <ErrorMessage description="Error message goes here" />
 
                 <Col>
-                    <InputTextMain name="username" placeholder="JohnDoe" required />
+                    <label htmlFor="username" className="text-xs font-semibold">Your Username</label>
+                    <InputTextMain name="username" id="username" placeholder="JohnDoe" required />
                 </Col>
 
                 <Col>
-                    <InputPasswordMain name="password" required />
+                    <label htmlFor="password" className="text-xs font-semibold">Your Password</label>
+                    <InputPasswordMain name="password" id="password" required />
                 </Col>
 
-                <Row>
+                <Row className="justify-between">
                     <FormResetButton />
                     <FormSubmitButton>Sign In</FormSubmitButton>
                 </Row>
