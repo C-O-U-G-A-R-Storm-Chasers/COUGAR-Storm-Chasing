@@ -18,10 +18,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 flex
                 flex-col
                 w-full
-                h-full
-                max-w-screen
-                max-h-screen
-                min-h-screen
+                h-screen
+                overflow-hidden
             ">
                 <Navbar />
 

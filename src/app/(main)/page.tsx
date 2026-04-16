@@ -8,13 +8,9 @@ import config from "../../lib/cougar-config.json";
 export default async function Home() {
     return (
         <Col
-            id="home-page-video-overlay-wrapper"
+            id="home-page-wrapper"
             className="
-                absolute
                 justify-between
-                items-center
-                left-0
-                top-0
                 w-full
                 h-full
                 pt-8
