@@ -5,26 +5,23 @@ export default function FormActionButton({ children, onClick, ...props }: { chil
         <button
             type="button"
             className="
-                flex
-                flex-row
-                items-center
-                p-2
-                px-4
+                p-1
+
+                text-xs
+                font-semibold
 
                 bg-gradient-to-br
-                from-emerald-500
-                to-emerald-700
-                hover:from-emerald-600
-                hover:to-emerald-500
+                from-sky-500
+                to-sky-600
+
+                hover:from-sky-600
+                hover:to-sky-500
 
                 border-1
-                border-emerald-50/20
+                border-sky-500
 
-                text-sm
-                font-semibold
                 rounded-sm
                 cursor-pointer
-                gap-2
             "
             onClick={(e) => {
                 if (onClick) {

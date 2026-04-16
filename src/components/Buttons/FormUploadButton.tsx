@@ -5,20 +5,21 @@ export default function FormUploadButton({ children, ...props }: { children: Rea
         <button
             type="button"
             className="
-                p-2
-                px-4
+                p-1
+
+                text-xs
+                font-semibold
 
                 bg-gradient-to-br
-                from-pink-500
-                to-pink-700
-                hover:from-pink-600
-                hover:to-pink-500
+                from-amber-500
+                to-amber-600
+
+                hover:from-amber-600
+                hover:to-amber-500
 
                 border-1
-                border-pink-50/20
+                border-amber-500
 
-                text-sm
-                font-semibold
                 rounded-sm
                 cursor-pointer
             "

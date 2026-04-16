@@ -11,6 +11,7 @@ import FormResetButton from "@/components/Buttons/FormResetButton";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
+import Link from "next/link";
 
 export default function SigninForm() {
     const [serverState, action] = useActionState(SigninAction, {
@@ -52,10 +53,11 @@ export default function SigninForm() {
         >
             <InfoHeader textContent="Sign In" />
 
+            <p className="text-xs">New here? <Link href="/account/register" className="underline">Create an account</Link>.</p>
+
             <Col className="w-full gap-2">
 
                 {error && <ErrorMessage description={error} />}
-                <ErrorMessage description="Error message goes here" />
 
                 <Col>
                     <label htmlFor="username" className="text-xs font-semibold">Your Username</label>
