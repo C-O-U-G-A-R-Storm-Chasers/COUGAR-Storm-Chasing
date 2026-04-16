@@ -3,7 +3,6 @@
 import { ReactNode } from "react";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-import Col from "@/components/Col";
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
     return (
@@ -21,12 +20,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 h-full
                 max-w-screen
                 max-h-screen
+                min-h-screen
             ">
-                <Col>
-                    <Navbar />
+                <Navbar />
 
-                    {children}
-                </Col>
+                {children}
             </body>
         </html>
     );

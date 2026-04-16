@@ -5,7 +5,7 @@ export default function InfoPageTitle({ textContent }: { textContent: string }) 
         <p
             className="
                 text-2xl
-                font-semibold
+                font-bold
             "
         >
             {textContent}
