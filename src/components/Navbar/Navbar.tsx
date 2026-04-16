@@ -6,6 +6,7 @@ import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
 import { BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import config from "../../lib/cougar-config.json";
 
 export default function Navbar() {
     return (
@@ -28,7 +29,7 @@ export default function Navbar() {
                 <Link href="/" className="flex flex-row items-center gap-2">
                     <Row id="navbar-home-icon">
                         <Image
-                            src="/assets/icon.jpg"
+                            src={config["navbar-home-icon"]}
                             alt="Navbar Home Icon for COUGAR Storm Chasing"
                             width={512}
                             height={512}

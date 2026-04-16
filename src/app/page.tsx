@@ -3,6 +3,7 @@ import InfoHomeTitle from "@/components/Text/Headers/InfoHomeTitle";
 import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import InfoSubheader from "@/components/Text/Headers/InfoSubheader";
 import Image from "next/image";
+import config from "../lib/cougar-config.json";
 
 export default async function Home() {
     return (
@@ -28,7 +29,7 @@ export default async function Home() {
                     select-none
                 "
             >
-                <source src="/assets/backgrounds/2026-04-14-main-page-background.mp4" type="video/mp4" />
+                <source src={config["homepage-background-video"]} type="video/mp4" />
             </video>
 
             <Col className="absolute justify-between items-center left-0 top-0 w-full h-full pt-8 pb-12">
@@ -40,7 +41,7 @@ export default async function Home() {
 
                 <Col className="items-center">
                     <Image
-                        src="/assets/banner.jpg"
+                        src={config["homepage-overlay-banner"]}
                         alt="Banner for COUGAR Storm Chasing"
                         width={2967}
                         height={1413}
