@@ -6,7 +6,7 @@ export default function WarnMessage({ title, description }: { title?: string, de
             className="
                 w-full
                 p-2
-                bg-amber-400/30
+                bg-amber-500
                 border-1
                 border-amber-400
                 rounded-xs

@@ -6,7 +6,7 @@ export default function InformationMessage({ title, description }: { title?: str
             className="
                 w-full
                 p-2
-                bg-cyan-400/30
+                bg-cyan-500
                 border-1
                 border-cyan-400
                 rounded-xs

@@ -6,9 +6,9 @@ export default function SuccessMessage({ title, description }: { title?: string,
             className="
                 w-full
                 p-2
-                bg-lime-400/30
+                bg-lime-700
                 border-1
-                border-lime-400
+                border-lime-600
                 rounded-xs
             "
         >

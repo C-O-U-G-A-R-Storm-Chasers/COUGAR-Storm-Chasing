@@ -6,9 +6,9 @@ export default function ErrorMessage({ title, description }: { title?: string, d
             className="
                 w-full
                 p-2
-                bg-red-400/30
+                bg-red-400
                 border-1
-                border-red-400
+                border-red-300
                 rounded-xs
             "
         >
