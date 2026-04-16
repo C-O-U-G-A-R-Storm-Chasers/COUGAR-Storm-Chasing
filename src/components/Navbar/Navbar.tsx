@@ -26,7 +26,7 @@ export default function Navbar() {
             <NavbarSection>
                 <Row id="navbar-home-icon">
                     <Image
-                        src=""
+                        src="/assets/icon.jpg"
                         alt="Navbar Home Icon for COUGAR Storm Chasing"
                         width={512}
                         height={512}
