@@ -5,6 +5,7 @@ import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
 import { PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 export default function Navbar() {
     return (
@@ -24,17 +25,19 @@ export default function Navbar() {
             "
         >
             <NavbarSection>
-                <Row id="navbar-home-icon">
-                    <Image
-                        src="/assets/icon.jpg"
-                        alt="Navbar Home Icon for COUGAR Storm Chasing"
-                        width={512}
-                        height={512}
-                        className="w-10 h-10 bg-slate-200 rounded-md"
-                    />
-                </Row>
-                
-                <p className="text-xl font-semibold">C.O.U.G.A.R. Storm Chasers</p>
+                <Link href="/" className="flex flex-row items-center gap-2">
+                    <Row id="navbar-home-icon">
+                        <Image
+                            src="/assets/icon.jpg"
+                            alt="Navbar Home Icon for COUGAR Storm Chasing"
+                            width={512}
+                            height={512}
+                            className="w-10 h-10 bg-slate-200 rounded-md"
+                        />
+                    </Row>
+                    
+                    <p className="text-xl font-semibold">C.O.U.G.A.R. Storm Chasers</p>
+                </Link>
             </NavbarSection>
 
             <NavbarSection>
