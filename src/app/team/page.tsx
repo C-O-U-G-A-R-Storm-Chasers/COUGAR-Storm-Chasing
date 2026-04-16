@@ -53,6 +53,7 @@ export default async function TeamPage() {
             <InfoSectionseparator>
                 <InfoHeader textContent="Chase C" />
                 <InfoSubheader textContent="Field Chaser & Social Media Coordinator" />
+                <InfoBulletStandard textContent="Field Chaser" />
                 <InfoBulletStandard textContent="Reed Timmer Jr. (This is an inside joke!)" />
                 <InfoBulletStandard textContent="Digital Content Manager" />
                 <InfoBulletStandard textContent="Field Operations Member" />
