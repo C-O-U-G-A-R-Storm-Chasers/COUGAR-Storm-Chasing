@@ -23,7 +23,7 @@ export default function Navbar() {
                 text-slate-50
 
                 border-b-2
-                border-sky-600/50
+                border-sky-600/50 
 
                 gap-2
             "
