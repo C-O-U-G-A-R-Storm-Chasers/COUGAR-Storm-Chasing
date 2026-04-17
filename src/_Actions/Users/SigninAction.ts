@@ -35,11 +35,6 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
         data: null
     };
 
-    // Check if the user has signed in before
-    const hasPreviousSignin = userExists.last_signin;
-
-    if (!hasPreviousSignin) redirect("/account/pass-change");
-
     // Set user cookie
     const isDev = process.env.NODE_ENV === "development";
     (await cookies()).set("user", JSON.stringify(userExists), {
