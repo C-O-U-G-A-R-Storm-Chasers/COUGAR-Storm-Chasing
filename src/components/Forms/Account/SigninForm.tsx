@@ -46,6 +46,9 @@ export default function SigninForm() {
                 
                 bg-sky-700
 
+                border-1
+                border-sky-500
+
                 rounded-md
                 
                 gap-2
