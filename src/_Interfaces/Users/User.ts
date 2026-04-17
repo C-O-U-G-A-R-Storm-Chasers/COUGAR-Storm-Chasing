@@ -1,3 +1,4 @@
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { PasswordHash } from "../Auth/PasswordHash";
 
 export interface User {
@@ -6,7 +7,8 @@ export interface User {
     first: string,
     last: string,
     email: string,
-    created_timestamp: number
+    created_timestamp: number,
+    perm_level: PermissionLevels
 }
 
 export interface UserWithStringPassword extends User {
