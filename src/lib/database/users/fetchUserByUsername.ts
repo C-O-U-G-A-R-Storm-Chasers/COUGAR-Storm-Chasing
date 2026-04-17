@@ -1,10 +1,10 @@
 import { User } from "@/_Interfaces/Users/User";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function fetchUser(uid: string): Promise<User | null> {
+export async function fetchUserByUsername(username: string): Promise<User | null> {
     const mongo = getMongo();
 
     return await mongo.database
         .collection<User>("users")
-        .findOne({ uid }, { projection: { _id: 0, password: 0 } });
+        .findOne({ username }, { projection: { _id: 0, password: 0 } });
 }
