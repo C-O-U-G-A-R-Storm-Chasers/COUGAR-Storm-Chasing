@@ -1,14 +1,22 @@
-"use client";
+"use server";
 
 import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { ArrowRightEndOnRectangleIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import { ArrowRightEndOnRectangleIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
+import { cookies } from "next/headers";
+import { User } from "@/_Interfaces/Users/User";
 
-export default function Navbar() {
+export default async function Navbar() {
+    const cookiesStore = cookies();
+    const userRaw = (await cookiesStore).get("user")?.value;
+    let user: User | null = null;
+
+    if (userRaw) user = JSON.parse(userRaw) as User | null;
+
     return (
         <Row
             id="navbar-wrapper"
@@ -67,10 +75,18 @@ export default function Navbar() {
             </NavbarSection>
 
             <NavbarSection>
-                <NavbarButtonStandard href="/account/signin">
-                    <ArrowRightEndOnRectangleIcon className="w-5 h-5" />
-                    <p className="text-xs font-semibold">Existing Member? Sign in</p>
-                </NavbarButtonStandard>
+                {
+                    user ?
+                    <NavbarButtonStandard href="/account">
+                        <UserIcon className="w-5 h-5" />
+                        <p className="text-xs font-semibold text-fuchsia-500">{user.username}</p>
+                    </NavbarButtonStandard>
+                    :
+                    <NavbarButtonStandard href="/account/signin">
+                        <ArrowRightEndOnRectangleIcon className="w-5 h-5" />
+                        <p className="text-xs font-semibold">Existing Member? Sign in</p>
+                    </NavbarButtonStandard>
+                }
             </NavbarSection>
         </Row>
     );

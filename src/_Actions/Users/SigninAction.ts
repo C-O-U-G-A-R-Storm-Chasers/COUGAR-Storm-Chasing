@@ -35,9 +35,14 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
         data: null
     };
 
+    const user = {
+        ...userExists,
+        password: null
+    };
+
     // Set user cookie
     const isDev = process.env.NODE_ENV === "development";
-    (await cookies()).set("user", JSON.stringify(userExists), {
+    (await cookies()).set("user", JSON.stringify(user), {
         httpOnly: false,
         secure: !isDev,
         sameSite: isDev ? "lax" : "strict",
