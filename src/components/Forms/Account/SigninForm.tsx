@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { SigninAction } from "@/_Actions/Users/SigninAction";
 import Col from "@/components/Col";
 import Row from "@/components/Row";
@@ -18,21 +17,12 @@ export default function SigninForm() {
         success: false
     });
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     useEffect(() => {
-        if (serverState.success) {
-            if (serverState.requiresPasswordReset) {
-                setError("You have not signed in before. You must change your password. Redirecting, please wait...");
-
-                const timer = setTimeout(() => {
-                    router.push("/data/account/change-password");
-                }, 3000);
-
-                return () => clearTimeout(timer);
-            }
-        } else setError(serverState.msg!);
-    }, [serverState, router]);
+        if (!serverState.success && serverState.msg) {
+            setError(serverState.msg);
+        }
+    }, [serverState]);
 
     return (
         <form
@@ -63,8 +53,8 @@ export default function SigninForm() {
                 {error && <ErrorMessage description={error} />}
 
                 <Col>
-                    <label htmlFor="username" className="text-xs font-semibold">Your Username</label>
-                    <InputTextMain name="username" id="username" placeholder="JohnDoe" required />
+                    <label htmlFor="login" className="text-xs font-semibold">Your Username or Email Address</label>
+                    <InputTextMain name="login" id="login" placeholder="JohnDoe or johndoe@gmail.com" required />
                 </Col>
 
                 <Col>

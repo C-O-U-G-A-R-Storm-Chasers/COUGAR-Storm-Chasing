@@ -9,6 +9,7 @@ import { fetchUserByEmail } from "@/lib/database/users/fetchUserByEmail";
 import { fetchUserByUsername } from "@/lib/database/users/fetchUserByUsername";
 import { insertUser } from "@/lib/database/users/insertUser";
 import { UUID } from "crypto";
+import { redirect } from "next/navigation";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export async function NewUserAction(prevState: any, data: FormData): Promise<BasicResult> {
@@ -66,6 +67,7 @@ export async function NewUserAction(prevState: any, data: FormData): Promise<Bas
         email,
         created_timestamp: Date.now(),
         perm_level: PermissionLevels.MEM,
+        last_signin: null,
         password: hashedPass
     };
 
@@ -77,9 +79,5 @@ export async function NewUserAction(prevState: any, data: FormData): Promise<Bas
         data: null
     };
 
-    return {
-        success: true,
-        msg: "",
-        data: null
-    };
+    redirect("/account/signin");
 }

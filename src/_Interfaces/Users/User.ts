@@ -8,7 +8,8 @@ export interface User {
     last: string,
     email: string,
     created_timestamp: number,
-    perm_level: PermissionLevels
+    perm_level: PermissionLevels,
+    last_signin: number | null
 }
 
 export interface UserWithStringPassword extends User {
