@@ -11,6 +11,7 @@ import Col from "@/components/Col";
 import Row from "@/components/Row";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
+import SuccessMessage from "@/components/Messages/SuccessMessage";
 
 export default function RegisterForm() {
     const [serverState, action] = useActionState(NewUserAction, {
@@ -51,6 +52,8 @@ export default function RegisterForm() {
             <Col className="w-full gap-2">
 
                 {error && <ErrorMessage description={error} />}
+
+                {serverState.success && <SuccessMessage description="You have successfully created an account! Please wait..." />}
 
                 <Col>
                     <label htmlFor="first" className="text-xs font-semibold">First Name</label>
