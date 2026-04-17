@@ -1,6 +1,6 @@
 "use client";
 
-import { NewUserAction } from "@/_Actions/Users/NewUserAction";
+import { NewUserAction } from "@/_Actions/Users/RegisterAction";
 import { useActionState, useEffect, useState } from "react";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InputTextMain from "@/components/Inputs/InputText";
