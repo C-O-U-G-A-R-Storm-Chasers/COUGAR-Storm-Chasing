@@ -4,7 +4,7 @@ import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { ArrowRightEndOnRectangleIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import { ArrowRightEndOnRectangleIcon, ArrowUpTrayIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
 import { cookies } from "next/headers";
@@ -77,10 +77,20 @@ export default async function Navbar() {
             <NavbarSection>
                 {
                     user ?
-                    <NavbarButtonStandard href="/account">
-                        <UserIcon className="w-5 h-5" />
-                        <p className="text-xs font-semibold text-fuchsia-500">{user.username}</p>
-                    </NavbarButtonStandard>
+                    <>
+                        <NavbarButtonStandard href="/account">
+                            <UserIcon className="w-5 h-5" />
+                            <p className="text-xs font-semibold text-fuchsia-500">{user.username}</p>
+                        </NavbarButtonStandard>
+
+                        {
+                            user.perm_level >= 6 &&
+                            <NavbarButtonStandard href="/upload-media">
+                                <ArrowUpTrayIcon className="w-5 h-5" />
+                                <p className="text-xs font-semibold">Upload Media</p>
+                            </NavbarButtonStandard>
+                        }
+                    </>
                     :
                     <NavbarButtonStandard href="/account/signin">
                         <ArrowRightEndOnRectangleIcon className="w-5 h-5" />
