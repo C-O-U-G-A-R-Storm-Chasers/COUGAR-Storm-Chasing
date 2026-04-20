@@ -85,7 +85,7 @@ export default async function Navbar() {
 
                         {
                             user.perm_level >= 6 &&
-                            <NavbarButtonStandard href="/upload-media">
+                            <NavbarButtonStandard href="/media/upload">
                                 <ArrowUpTrayIcon className="w-5 h-5" />
                                 <p className="text-xs font-semibold">Upload Media</p>
                             </NavbarButtonStandard>
