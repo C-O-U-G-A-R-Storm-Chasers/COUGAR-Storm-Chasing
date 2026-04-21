@@ -8,8 +8,8 @@ import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import FormUploadButton from "@/components/Buttons/FormUploadButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { MediaUploadAction } from "@/_Actions/Media/Upload/UploadImageAction";
-import { PendingUploadFile } from "@/_Interfaces/Media/PendingUploadFile";
+import { SelectedFile } from "@/_Interfaces/Files/SelectedFile";
+import { FileUploadAction } from "@/_Actions/File/Upload/UploadImageAction";
 
 export default function MediaUploadForm() {
     const [serverState, action] = useActionState(SigninAction, {
@@ -33,12 +33,14 @@ export default function MediaUploadForm() {
         const uploadTimestamp = Date.now();
 
         const selectedMedia = await Promise.all(Array.from(media).entries().map(async ([i, media]) => {
-            const file: PendingUploadFile = {
+            const file: SelectedFile = {
                 file: media,
-                desiredName: `COUGAR-${uploadTimestamp}-${i}`
+                desiredName: `${uploadTimestamp}-${i}`,
+                desiredPath: "/admin/media",
+                timestamp: uploadTimestamp
             };
 
-            const result: BasicResult = await MediaUploadAction([file]);
+            const result: BasicResult = await FileUploadAction(file);
 
             if (!result.success) {
                 setError(result.msg!);
@@ -47,7 +49,7 @@ export default function MediaUploadForm() {
             }
 
             const baseURL = typeof window !== "undefined" ? window.location.origin : "";
-            const mediaURL = baseURL + "/" + result.data[0];
+            const mediaURL = baseURL + "/" + result.data;
 
             return mediaURL;
         }));
