@@ -1,4 +1,6 @@
 {
+    "dev-hostname": "http://localhost:3000",
+    "prod-hostname": "https://cougarstormchasing.org",
     "browser-tab-icon": "/assets/icon.jpg",
     "navbar-home-icon": "/assets/icon.jpg",
     "homepage-background-video": "/assets/backgrounds/2026-04-14-main-page-background.mp4",

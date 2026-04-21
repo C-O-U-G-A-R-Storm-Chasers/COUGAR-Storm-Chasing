@@ -9,7 +9,11 @@ import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import FormUploadButton from "@/components/Buttons/FormUploadButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import { SelectedFile } from "@/_Interfaces/Files/SelectedFile";
-import { FileUploadAction } from "@/_Actions/File/Upload/UploadImageAction";
+import { FileUploadAction } from "@/_Actions/File/Upload/FileUploadAction";
+import { UploadedFile } from "@/_Interfaces/Files/UploadedFile";
+import { FileUploadPaths } from "@/_Enums/Files/FileUploadPaths";
+import VideoPreview from "./VideoPreview";
+import ImagePreview from "./ImagePreview";
 
 export default function MediaUploadForm() {
     const [serverState, action] = useActionState(SigninAction, {
@@ -17,7 +21,7 @@ export default function MediaUploadForm() {
     });
     const [error, setError] = useState<string | null>(null);
     const filesInput = useRef<HTMLInputElement>(null);
-    const [uploadedMedia, setUploadedMedia] = useState<Array<string>>();
+    const [uploadedMedia, setUploadedMedia] = useState<Array<UploadedFile>>();
 
     useEffect(() => {
         if (!serverState.success && serverState.msg) {
@@ -36,22 +40,21 @@ export default function MediaUploadForm() {
             const file: SelectedFile = {
                 file: media,
                 desiredName: `${uploadTimestamp}-${i}`,
-                desiredPath: "/admin/media",
+                desiredPath: FileUploadPaths.MEDIA,
                 timestamp: uploadTimestamp
             };
 
-            const result: BasicResult = await FileUploadAction(file);
+            const result: BasicResult<UploadedFile> = await FileUploadAction(file);
 
             if (!result.success) {
                 setError(result.msg!);
 
                 return;
             }
+            
+            const uploadedFile: UploadedFile = result.data!;
 
-            const baseURL = typeof window !== "undefined" ? window.location.origin : "";
-            const mediaURL = baseURL + "/" + result.data;
-
-            return mediaURL;
+            return uploadedFile;
         }));
 
         setUploadedMedia(selectedMedia.filter(media => media !== undefined));
@@ -66,7 +69,7 @@ export default function MediaUploadForm() {
                 flex
                 flex-col
                 items-center
-                w-1/3
+                w-2/3
                 p-2
                 
                 bg-sky-700
@@ -99,12 +102,14 @@ export default function MediaUploadForm() {
                     <FormUploadButton onClick={handleClick}>Select Files</FormUploadButton>
                 </Col>
 
-                <Col>
-                    {
-                        (uploadedMedia && uploadedMedia.length > 0) &&
-                        uploadedMedia.map((media, i) => <p key={i}>{media}</p>)
-                    }
-                </Col>
+                {
+                    (uploadedMedia && uploadedMedia.length > 0) &&
+                    uploadedMedia.map((media, i) => {
+                        if (media.type === "image") return <ImagePreview key={`video-${i}`} webPath={media.webPath} />;
+
+                        if (media.type === "video") return <VideoPreview key={`video-${i}`} webPath={media.webPath} />;
+                    })
+                }
 
                 <Col>
                     <FormSubmitButton>Upload</FormSubmitButton>

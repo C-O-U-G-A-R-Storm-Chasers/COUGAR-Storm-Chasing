@@ -11,7 +11,8 @@ export async function insertFile(file: UploadedFile): Promise<UploadedFile | nul
             {
                 $setOnInsert: { 
                     timestamp: file.timestamp,
-                    uploadedBy: file.uploadedBy
+                    uploadedBy: file.uploadedBy,
+                    type: file.type
                 },
                 $set: { webPath: file.webPath },
             },

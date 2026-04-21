@@ -8,8 +8,9 @@ import { insertFile } from "@/lib/database/files/insertFile";
 import { cookies } from "next/headers";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import config from "../../../lib/cougar-config.json";
 
-export async function FileUploadAction(selectedFile: SelectedFile): Promise<BasicResult> {
+export async function FileUploadAction(selectedFile: SelectedFile): Promise<BasicResult<UploadedFile>> {
     if (!selectedFile) return {
         success: false,
         msg: "A technical error occurred. Error Code: File-1"
@@ -31,7 +32,7 @@ export async function FileUploadAction(selectedFile: SelectedFile): Promise<Basi
     const desiredPath = selectedFile.desiredPath;
 
     // Ensure dir exists
-    const dir = join("/uploaded", desiredPath);
+    const dir = join("/uploads", desiredPath);
 
     await mkdir(dir, { recursive: true });
 
@@ -47,13 +48,18 @@ export async function FileUploadAction(selectedFile: SelectedFile): Promise<Basi
     const filePath = join(dir, fileName);
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+    const hostname = process.env.NODE_ENV === "development" ? config["dev-hostname"] : config["prod-hostname"];
+    const webPath = `${hostname}/media/${fileName}`.replace(/\\/g, "/");
+
+    if (process.env.NODE_ENV === "development") console.log("\n\n", "Uploaded File Web Path:", "\n", webPath, "\n\n");
 
     await writeFile(filePath, buffer);
 
     const uploadedFile: UploadedFile = {
-        webPath: filePath,
+        webPath,
         timestamp: selectedFile.timestamp,
-        uploadedBy: user.uid
+        uploadedBy: user.uid,
+        type: file.type.split("/")[0]
     };
 
     // Write to database
@@ -66,6 +72,6 @@ export async function FileUploadAction(selectedFile: SelectedFile): Promise<Basi
 
     return {
         success: true,
-        data: fileName
+        data: writeToDatabaseResult
     }
 }
