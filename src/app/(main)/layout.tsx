@@ -27,7 +27,11 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
                 <source src={config["homepage-background-video"]} type="video/mp4" />
             </video>
 
-            <div className="absolute h-full z-10 inset-0">{children}</div>
+            <div className="absolute p-5 inset-0 z-10 overflow-y-auto">
+                <div className="min-h-full flex flex-col items-start">
+                    {children}
+                </div>
+            </div>
         </div>
     );
 }
