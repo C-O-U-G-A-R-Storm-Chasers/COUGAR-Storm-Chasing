@@ -7,7 +7,7 @@ export default function InfoSectionseparator({ children }: { children: ReactNode
     return (
         <Col
             className="
-                w-1/3
+                w-full
                 items-center
                 
                 text-center
