@@ -7,15 +7,12 @@ import NavbarButtonStandard from "./NavbarButtonStandard";
 import { ArrowRightEndOnRectangleIcon, ArrowUpTrayIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
-import { cookies } from "next/headers";
-import { User } from "@/_Interfaces/Users/User";
+import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 
 export default async function Navbar() {
-    const cookiesStore = cookies();
-    const userRaw = (await cookiesStore).get("user")?.value;
-    let user: User | null = null;
-
-    if (userRaw) user = JSON.parse(userRaw) as User | null;
+    const { data: user } = await signinValidation();
+    const { success: adminSuccess, data: admin } = await signinValidation(PermissionLevels.ADMIN);
 
     return (
         <Row
@@ -84,7 +81,7 @@ export default async function Navbar() {
                         </NavbarButtonStandard>
 
                         {
-                            user.perm_level >= 6 &&
+                            (adminSuccess && admin) &&
                             <NavbarButtonStandard href="/media/upload">
                                 <ArrowUpTrayIcon className="w-5 h-5" />
                                 <p className="text-xs font-semibold">Upload Media</p>
