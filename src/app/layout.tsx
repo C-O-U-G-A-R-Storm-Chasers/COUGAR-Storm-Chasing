@@ -19,7 +19,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 flex-col
                 w-full
                 h-screen
-                overflow-hidden
             ">
                 <Navbar />
 
