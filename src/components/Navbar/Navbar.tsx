@@ -4,15 +4,14 @@ import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { ArrowRightEndOnRectangleIcon, ArrowUpTrayIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import { ArrowRightEndOnRectangleIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
-import { PermissionLevels } from "@/_Enums/PermissionLevels";
+import AdminNavButtons from "./AdminNavButtons";
 
 export default async function Navbar() {
     const { data: user } = await signinValidation();
-    const { success: adminSuccess, data: admin } = await signinValidation(PermissionLevels.ADMIN);
 
     return (
         <Row
@@ -55,7 +54,7 @@ export default async function Navbar() {
                     <p className="text-xs font-semibold">Current Outlooks</p>
                 </NavbarButtonStandard>
 
-                <NavbarButtonStandard href="/chases">
+                <NavbarButtonStandard href="/media">
                     <VideoCameraIcon className="w-5 h-5" />
                     <p className="text-xs font-semibold">Our Media</p>
                 </NavbarButtonStandard>
@@ -65,7 +64,7 @@ export default async function Navbar() {
                     <p className="text-xs font-semibold">Our Team</p>
                 </NavbarButtonStandard>
 
-                <NavbarButtonStandard href="/scheduled-chases">
+                <NavbarButtonStandard href="/chases">
                     <BookmarkIcon className="w-5 h-5" />
                     <p className="text-xs font-semibold">Upcoming Chases</p>
                 </NavbarButtonStandard>
@@ -80,13 +79,7 @@ export default async function Navbar() {
                             <p className="text-xs font-semibold text-fuchsia-500">{user.username}</p>
                         </NavbarButtonStandard>
 
-                        {
-                            (adminSuccess && admin) &&
-                            <NavbarButtonStandard href="/media/upload">
-                                <ArrowUpTrayIcon className="w-5 h-5" />
-                                <p className="text-xs font-semibold">Upload Media</p>
-                            </NavbarButtonStandard>
-                        }
+                        <AdminNavButtons />
                     </>
                     :
                     <NavbarButtonStandard href="/account/signin">
