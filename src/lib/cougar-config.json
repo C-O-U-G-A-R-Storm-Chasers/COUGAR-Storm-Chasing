@@ -11,5 +11,27 @@
         "nparlmer": "/assets/team_headshots/nparlmer.jpg",
         "ngarcia": "/assets/team_headshots/ngarcia.jpg",
         "mgarcia": "/assets/team_headshots/mgarcia.jpg"
+    },
+    "team_members": {
+        "mgarcia": {
+            "name": "Mario Garcia",
+            "primary_title": "Field Operations Director"
+        },
+        "ngarcia": {
+            "name": "Nicole Garcia",
+            "primary_title": "Community Outreach & Field Support Specialist"
+        },
+        "cchesney": {
+            "name": "Chase Chesney",
+            "primary_title": "Field Chaser & Social Media Coordinator"
+        },
+        "chesse": {
+            "name": "Caleb Hesse",
+            "primary_title": "Research & Technology Director"
+        },
+        "nparlmer": {
+            "name": "Nicholas Parlmer",
+            "primary_title": "Lead Atmospheric Analyst & Systems Engineer"
+        }
     }
 }
