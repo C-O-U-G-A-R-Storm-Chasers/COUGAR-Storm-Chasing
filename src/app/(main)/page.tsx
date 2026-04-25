@@ -10,11 +10,11 @@ export default async function Home() {
         <Col
             id="home-page-wrapper"
             className="
-                justify-between
                 w-full
                 h-full
                 pt-8
                 pb-12
+                gap-10
             "
         >
             <Col className="items-center">
