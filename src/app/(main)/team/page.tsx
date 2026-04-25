@@ -13,7 +13,7 @@ import config from "../../../lib/cougar-config.json";
 export default async function TeamPage() {
     return (
         <Col className="w-full items-center">
-            <Col className="w-1/3 items-center p-2 bg-white/85 text-slate-950 rounded-md gap-5">
+            <Col className="w-2/5 items-center p-2 px-5 bg-white/85 text-slate-950 rounded-md gap-5">
 
                 <InfoPageTitle textContent="Meet Our Team Members" />
                 
