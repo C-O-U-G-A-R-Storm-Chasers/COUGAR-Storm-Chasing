@@ -35,7 +35,7 @@ export default async function TeamPage() {
             </InfoSectionseparator>
 
             <InfoSectionseparator>
-                <InfoParagraph textContent="Caleb is one of the four storm chasers on our team. He helps with choosing target areas and is helping with the development of our probe, and soon, our dedicated website! He also does most of the managing of the Facebook page and steps in to help review models for forecasting when Nicholas P is not available." />
+                <InfoParagraph textContent="Caleb is one of the four storm chasers on our team. He helps with choosing target areas and is helping with the development of our probe, and the development of this website! He also does most of the managing of the Facebook page and steps in to help review models for forecasting when Nicholas P is not available." />
             </InfoSectionseparator>
 
             <InfoSectionseparator>
