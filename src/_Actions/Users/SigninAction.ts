@@ -5,6 +5,7 @@ import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { verifyPass } from "@/lib/auth/verifyPass";
 import { fetchUserByEmail } from "@/lib/database/users/fetchUserByEmail";
 import { fetchUserByUsername } from "@/lib/database/users/fetchUserByUsername";
+import { updateLastSignin } from "@/lib/database/users/updateLastSignin";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -49,6 +50,8 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
         maxAge: 60 * 60 * 24 * 0.5, // 12 hours
         path: "/",
     });
+
+    await updateLastSignin(user.uid);
     
     redirect("/");
 }
