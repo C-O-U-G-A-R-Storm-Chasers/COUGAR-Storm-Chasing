@@ -7,6 +7,8 @@ import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import InfoParagraph from "@/components/Text/InfoParagraph";
 import InfoSubheader from "@/components/Text/Headers/InfoSubheader";
 import InfoSectionseparator from "@/components/Text/InfoSectionSeparator";
+import Image from "next/image";
+import config from "../../lib/cougar-config.json";
 
 export default async function TeamPage() {
     return (
@@ -26,6 +28,13 @@ export default async function TeamPage() {
             </InfoSectionseparator>
 
             <InfoSectionseparator>
+                <Image
+                    src={config["team_headshots"]["chesse"]}
+                    alt="Team member headshot"
+                    width={512}
+                    height={512}
+                    className="w-50 h-50 bg-slate-200 rounded-md"
+                />
                 <InfoHeader textContent="Caleb H" />
                 <InfoSubheader textContent="Research & Technology Director" />
                 <InfoBulletStandard textContent="Field Chaser" />

@@ -4,5 +4,12 @@
     "browser-tab-icon": "/assets/icon.jpg",
     "navbar-home-icon": "/assets/icon.jpg",
     "homepage-background-video": "/assets/backgrounds/2026-04-14-main-page-background.mp4",
-    "homepage-overlay-banner": "/assets/banner.jpg"
+    "homepage-overlay-banner": "/assets/banner.jpg",
+    "team_headshots": {
+        "chesse": "/assets/team_headshots/chesse.jpg",
+        "cchesney": "/assets/team_headshots/cchesney.jpg",
+        "nparlmer": "/assets/team_headshots/nparlmer.jpg",
+        "ngarcia": "/assets/team_headshots/ngarcia.jpg",
+        "mgarcia": "/assets/team_headshots/mgarcia.jpg"
+    }
 }
