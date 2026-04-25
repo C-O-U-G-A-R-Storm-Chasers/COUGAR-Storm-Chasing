@@ -35,7 +35,7 @@ export default async function TeamPage() {
                         alt="Team member headshot"
                         width={512}
                         height={512}
-                        className="w-50 h-50 bg-slate-200 rounded-md"
+                        className="w-50 bg-slate-200 rounded-md"
                     />
                     <InfoHeader textContent="Caleb H" />
                     <InfoSubheader textContent="Research & Technology Director" />
@@ -62,6 +62,13 @@ export default async function TeamPage() {
                 </InfoSectionseparator>
 
                 <InfoSectionseparator>
+                    <Image
+                        src={config["team_headshots"]["cchesney"]}
+                        alt="Team member headshot"
+                        width={512}
+                        height={512}
+                        className="w-50 bg-slate-200 rounded-md"
+                    />
                     <InfoHeader textContent="Chase C" />
                     <InfoSubheader textContent="Field Chaser & Social Media Coordinator" />
                     <InfoBulletStandard textContent="Field Chaser" />
