@@ -1,15 +1,14 @@
 import { UUID } from "crypto";
 import { Chaser } from "./Chaser";
-
-type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+import { DateString } from "@/_Types/DateString";
 
 export interface PlannedChase {
     id: UUID,
     title: string,
     description: string,
     chasers: Chaser["id"][],
-    start_date: `${Digit}${Digit}${Digit}${Digit}-${Digit}${Digit}-${Digit}${Digit}`,
-    end_date: `${Digit}${Digit}${Digit}${Digit}-${Digit}${Digit}-${Digit}${Digit}`,
+    start_date: DateString,
+    end_date: DateString,
     created_timestamp: number,
     updated_timestamp: number
 }
