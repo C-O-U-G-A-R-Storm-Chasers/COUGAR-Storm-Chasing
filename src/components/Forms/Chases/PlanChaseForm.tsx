@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useActionState, useEffect, useState } from "react";
-import { SigninAction } from "@/_Actions/Users/SigninAction";
 import Col from "@/components/Col";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
@@ -13,9 +12,10 @@ import InputTextarea from "@/components/Inputs/InputTextarea";
 import config from "../../../lib/cougar-config.json";
 import InputDropdown from "@/components/Inputs/InputDropdown";
 import { Chaser } from "@/_Interfaces/Chasers/Chaser";
+import { PlanChaseAction } from "@/_Actions/Chases/PlanChaseAction";
 
 export default function PlanChaseForm() {
-    const [serverState, action] = useActionState(SigninAction, {
+    const [serverState, action] = useActionState(PlanChaseAction, {
         success: false
     });
     const [error, setError] = useState<string | null>(null);
