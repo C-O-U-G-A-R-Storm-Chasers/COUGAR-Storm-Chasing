@@ -19,5 +19,5 @@ export function unixToDate(unixMilliseconds: number) {
     const min = get("minute");
     const ampm = (get("dayPeriod") || "").toLowerCase();
 
-    return `${mm}/${dd}/${yyyy} ${hh}:${min} ${ampm}`;
+    return `${yyyy}/${mm}/${dd} ${hh}:${min} ${ampm}`;
 }

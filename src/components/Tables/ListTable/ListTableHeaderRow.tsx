@@ -10,8 +10,8 @@ export default function ListTableHeaderRow({ children }: { children: ReactNode }
                 items-center
                 p-1
 
-                odd:bg-slate-800
-                even:bg-slate-900
+                odd:bg-slate-50
+                even:bg-slate-100
 
                 first:rounded-t-sm
                 last:rounded-b-sm

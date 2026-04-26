@@ -5,7 +5,7 @@ import Col from "../../Col";
 
 export default function ListTable({ children }: { children: ReactNode }) {
     return (
-        <Col>
+        <Col className="w-full text-slate-950">
             {children}
         </Col>
     );

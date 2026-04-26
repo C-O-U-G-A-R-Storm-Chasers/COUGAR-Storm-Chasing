@@ -1,3 +1,5 @@
+"use server";
+
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import Col from "@/components/Col";
 import PlanChaseForm from "@/components/Forms/Chases/PlanChaseForm";
