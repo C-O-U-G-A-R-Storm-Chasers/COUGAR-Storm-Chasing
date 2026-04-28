@@ -23,6 +23,7 @@ export default async function TeamPage() {
                     <InfoBulletStandard textContent="Field Operations Director" />
                     <InfoBulletStandard textContent="Lead Storm Chaser" />
                     <InfoBulletStandard textContent="Media Operations Coordinator" />
+                    <InfoBulletStandard textContent="Hail Core Magnet" />
                 </InfoSectionseparator>
 
                 <InfoSectionseparator>
@@ -43,6 +44,7 @@ export default async function TeamPage() {
                     <InfoBulletStandard textContent="Certified SKYWARN Spotter" />
                     <InfoBulletStandard textContent="Software & Web Engineer" />
                     <InfoBulletStandard textContent="S.T.I.P. Helper" />
+                    <InfoBulletStandard textContent="Slopness Monster Magnet" />
                 </InfoSectionseparator>
 
                 <InfoSectionseparator>
@@ -75,6 +77,7 @@ export default async function TeamPage() {
                     <InfoBulletStandard textContent="Reed Timmer Jr. (This is an inside joke!)" />
                     <InfoBulletStandard textContent="Digital Content Manager" />
                     <InfoBulletStandard textContent="Field Operations Member" />
+                    <InfoBulletStandard textContent="Wedge Magnet" />
                 </InfoSectionseparator>
 
                 <InfoSectionseparator>
