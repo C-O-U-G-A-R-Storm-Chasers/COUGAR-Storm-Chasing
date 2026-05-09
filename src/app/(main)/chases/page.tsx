@@ -14,6 +14,7 @@ import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { fetchAllPlannedChases } from "@/lib/database/chases/fetchAllPlannedChases";
 import { searchThroughObjects } from "@/lib/utils/search/searchThroughObjects";
 import { unixToDate } from "@/lib/utils/unixToDate";
+import LatestPlannedChaseButton from "./LatestPlannedChaseButton";
 
 export default async function ChasesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
     const params = await searchParams;
@@ -25,11 +26,7 @@ export default async function ChasesPage({ searchParams }: { searchParams: Promi
 
     let chases = await fetchAllPlannedChases();
 
-    console.log("Chases before:", chases);
-
     if (chases && query && query.trim().length > 0) chases = await searchThroughObjects<PlannedChase>(chases, query);
-
-    console.log("Chases After:", chases);
 
     return (
         <Col className="w-full h-full items-center justify-center">
@@ -51,7 +48,9 @@ export default async function ChasesPage({ searchParams }: { searchParams: Promi
                     gap-2
                 "
             >
-                <InfoHeader textContent="Chases" />
+                <InfoHeader textContent="All Planned Chases" />
+
+                <LatestPlannedChaseButton />
 
                 <ListTable>
                     <ListTableSearchRow searchTerm="chases" />
