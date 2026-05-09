@@ -1,11 +1,34 @@
-"use server";
+"use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { usePathname, useRouter } from "next/navigation";
+import { FormEvent } from "react";
 
-export default async function ListTableSearchRow({ name, id, searchTerm, action }: { name: string, id: string, searchTerm: string, action: (data: FormData) => void }) {
+export default function ListTableSearchRow({ searchTerm }: { searchTerm: string }) {
+    const router = useRouter();
+    const pathName = usePathname();
+
+    const submit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const data = new FormData(e.currentTarget);
+        const query = data.get("query") as string;
+
+        if (
+            !query ||
+            (query.trim().length === 0)
+        ) {
+            router.push(`${pathName}`);
+
+            return;
+        }
+
+        router.push(`${pathName}?q=${query}`);
+    };
+
     return (
         <form
-            action={action}
+            onSubmit={submit}
             className="
                 flex
                 flex-row
@@ -23,8 +46,7 @@ export default async function ListTableSearchRow({ name, id, searchTerm, action 
 
             <input
                 type="text"
-                name={name}
-                id={id}
+                name="query"
                 placeholder={`Search ${searchTerm}...`}
                 minLength={1}
                 className="

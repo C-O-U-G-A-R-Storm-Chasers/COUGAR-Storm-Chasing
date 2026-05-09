@@ -1,4 +1,5 @@
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
+import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import ListTable from "@/components/Tables/ListTable/ListTable";
@@ -7,17 +8,28 @@ import ListTableContentLink from "@/components/Tables/ListTable/ListTableContent
 import ListTableContentRow from "@/components/Tables/ListTable/ListTableContentRow";
 import ListTableHeader from "@/components/Tables/ListTable/ListTableHeader";
 import ListTableHeaderRow from "@/components/Tables/ListTable/ListTableHeaderRow";
+import ListTableSearchRow from "@/components/Tables/ListTable/ListTableSearchRow";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { fetchAllPlannedChases } from "@/lib/database/chases/fetchAllPlannedChases";
+import { searchThroughObjects } from "@/lib/utils/search/searchThroughObjects";
 import { unixToDate } from "@/lib/utils/unixToDate";
 
-export default async function ChasesPage() {
+export default async function ChasesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+    const params = await searchParams;
+    const query = params.q;
+
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
 
     if (!success) return <ErrorMessage description={msg} />;
 
-    const chases = await fetchAllPlannedChases();
+    let chases = await fetchAllPlannedChases();
+
+    console.log("Chases before:", chases);
+
+    if (chases && query && query.trim().length > 0) chases = await searchThroughObjects<PlannedChase>(chases, query);
+
+    console.log("Chases After:", chases);
 
     return (
         <Col className="w-full h-full items-center justify-center">
@@ -42,6 +54,8 @@ export default async function ChasesPage() {
                 <InfoHeader textContent="Chases" />
 
                 <ListTable>
+                    <ListTableSearchRow searchTerm="chases" />
+                    
                     <ListTableHeaderRow>
                         <ListTableHeader>Title</ListTableHeader>
                         <ListTableHeader>ID</ListTableHeader>
@@ -54,7 +68,7 @@ export default async function ChasesPage() {
                     {
                         (!chases || chases.length === 0) ?
                         <ListTableContentRow>
-                            <ListTableContent>There is nothing to show here.</ListTableContent>
+                            <ListTableContent>No results found</ListTableContent>
                         </ListTableContentRow>
                         :
                         chases.map(async chase => (
