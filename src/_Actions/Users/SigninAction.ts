@@ -3,6 +3,8 @@
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { verifyPass } from "@/lib/auth/verifyPass";
+import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
+import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
 import { fetchUserByEmail } from "@/lib/database/users/fetchUserByEmail";
 import { fetchUserByUsername } from "@/lib/database/users/fetchUserByUsername";
 import { updateLastSignin } from "@/lib/database/users/updateLastSignin";
@@ -52,6 +54,14 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
     });
 
     await updateLastSignin(user.uid);
+    
+    // Update web webStats
+    const webStats = await fetchWebStats();
+    
+    if (webStats) await updateWebStats({
+        ...webStats,
+        signinCount: webStats.signinCount + 1
+    });
     
     redirect("/");
 }

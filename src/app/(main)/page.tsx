@@ -4,8 +4,17 @@ import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import InfoSubheader from "@/components/Text/Headers/InfoSubheader";
 import Image from "next/image";
 import config from "../../lib/cougar-config.json";
+import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
+import ErrorMessage from "@/components/Messages/ErrorMessage";
+import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 
 export default async function Home() {
+    const { success, msg } = await signinValidation();
+        
+    if (!success) return <ErrorMessage description={msg} />;
+
+    await updateWebVisits();
+
     return (
         <Col
             id="home-page-wrapper"

@@ -7,7 +7,7 @@ export async function insertPlannedChase(planned_chase: PlannedChase): Promise<P
     const { id, created_timestamp, ...updatedData } = planned_chase;
 
     return await mongo.database
-        .collection<PlannedChase>("planned_chases")
+        .collection<PlannedChase>("planned-chases")
         .findOneAndUpdate(
             { id },
             {

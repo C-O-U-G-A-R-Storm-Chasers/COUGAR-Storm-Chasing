@@ -7,11 +7,14 @@ import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import AllPlannedChasesButton from "./AllPlannedChasesButton";
 import { fetchLatestPlannedChase } from "@/lib/database/chases/fetchLatestPlannedChase";
 import ChaseRecord from "@/components/Chases/ChaseRecord";
+import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 
 export default async function LatestPlannedChasePage() {
     const { success, msg } = await signinValidation();
 
     if (!success) return <ErrorMessage description={msg} />;
+
+    await updateWebVisits();
 
     const chase = await fetchLatestPlannedChase();
 

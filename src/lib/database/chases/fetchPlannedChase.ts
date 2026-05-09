@@ -5,6 +5,6 @@ export async function fetchPlannedChase(id: PlannedChase["id"]): Promise<Planned
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<PlannedChase>("planned_chases")
+        .collection<PlannedChase>("planned-chases")
         .findOne({ id }, { projection: { _id: 0 } });
 }

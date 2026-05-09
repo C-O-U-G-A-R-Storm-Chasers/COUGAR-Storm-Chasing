@@ -15,6 +15,7 @@ import { fetchAllPlannedChases } from "@/lib/database/chases/fetchAllPlannedChas
 import { searchThroughObjects } from "@/lib/utils/search/searchThroughObjects";
 import { unixToDate } from "@/lib/utils/unixToDate";
 import LatestPlannedChaseButton from "./LatestPlannedChaseButton";
+import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 
 export default async function ChasesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
     const params = await searchParams;
@@ -23,6 +24,8 @@ export default async function ChasesPage({ searchParams }: { searchParams: Promi
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
 
     if (!success) return <ErrorMessage description={msg} />;
+
+    await updateWebVisits();
 
     let chases = await fetchAllPlannedChases();
 

@@ -1,11 +1,11 @@
-import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
+import { WebStats } from "@/_Interfaces/Statistics/WebStats";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function fetchLatestPlannedChase(): Promise<PlannedChase | null> {
+export async function fetchWebStats(): Promise<WebStats | null> {
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<PlannedChase>("planned-chases")
+        .collection<WebStats>("web-stats")
         .findOne({}, {
             projection: { _id: 0 },
             sort: { _id: -1 }

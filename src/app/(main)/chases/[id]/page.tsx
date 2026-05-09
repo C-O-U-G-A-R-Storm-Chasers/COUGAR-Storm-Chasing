@@ -10,6 +10,7 @@ import AllPlannedChasesButton from "../latest/AllPlannedChasesButton";
 import LatestPlannedChaseButton from "../LatestPlannedChaseButton";
 import { fetchPlannedChase } from "@/lib/database/chases/fetchPlannedChase";
 import { UUID } from "crypto";
+import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 
 export default async function PlannedChasePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -17,6 +18,8 @@ export default async function PlannedChasePage({ params }: { params: Promise<{ i
     const { success, msg } = await signinValidation();
 
     if (!success) return <ErrorMessage description={msg} />;
+
+    await updateWebVisits();
 
     const chase = await fetchPlannedChase(id as UUID);
 

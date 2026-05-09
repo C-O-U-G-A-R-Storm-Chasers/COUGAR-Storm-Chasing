@@ -9,6 +9,8 @@ import { cookies } from "next/headers";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import config from "../../../lib/cougar-config.json";
+import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
+import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
 
 export async function FileUploadAction(selectedFile: SelectedFile): Promise<BasicResult<UploadedFile>> {
     if (!selectedFile) return {
@@ -61,6 +63,14 @@ export async function FileUploadAction(selectedFile: SelectedFile): Promise<Basi
         uploadedBy: user.uid,
         type: file.type.split("/")[0]
     };
+
+    // Update web webStats
+    const webStats = await fetchWebStats();
+    
+    if (webStats) await updateWebStats({
+        ...webStats,
+        filesUploaded: webStats.filesUploaded + 1
+    });
 
     // Write to database
     const writeToDatabaseResult = await insertFile(uploadedFile);
