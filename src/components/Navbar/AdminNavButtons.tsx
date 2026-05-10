@@ -20,7 +20,7 @@ export default async function AdminNavButtons() {
                 <p className="text-xs font-semibold">Plan Our Chases</p>
             </NavbarButtonStandard>
 
-            <NavbarButtonStandard href="/chases/plan">
+            <NavbarButtonStandard href="/outlooks/new">
                 <PresentationChartLineIcon className="w-5 h-5" />
                 <p className="text-xs font-semibold">Submit New Outlook</p>
             </NavbarButtonStandard>

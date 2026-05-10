@@ -11,8 +11,8 @@ import InputText from "@/components/Inputs/InputText";
 import InputTextarea from "@/components/Inputs/InputTextarea";
 import config from "../../../lib/cougar-config.json";
 import InputDropdown from "@/components/Inputs/InputDropdown";
-import { Chaser } from "@/_Interfaces/Chasers/Chaser";
 import { PlanChaseAction } from "@/_Actions/Chases/PlanChaseAction";
+import { Chaser } from "@/_Interfaces/Chases/Chaser";
 
 export default function PlanChaseForm() {
     const [serverState, action] = useActionState(PlanChaseAction, {

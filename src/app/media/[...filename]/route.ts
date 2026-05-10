@@ -1,23 +1,26 @@
+import { findFileRecursive } from "@/lib/utils/media/findFileRecursive";
 import mime from "mime";
 import { NextRequest, NextResponse } from "next/server";
 import { createReadStream, existsSync, statSync } from "node:fs";
-import { join, normalize, resolve } from "node:path";
+import { resolve } from "node:path";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ filename: Array<string> }> }) {
     const { filename } = await params;
 
     try {
-        const baseDir = "/uploads";
-        const unsafePath = join(baseDir, "media", ...filename);
-        const safePath = normalize(unsafePath);
+        const baseDir = resolve("/uploads/media");
+        const fileName = filename[filename.length - 1];
+        const resolvedPath = findFileRecursive(baseDir, fileName);
+
+        if (!resolvedPath) return new NextResponse("Not Found", { status: 404 });
+
         const resolvedBase = resolve(baseDir);
-        const resolvedPath = resolve(safePath);
 
         if (!resolvedPath.startsWith(resolvedBase)) return new NextResponse("Forbidden", { status: 403 });
 
-        if (!existsSync(safePath)) return new NextResponse("Not Found", { status: 404 });
+        if (!existsSync(resolvedPath)) return new NextResponse("Not Found", { status: 404 });
 
-        const mimeType = mime.getType(safePath) || "";
+        const mimeType = mime.getType(resolvedPath) || "";
 
         if (!mimeType.startsWith("image/") && !mimeType.startsWith("video/")) return new NextResponse("Unsupported media type", { status: 415 });
 

@@ -23,12 +23,12 @@ export default function ImagePreview({ webPath }: { webPath: string }) {
             />
 
             <Col className="w-2/3">
-                <label htmlFor="title" className="text-xs font-semibold">Video Title</label>
+                <label htmlFor="title" className="text-xs font-semibold">Image Title</label>
                 <InputText name="title" id="title" required />
             </Col>
 
             <Col className="w-2/3">
-                <label htmlFor="capture-date" className="text-xs font-semibold">Video Capture Date (YYYY-MM-DD)</label>
+                <label htmlFor="capture-date" className="text-xs font-semibold">Image Capture Date (YYYY-MM-DD)</label>
                 <InputText name="capture-date" id="capture-date" required />
             </Col>
         </Col>

@@ -1,8 +1,8 @@
 "use server";
 
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { Chaser } from "@/_Interfaces/Chasers/Chaser";
-import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
+import { Chaser } from "@/_Interfaces/Chases/Chaser";
+import { PlannedChase } from "@/_Interfaces/Chases/PlannedChase";
 import { safeUUID } from "@/lib/crypto/crypto";
 import { insertPlannedChase } from "@/lib/database/chases/insertPlannedChase";
 import { UUID } from "crypto";

@@ -1,7 +1,6 @@
 "use client";
 
-import { ChangeEvent, useActionState, useEffect, useRef, useState } from "react";
-import { SigninAction } from "@/_Actions/Users/SigninAction";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Col from "@/components/Col";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
@@ -15,19 +14,14 @@ import { FileUploadPaths } from "@/_Enums/Files/FileUploadPaths";
 import VideoPreview from "./VideoPreview";
 import ImagePreview from "./ImagePreview";
 
-export default function MediaUploadForm() {
-    const [serverState, action] = useActionState(SigninAction, {
-        success: false
-    });
+export default function MediaUploadForm({ title, desiredPath, setParentUploadedMedia  }: { title?: string, desiredPath?: FileUploadPaths, setParentUploadedMedia?: (media: UploadedFile[] | undefined) => void }) {
     const [error, setError] = useState<string | null>(null);
     const filesInput = useRef<HTMLInputElement>(null);
-    const [uploadedMedia, setUploadedMedia] = useState<Array<UploadedFile>>();
+    const [uploadedMedia, setUploadedMedia] = useState<UploadedFile[]>();
 
     useEffect(() => {
-        if (!serverState.success && serverState.msg) {
-            setError(serverState.msg);
-        }
-    }, [serverState]);
+        if (setParentUploadedMedia) setParentUploadedMedia(uploadedMedia);
+    }, [uploadedMedia, setParentUploadedMedia]);
 
     const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
         const media = e.target.files;
@@ -40,7 +34,7 @@ export default function MediaUploadForm() {
             const file: SelectedFile = {
                 file: media,
                 desiredName: `${uploadTimestamp}-${i}`,
-                desiredPath: FileUploadPaths.MEDIA,
+                desiredPath: desiredPath ?? FileUploadPaths.MEDIA,
                 timestamp: uploadTimestamp
             };
 
@@ -63,11 +57,8 @@ export default function MediaUploadForm() {
     const handleClick = () => filesInput.current?.click();
 
     return (
-        <form
-            action={action}
+        <Col
             className="
-                flex
-                flex-col
                 items-center
                 w-2/3
                 p-2
@@ -82,7 +73,7 @@ export default function MediaUploadForm() {
                 gap-2
             "
         >
-            <InfoHeader textContent="Upload Media" />
+            <InfoHeader textContent={title ?? "Upload Media"} />
 
             <Col className="w-full gap-2">
 
@@ -112,10 +103,10 @@ export default function MediaUploadForm() {
                 }
 
                 <Col>
-                    <FormSubmitButton>Upload</FormSubmitButton>
+                    {!setParentUploadedMedia && <FormSubmitButton>Upload</FormSubmitButton>}
                 </Col>
 
             </Col>
-        </form>
+        </Col>
     );
 }
