@@ -12,9 +12,9 @@ import Link from "next/link";
 export default async function OutlookDayPage({ params }: { params: Promise<{ day: string }> }) {
     const { day } = await params;
 
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 
     await updateWebVisits();
 

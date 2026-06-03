@@ -1,4 +1,3 @@
-import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import Row from "@/components/Row";
@@ -8,7 +7,7 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import MediaElement from "./MediaElement";
 
 export default async function OurMediaPage() {
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success, msg } = await signinValidation();
 
     if (!success) return <ErrorMessage description={msg} />;
 

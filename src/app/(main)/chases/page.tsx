@@ -21,9 +21,9 @@ export default async function ChasesPage({ searchParams }: { searchParams: Promi
     const params = await searchParams;
     const query = params.q;
 
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 
     await updateWebVisits();
 

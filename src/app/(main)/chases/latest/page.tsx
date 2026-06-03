@@ -8,11 +8,12 @@ import AllPlannedChasesButton from "./AllPlannedChasesButton";
 import { fetchLatestPlannedChase } from "@/lib/database/chases/fetchLatestPlannedChase";
 import ChaseRecord from "@/components/Chases/ChaseRecord";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 
 export default async function LatestPlannedChasePage() {
-    const { success, msg } = await signinValidation();
+    const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 
     await updateWebVisits();
 

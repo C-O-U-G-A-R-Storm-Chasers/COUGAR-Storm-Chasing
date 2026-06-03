@@ -11,13 +11,14 @@ import LatestPlannedChaseButton from "../LatestPlannedChaseButton";
 import { fetchPlannedChase } from "@/lib/database/chases/fetchPlannedChase";
 import { UUID } from "crypto";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 
 export default async function PlannedChasePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
 
-    const { success, msg } = await signinValidation();
+    const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 
     await updateWebVisits();
 

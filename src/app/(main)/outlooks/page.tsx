@@ -7,9 +7,9 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import OutlookDayLink from "./OutlookDayLink";
 
 export default async function OutlooksPage() {
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 
     await updateWebVisits();
 
