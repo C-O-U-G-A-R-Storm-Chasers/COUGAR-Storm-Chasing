@@ -1,5 +1,4 @@
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import ListTable from "@/components/Tables/ListTable/ListTable";
@@ -16,6 +15,7 @@ import { searchThroughObjects } from "@/lib/utils/search/searchThroughObjects";
 import { unixToDate } from "@/lib/utils/unixToDate";
 import LatestPlannedChaseButton from "./LatestPlannedChaseButton";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
+import { PlannedChase } from "@/_Interfaces/Chases/PlannedChase";
 
 export default async function ChasesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
     const params = await searchParams;
