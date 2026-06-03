@@ -44,17 +44,17 @@ export default async function OutlookDayPage({ params }: { params: Promise<{ day
                     w-full
                     p-2
                     
-                    bg-sky-700
+                    bg-primary-10
 
                     border-1
-                    border-sky-500
+                    border-primary-9
 
                     rounded-md
                     
                     gap-2
                 "
             >
-                <Col className="w-full items-start p-1 bg-white text-slate-900 rounded-sm">
+                <Col className="w-full items-start p-1 bg-white text-slate-900 border-1 border-slate-400 rounded-sm">
                     <Link
                         href={`/outlooks/day/${outlookDay}`}
                         className="

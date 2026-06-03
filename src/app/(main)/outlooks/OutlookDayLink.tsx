@@ -15,7 +15,7 @@ export default async function OutlookDayLink({ outlookDay }: { outlookDay: Outlo
     else outlook = await fetchLatestOutlook(outlookDay);
 
     return (
-        <Col className="p-1 bg-white text-slate-900 rounded-sm">
+        <Col className="p-1 bg-white text-slate-900 border-1 border-slate-400 rounded-sm">
             {
                 outlook ?
                 <Col>

@@ -19,14 +19,14 @@ export default async function OutlooksPage() {
                 className="
                     flex
                     flex-col
-                    items-start
+                    items-center
                     w-1/3
                     p-2
                     
-                    bg-sky-700
+                    bg-primary-10
 
                     border-1
-                    border-sky-500
+                    border-primary-9
 
                     rounded-md
                     
@@ -35,7 +35,7 @@ export default async function OutlooksPage() {
             >
                 <InfoHeader textContent="Current Outlooks" />
 
-                <p className="text-xs">Disclaimer: All of our outlooks are based on our own forecasting, and are not to be considered 100% accurate. We try our best to be as accurate as possible, but we can easily make mistakes. For official outlook information, please view the current <a href="https://www.spc.noaa.gov/products/outlook/" className="underline">Storm Prediction Center outlooks</a>.</p>
+                <p className="text-xs text-center">Disclaimer: All of our outlooks are based on our own forecasting, and are not to be considered 100% accurate. We try our best to be as accurate as possible, but we can easily make mistakes. For official outlook information, please view the current <a href="https://www.spc.noaa.gov/products/outlook/" className="underline">Storm Prediction Center outlooks</a>.</p>
 
                 <Col className="gap-2">
                     <OutlookDayLink outlookDay={1} />

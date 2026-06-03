@@ -54,10 +54,10 @@ export default function NewOutlookForm() {
                 w-2/3
                 p-2
                 
-                bg-sky-700
+                bg-primary-10
 
                 border-1
-                border-sky-500
+                border-primary-9
 
                 rounded-md
                 

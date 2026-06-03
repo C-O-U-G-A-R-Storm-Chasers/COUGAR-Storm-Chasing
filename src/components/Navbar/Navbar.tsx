@@ -23,11 +23,11 @@ export default async function Navbar() {
                 p-1
                 px-3
 
-                bg-sky-900
-                text-slate-50
+                bg-primary-10
+                text-primary-1
 
                 border-b-2
-                border-sky-600/50 
+                border-secondary-7
 
                 gap-2
             "

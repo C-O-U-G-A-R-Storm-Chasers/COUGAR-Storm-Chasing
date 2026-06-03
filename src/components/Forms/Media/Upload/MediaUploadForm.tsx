@@ -63,10 +63,10 @@ export default function MediaUploadForm({ title, desiredPath, setParentUploadedM
                 w-2/3
                 p-2
                 
-                bg-sky-700
+                bg-primary-8
 
                 border-1
-                border-sky-500
+                border-primary-7
 
                 rounded-md
                 

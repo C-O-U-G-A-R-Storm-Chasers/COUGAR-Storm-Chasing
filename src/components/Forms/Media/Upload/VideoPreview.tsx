@@ -11,7 +11,7 @@ export default function VideoPreview({ webPath }: { webPath: string }) {
                 items-center
                 p-2
 
-                bg-teal-700
+                bg-secondary-9
 
                 rounded-md
                 gap-2

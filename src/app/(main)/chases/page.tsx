@@ -41,10 +41,10 @@ export default async function ChasesPage({ searchParams }: { searchParams: Promi
                     w-3/4
                     p-2
                     
-                    bg-sky-700
+                    bg-primary-10
 
                     border-1
-                    border-sky-500
+                    border-primary-9
 
                     rounded-md
                     
