@@ -1,4 +1,4 @@
-import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
+import { PlannedChase } from "@/_Interfaces/Chases/PlannedChase";
 import { getMongo } from "@/lib/mongo/getmongo";
 
 export async function fetchLatestPlannedChase(): Promise<PlannedChase | null> {

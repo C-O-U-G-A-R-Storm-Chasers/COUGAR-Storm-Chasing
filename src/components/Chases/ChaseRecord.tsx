@@ -1,6 +1,6 @@
 "use client";
 
-import { PlannedChase } from "@/_Interfaces/Chasers/PlannedChase";
+import { PlannedChase } from "@/_Interfaces/Chases/PlannedChase";
 import Col from "../Col";
 import { unixToDate } from "@/lib/utils/unixToDate";
 
