@@ -4,7 +4,7 @@ import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
-import OutlookDayLink from "@/components/Outlooks/OutlookDayLink";
+import OutlookDayLink from "./OutlookDayLink";
 
 export default async function OutlooksPage() {
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);

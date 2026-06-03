@@ -1,11 +1,11 @@
 "use server";
 
 import { Outlook } from "@/_Interfaces/Outlooks/Outlook";
-import Col from "../Col";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchLatestValidOutlook } from "@/lib/database/outlooks/fetchLatestValidOutlook";
 import { fetchLatestOutlook } from "@/lib/database/outlooks/fetchLatestOutlook";
+import Col from "@/components/Col";
 
 export default async function OutlookDayLink({ outlookDay }: { outlookDay: Outlook["outlookDay"] }) {
     let outlook = null;
@@ -33,7 +33,6 @@ export default async function OutlookDayLink({ outlookDay }: { outlookDay: Outlo
                         {
                             (outlook.media && outlook.media.length > 0) &&
                             <Image
-                                key={`outlook-${outlookDay}-thumbnail`}
                                 alt={`outlook-${outlookDay}-thumbnail`}
                                 src={outlook.media[0].webPath}
                                 width={190}
