@@ -54,7 +54,6 @@ export default async function OutlookDayPage({ params }: { params: Promise<{ day
                     gap-2
                 "
             >
-
                 <Col className="w-full items-start p-1 bg-white text-slate-900 rounded-sm">
                     <Link
                         href={`/outlooks/day/${outlookDay}`}
