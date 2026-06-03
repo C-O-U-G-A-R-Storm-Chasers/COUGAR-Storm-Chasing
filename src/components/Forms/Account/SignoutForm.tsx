@@ -4,44 +4,52 @@ import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SignoutAction } from "@/_Actions/Users/SignoutAction";
 import Col from "@/components/Col";
-import Row from "@/components/Row";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
-import SuccessMessage from "@/components/Messages/SuccessMessage";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import FormActionButton from "@/components/Buttons/FormActionButton";
+import InfoHeader from "@/components/Text/Headers/InfoHeader";
 
 export default function SignoutForm() {
     const [serverState, action] = useActionState(SignoutAction, {
         success: false
     });
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
         if (!serverState.success && serverState.msg) {
             setError(serverState.msg);
         }
-
-        if (serverState.success) setSuccess(true);
-    }, [serverState, router]);
+    }, [serverState]);
 
     return (
-        <form action={action}>
-            <Col className="justify-center items-center">
+        <form
+            action={action}
+            className="
+                flex
+                flex-col
+                items-center
+                w-1/3
+                p-2
+                
+                bg-sky-700
 
-                {
-                    error && <ErrorMessage description={error} />
-                }
+                border-1
+                border-sky-500
 
-                {
-                    success && <SuccessMessage description="You have been successfully signed out. Please wait..." />
-                }
+                rounded-md
+                
+                gap-2
+            "
+        >
+            <InfoHeader textContent="Are you sure you want to sign out?" />
 
-                <Row className="justify-center items-center">
-                    <FormSubmitButton>Yes</FormSubmitButton>
-                    <FormActionButton onClick={() => router.back()}>No, take me back</FormActionButton>
-                </Row>
+            <Col className="w-full gap-2">
+
+                {error && <ErrorMessage description={error} />}
+
+                <FormSubmitButton>Yes</FormSubmitButton>
+                <FormActionButton onClick={() => router.back()}>No, take me back</FormActionButton>
 
             </Col>
         </form>

@@ -3,7 +3,7 @@
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { ArrowUpTrayIcon, PresentationChartLineIcon, TruckIcon } from "@heroicons/react/24/solid";
+import { ArrowRightStartOnRectangleIcon, ArrowUpTrayIcon, PresentationChartLineIcon, TruckIcon } from "@heroicons/react/24/solid";
 
 export default async function AdminNavButtons() {
     const { success: adminSuccess, data: admin } = await signinValidation(PermissionLevels.ADMIN);
@@ -23,6 +23,11 @@ export default async function AdminNavButtons() {
             <NavbarButtonStandard href="/outlooks/new">
                 <PresentationChartLineIcon className="w-5 h-5" />
                 <p className="text-xs font-semibold">Submit New Outlook</p>
+            </NavbarButtonStandard>
+
+            <NavbarButtonStandard href="/account/signout">
+                <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-sky-300" />
+                <p className="text-xs font-semibold text-sky-300">Signout</p>
             </NavbarButtonStandard>
         </>
     );
