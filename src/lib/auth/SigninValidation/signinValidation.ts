@@ -5,8 +5,14 @@ import { SigninStatus } from "@/_Enums/Auth/SigninStatus";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { SigninValidationResult } from "@/_Interfaces/Users/SigninValidationResult";
 
-export async function signinValidation(requiredPermissionLevel: PermissionLevels = PermissionLevels.MEM): Promise<SigninValidationResult> {
+export async function signinValidation(requiredPermissionLevel?: PermissionLevels): Promise<SigninValidationResult> {
     const { status, user } = await signinStatus();
+
+    if (!requiredPermissionLevel) return {
+        success: true,
+        msg: "This page is public.",
+        data: user
+    };
 
     if (status === SigninStatus.SIGNED_OUT) return {
         success: false,
