@@ -12,6 +12,31 @@
     @apply text-lime-600;
 }
 
+@theme {
+    --color-primary-10: #172c38;
+    --color-primary-9: #203743;
+    --color-primary-8: #2c4756;
+    --color-primary-7: #2d3f3d;
+    --color-primary-6: #354f51;
+    --color-primary-5: #456a5d;
+    --color-primary-4: #4b89a9;
+    --color-primary-3: #829994;
+    --color-primary-2: #ccecef;
+    --color-primary-1: #F0FDFF;
+
+    --color-secondary-11: #2c2d2a;
+    --color-secondary-10:  #343331;
+    --color-secondary-9:  #414141;
+    --color-secondary-8:  #524131;
+    --color-secondary-7: #909295;
+    --color-secondary-6:  #74492e;
+    --color-secondary-5:  #845430;
+    --color-secondary-4:  #af7c4b;
+    --color-secondary-3:  #9f8158;
+    --color-secondary-2:  #cab887;
+    --color-secondary-1:  #dcc198;
+}
+
 @layer utilities {
     .no-scrollbar {
         -ms-overflow-style: none;
