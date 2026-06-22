@@ -22,11 +22,11 @@ export default async function Navbar() {
                 justify-center
                 items-center
 
-                bg-primary-11
+                bg-neutral-950
                 text-cyan-400
 
-                border-b-2
-                border-cyan-200/50
+                border-b-1
+                border-neutral-500
 
                 gap-2
             "

@@ -14,10 +14,10 @@ export default function Sidebar() {
                 p-1
                 px-2
                 
-                bg-primary-10
+                bg-neutral-900
 
                 border-r-1
-                border-cyan-200/25
+                border-neutral-500
 
                 gap-2
             "
