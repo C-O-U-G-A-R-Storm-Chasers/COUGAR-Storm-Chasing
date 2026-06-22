@@ -18,13 +18,11 @@ export default async function Navbar() {
             id="navbar-wrapper"
             className="
                 w-full
-                justify-between
+                justify-center
                 items-center
-                p-1
-                px-3
 
-                bg-primary-10
-                text-primary-1
+                bg-primary-11
+                text-cyan-300
 
                 border-b-2
                 border-secondary-7
@@ -32,62 +30,75 @@ export default async function Navbar() {
                 gap-2
             "
         >
-            <NavbarSection>
-                <Link href="/" className="flex flex-row items-center gap-2">
-                    <Row id="navbar-home-icon">
-                        <Image
-                            src={config["navbar-home-icon"]}
-                            alt="Navbar Home Icon for COUGAR Storm Chasing"
-                            width={512}
-                            height={512}
-                            className="w-10 h-10 bg-slate-200 rounded-md"
-                        />
-                    </Row>
-                    
-                    <p className="text-xl font-semibold">C.O.U.G.A.R. Storm Chasers</p>
-                </Link>
-            </NavbarSection>
+            <Row
+                id="navbar-wrapper"
+                className="
+                    w-1/2
+                    justify-between
+                    items-center
+                    p-1
+                    px-3
 
-            <NavbarSection>
-                <NavbarButtonStandard href="/outlooks">
-                    <PresentationChartLineIcon className="w-5 h-5" />
-                    <p className="text-xs font-semibold">Current Outlooks</p>
-                </NavbarButtonStandard>
+                    gap-2
+                "
+            >
+                <NavbarSection>
+                    <Link href="/" className="flex flex-row items-center gap-2">
+                        <Row id="navbar-home-icon">
+                            <Image
+                                src={config["navbar-home-icon"]}
+                                alt="Navbar Home Icon for COUGAR Storm Chasing"
+                                width={512}
+                                height={512}
+                                className="w-10 h-10 bg-slate-200 rounded-md"
+                            />
+                        </Row>
+                        
+                        <p className="text-xl">C.O.U.G.A.R. Storm Chasers</p>
+                    </Link>
+                </NavbarSection>
 
-                <NavbarButtonStandard href="/media">
-                    <VideoCameraIcon className="w-5 h-5" />
-                    <p className="text-xs font-semibold">Our Media</p>
-                </NavbarButtonStandard>
-
-                <NavbarButtonStandard href="/team">
-                    <UserGroupIcon className="w-5 h-5" />
-                    <p className="text-xs font-semibold">Our Team</p>
-                </NavbarButtonStandard>
-
-                <NavbarButtonStandard href="/chases">
-                    <BookmarkIcon className="w-5 h-5" />
-                    <p className="text-xs font-semibold">Upcoming Chases</p>
-                </NavbarButtonStandard>
-            </NavbarSection>
-
-            <NavbarSection>
-                {
-                    user ?
-                    <>
-                        <NavbarButtonStandard href="/account">
-                            <UserIcon className="w-5 h-5" />
-                            <p className="text-xs font-semibold text-fuchsia-500">{user.username}</p>
-                        </NavbarButtonStandard>
-
-                        <AdminNavButtons />
-                    </>
-                    :
-                    <NavbarButtonStandard href="/account/signin">
-                        <ArrowRightEndOnRectangleIcon className="w-5 h-5" />
-                        <p className="text-xs font-semibold">Existing Member? Sign in</p>
+                <NavbarSection>
+                    <NavbarButtonStandard href="/outlooks">
+                        <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs">Current Outlooks</p>
                     </NavbarButtonStandard>
-                }
-            </NavbarSection>
+
+                    <NavbarButtonStandard href="/media">
+                        <VideoCameraIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs">Our Media</p>
+                    </NavbarButtonStandard>
+
+                    <NavbarButtonStandard href="/team">
+                        <UserGroupIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs">Our Team</p>
+                    </NavbarButtonStandard>
+
+                    <NavbarButtonStandard href="/chases">
+                        <BookmarkIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs">Upcoming Chases</p>
+                    </NavbarButtonStandard>
+                </NavbarSection>
+
+                <NavbarSection>
+                    {
+                        user ?
+                        <>
+                            <NavbarButtonStandard href="/account">
+                                <UserIcon className="w-5 h-5 text-primary-1" />
+                                <p className="text-xs text-fuchsia-500">{user.username}</p>
+                            </NavbarButtonStandard>
+
+                            <AdminNavButtons />
+                        </>
+                        :
+                        <NavbarButtonStandard href="/account/signin">
+                            <ArrowRightEndOnRectangleIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-xs">Existing Member? Sign in</p>
+                        </NavbarButtonStandard>
+                    }
+                </NavbarSection>
+            </Row>
         </Row>
     );
 }
