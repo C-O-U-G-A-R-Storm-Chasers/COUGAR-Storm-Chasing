@@ -31,6 +31,7 @@ export default async function TeamPage() {
                     <InfoSubheader textContent="Field Operations Director" />
                     <InfoBulletStandard textContent="Field Operations Director" />
                     <InfoBulletStandard textContent="Lead Storm Chaser" />
+                    <InfoBulletStandard textContent="Certified SKYWARN Spotter" />
                     <InfoBulletStandard textContent="Media Operations Coordinator" />
                     <InfoBulletStandard textContent="Hail Core Magnet" />
                 </InfoSectionseparator>
