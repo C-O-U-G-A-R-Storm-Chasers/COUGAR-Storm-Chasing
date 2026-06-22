@@ -31,13 +31,8 @@ export default function SigninForm() {
                 flex
                 flex-col
                 items-center
-                w-1/3
+                w-1/2
                 p-2
-                
-                bg-primary-10
-
-                border-1
-                border-primary-9
 
                 rounded-md
                 
@@ -53,18 +48,21 @@ export default function SigninForm() {
                 {error && <ErrorMessage description={error} />}
 
                 <Col>
-                    <label htmlFor="login" className="text-xs font-semibold">Your Username or Email Address</label>
-                    <InputTextMain name="login" id="login" placeholder="JohnDoe or johndoe@gmail.com" required />
+                    <label htmlFor="login" className="text-xs">Your Username or Email Address</label>
+                    <InputTextMain name="login" id="login" placeholder="johndoe@gmail.com" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="password" className="text-xs font-semibold">Your Password</label>
+                    <label htmlFor="password" className="text-xs">Your Password</label>
                     <InputPasswordMain name="password" id="password" required />
                 </Col>
 
-                <Row className="justify-between">
-                    <FormResetButton />
+                <Col>
                     <FormSubmitButton>Sign In</FormSubmitButton>
+                </Col>
+
+                <Row>
+                    <FormResetButton />
                 </Row>
 
             </Col>

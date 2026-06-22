@@ -13,7 +13,7 @@ export default async function SignoutPage() {
     await updateWebVisits();
 
     return (
-        <Col className="w-full h-full items-center justify-center">
+        <Col className="w-full h-full items-center">
             <SignoutForm />
         </Col>
     );

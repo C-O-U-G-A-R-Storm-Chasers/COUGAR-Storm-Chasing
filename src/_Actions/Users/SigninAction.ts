@@ -63,5 +63,5 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
         signinCount: webStats.signinCount + 1
     });
     
-    redirect("/");
+    redirect("/dashboard");
 }

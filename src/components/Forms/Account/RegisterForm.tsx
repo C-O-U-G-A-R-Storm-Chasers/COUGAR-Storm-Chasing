@@ -32,13 +32,8 @@ export default function RegisterForm() {
                 flex
                 flex-col
                 items-center
-                w-1/3
+                w-1/2
                 p-2
-                
-                bg-primary-10
-
-                border-1
-                border-primary-9
 
                 rounded-md
                 
@@ -56,38 +51,41 @@ export default function RegisterForm() {
                 {serverState.success && <SuccessMessage description="You have successfully created an account! Please wait..." />}
 
                 <Col>
-                    <label htmlFor="first" className="text-xs font-semibold">First Name</label>
+                    <label htmlFor="first" className="text-xs">First Name</label>
                     <InputTextMain name="first" id="first" placeholder="John" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="last" className="text-xs font-semibold">Last Name</label>
+                    <label htmlFor="last" className="text-xs">Last Name</label>
                     <InputTextMain name="last" id="last" placeholder="Doe" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="username" className="text-xs font-semibold">Desired Username</label>
+                    <label htmlFor="username" className="text-xs">Desired Username</label>
                     <InputTextMain name="username" id="username" placeholder="John Doe 01" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="email" className="text-xs font-semibold">Email Address</label>
+                    <label htmlFor="email" className="text-xs">Email Address</label>
                     <InputTextMain name="email" id="email" placeholder="johndoe@gmail.com" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="password" className="text-xs font-semibold">Desired Password</label>
+                    <label htmlFor="password" className="text-xs">Desired Password</label>
                     <InputPasswordMain name="password" id="password" required />
                 </Col>
 
                 <Col>
-                    <label htmlFor="rpt-password" className="text-xs font-semibold">Repeat Password</label>
+                    <label htmlFor="rpt-password" className="text-xs">Repeat Password</label>
                     <InputPasswordMain name="rpt-password" id="rpt-password" required />
                 </Col>
 
-                <Row className="justify-between">
+                <Col>
+                    <FormSubmitButton>Create Account</FormSubmitButton>
+                </Col>
+
+                <Row>
                     <FormResetButton />
-                    <FormSubmitButton>Sign In</FormSubmitButton>
                 </Row>
 
             </Col>

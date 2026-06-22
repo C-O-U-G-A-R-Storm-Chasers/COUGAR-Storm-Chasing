@@ -6,7 +6,7 @@ export default async function RegisterPage() {
     await updateWebVisits();
 
     return (
-        <Col className="w-full h-full items-center justify-center">
+        <Col className="w-full h-full items-center">
             <RegisterForm />
         </Col>
     );

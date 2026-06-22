@@ -22,7 +22,24 @@ export default async function TeamPage() {
 
     return (
         <Col className="w-full items-center">
-            <Col className="w-2/5 items-center p-2 px-5 bg-white/85 text-slate-950 border-1 border-slate-400 rounded-md gap-5">
+            <Col
+                className="
+                    w-1/2
+                    items-center
+                    p-2
+                    px-5
+
+                    text-neutral-950
+
+                    bg-neutral-200/75
+
+                    border-1
+                    border-neutral-400
+
+                    rounded-md
+                    gap-5
+                "
+            >
 
                 <InfoPageTitle textContent="Meet Our Team Members" />
                 

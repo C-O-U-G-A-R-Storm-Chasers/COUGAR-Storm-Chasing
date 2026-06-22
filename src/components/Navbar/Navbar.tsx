@@ -4,11 +4,12 @@ import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { ArrowRightEndOnRectangleIcon, BookmarkIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
+import { HomeModernIcon } from "@heroicons/react/24/solid";
+import { ArrowRightEndOnRectangleIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
-import AdminNavButtons from "./AdminNavButtons";
+import UserNavButton from "./UserNavButton";
 
 export default async function Navbar() {
     const { data: user } = await signinValidation();
@@ -22,10 +23,10 @@ export default async function Navbar() {
                 items-center
 
                 bg-primary-11
-                text-cyan-300
+                text-cyan-400
 
                 border-b-2
-                border-secondary-7
+                border-cyan-200/50
 
                 gap-2
             "
@@ -38,8 +39,9 @@ export default async function Navbar() {
                     items-center
                     p-1
                     px-3
+                    flex-wrap
 
-                    gap-2
+                    gap-4
                 "
             >
                 <NavbarSection>
@@ -50,49 +52,32 @@ export default async function Navbar() {
                                 alt="Navbar Home Icon for COUGAR Storm Chasing"
                                 width={512}
                                 height={512}
-                                className="w-10 h-10 bg-slate-200 rounded-md"
+                                className="w-6 h-6 bg-slate-200 rounded-md"
                             />
                         </Row>
                         
-                        <p className="text-xl">C.O.U.G.A.R. Storm Chasers</p>
+                        <p className="text-sm">Cyclone Observation Unit for General Atmospheric Research</p>
                     </Link>
-                </NavbarSection>
-
-                <NavbarSection>
-                    <NavbarButtonStandard href="/outlooks">
-                        <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs">Current Outlooks</p>
-                    </NavbarButtonStandard>
-
-                    <NavbarButtonStandard href="/media">
-                        <VideoCameraIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs">Our Media</p>
-                    </NavbarButtonStandard>
-
-                    <NavbarButtonStandard href="/team">
-                        <UserGroupIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs">Our Team</p>
-                    </NavbarButtonStandard>
-
-                    <NavbarButtonStandard href="/chases">
-                        <BookmarkIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs">Upcoming Chases</p>
-                    </NavbarButtonStandard>
                 </NavbarSection>
 
                 <NavbarSection>
                     {
                         user ?
                         <>
-                            <NavbarButtonStandard href="/account">
-                                <UserIcon className="w-5 h-5 text-primary-1" />
-                                <p className="text-xs text-fuchsia-500">{user.username}</p>
+                            <UserNavButton user={user} />
+
+                            <NavbarButtonStandard href="/dashboard">
+                                <HomeModernIcon className="w-5 h-5 text-primary-1" />
+                                <p className="text-xs text-primary-1">Dashboard</p>
                             </NavbarButtonStandard>
 
-                            <AdminNavButtons />
+                            <NavbarButtonStandard href="/dashboard/account/signout">
+                                <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-primary-1" />
+                                <p className="text-xs font-semibold text-primary-1">Signout</p>
+                            </NavbarButtonStandard>
                         </>
                         :
-                        <NavbarButtonStandard href="/account/signin">
+                        <NavbarButtonStandard href="/dashboard/account/signin">
                             <ArrowRightEndOnRectangleIcon className="w-5 h-5 text-primary-1" />
                             <p className="text-xs">Existing Member? Sign in</p>
                         </NavbarButtonStandard>

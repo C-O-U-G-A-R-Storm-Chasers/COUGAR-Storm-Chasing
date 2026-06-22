@@ -10,17 +10,19 @@ export default function FormSubmitButton({ children, ...props }: { children: Rea
                 text-xs
                 font-semibold
 
-                bg-gradient-to-br
-                from-emerald-500
-                to-emerald-600
+                text-primary-1
 
-                hover:from-emerald-600
-                hover:to-emerald-500
+                bg-gradient-to-br
+                from-blue-500
+                to-blue-600
+
+                hover:from-blue-600
+                hover:to-blue-500
 
                 border-1
-                border-emerald-500
+                border-blue-500
 
-                rounded-sm
+                rounded-xs
                 cursor-pointer
             "
             {...props}

@@ -6,7 +6,7 @@ export default async function SigninPage() {
     await updateWebVisits();
 
     return (
-        <Col className="w-full h-full items-center justify-center">
+        <Col className="w-full h-full items-center">
             <SigninForm />
         </Col>
     );

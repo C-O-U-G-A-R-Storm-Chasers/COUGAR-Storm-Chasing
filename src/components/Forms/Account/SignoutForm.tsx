@@ -29,17 +29,12 @@ export default function SignoutForm() {
                 flex
                 flex-col
                 items-center
-                w-1/3
+                w-1/2
                 p-2
-                
-                bg-primary-10
-
-                border-1
-                border-sky-500
 
                 rounded-md
                 
-                gap-2
+                gap-4
             "
         >
             <InfoHeader textContent="Are you sure you want to sign out?" />

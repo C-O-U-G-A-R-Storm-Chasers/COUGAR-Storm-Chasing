@@ -10,17 +10,19 @@ export default function FormActionButton({ children, onClick, ...props }: { chil
                 text-xs
                 font-semibold
 
-                bg-gradient-to-br
-                from-sky-500
-                to-sky-600
+                text-primary-1
 
-                hover:from-sky-600
-                hover:to-sky-500
+                bg-gradient-to-br
+                from-neutral-500
+                to-neutral-600
+
+                hover:from-neutral-600
+                hover:to-neutral-500
 
                 border-1
-                border-sky-500
+                border-neutral-500
 
-                rounded-sm
+                rounded-xs
                 cursor-pointer
             "
             onClick={(e) => {
