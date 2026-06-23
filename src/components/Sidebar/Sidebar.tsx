@@ -12,7 +12,8 @@ export default function Sidebar() {
                 w-1/6
                 items-center
                 p-1
-                px-2
+                pl-0
+                pr-2
                 
                 bg-neutral-900
 

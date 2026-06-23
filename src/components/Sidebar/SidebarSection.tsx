@@ -8,7 +8,7 @@ export default function SidebarSection({ label, children }: { label?: string, ch
         <Col className="w-full items-center gap-2">
             { label && <p className="text-sm text-primary-1/75 font-semibold">{label}</p>}
 
-            <Col className="w-full gap-2">
+            <Col className="w-full gap-1">
                 {children}
             </Col>
         </Col>
