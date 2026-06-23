@@ -19,7 +19,7 @@
     "dompurify": "^3.3.1",
     "html-react-parser": "^5.2.10",
     "isomorphic-dompurify": "^2.34.0",
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.8",
     "jsdom": "^27.3.0",
     "mime": "^4.1.0",
     "mongodb": "^7.0.0",

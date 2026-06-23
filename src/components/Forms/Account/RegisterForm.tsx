@@ -12,7 +12,7 @@ import Row from "@/components/Row";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
-import MediaUploadForm, { AllowedMediaUploadTypes } from "../Media/Upload/MediaUploadForm";
+import ProfileImageUploadForm, { AllowedMediaUploadTypes } from "../Media/Upload/ProfileImageUploadForm";
 
 export default function RegisterForm() {
     const [serverState, action] = useActionState(NewUserAction, {
@@ -64,7 +64,7 @@ export default function RegisterForm() {
 
                 {serverState.success && <SuccessMessage description="You have successfully created an account! Please wait..." />}
                 
-                <MediaUploadForm
+                <ProfileImageUploadForm
                     customLabel="Select Profile Image"
                     selectedFileList={setSelectedFiles}
                     allowedTypes={AllowedMediaUploadTypes.SINGLE_IMAGE}

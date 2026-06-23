@@ -9,7 +9,7 @@ import Row from "@/components/Row";
 import FormResetButton from "@/components/Buttons/FormResetButton";
 import InputTextarea from "@/components/Inputs/InputTextarea";
 import InputDropdown from "@/components/Inputs/InputDropdown";
-import MediaUploadForm from "../Media/Upload/MediaUploadForm";
+import MediaUploadForm from "../Media/Upload/ProfileImageUploadForm";
 import { UploadedFile } from "@/_Interfaces/Files/UploadedFile";
 import { FileUploadPaths } from "@/_Enums/Files/FileUploadPaths";
 import { ThreatTypes } from "@/_Enums/Threats/ThreatTypes";

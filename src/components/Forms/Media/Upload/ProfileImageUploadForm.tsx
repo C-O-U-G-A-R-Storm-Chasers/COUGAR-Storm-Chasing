@@ -15,7 +15,7 @@ export enum AllowedMediaUploadTypes {
     MULTIPLE_ANY = 6
 }
 
-export default function MediaUploadForm(
+export default function ProfileImageUploadForm(
     {
         allowedTypes,
         selectedFileList,
