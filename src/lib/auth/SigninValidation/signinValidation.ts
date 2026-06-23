@@ -21,7 +21,7 @@ export async function signinValidation(requiredPermissionLevel?: PermissionLevel
     };
 
     if (status === SigninStatus.SIGNED_IN && user) {
-        if (user.perm_level < requiredPermissionLevel) return {
+        if (user.perm_level > requiredPermissionLevel) return {
             success: false,
             msg: "You do not have access to this page or feature.",
             data: user

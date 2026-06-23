@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserGroupIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
@@ -36,22 +36,25 @@ export default function Sidebar() {
 
                 <SidebarButtonStandard href="/dashboard/outlooks">
                     <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Current Outlooks</p>
+                    <p className="text-md text-primary-1">Outlooks</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/chases">
                     <BookmarkIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Upcoming Chases</p>
+                    <p className="text-md text-primary-1">Storm Chases</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/media">
                     <VideoCameraIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Our Media</p>
+                    <p className="text-md text-primary-1">Media</p>
                 </SidebarButtonStandard>
             </SidebarSection>
 
             <SidebarSection label="My Stuff">
-
+                <SidebarButtonStandard href="/dashboard/account">
+                    <UserIcon className="w-5 h-5 text-primary-1" />
+                    <p className="text-md text-primary-1">My Account</p>
+                </SidebarButtonStandard>
             </SidebarSection>
         </Col>
     );

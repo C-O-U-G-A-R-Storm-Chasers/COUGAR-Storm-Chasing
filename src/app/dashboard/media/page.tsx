@@ -1,19 +1,17 @@
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import Row from "@/components/Row";
+import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
-import { fetchAllUploadedMedia } from "@/lib/database/files/fetchAllUploadedMedia";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
-import MediaElement from "./MediaElement";
+import MediaPageSidebar from "./Sidebar/MediaPageSidebar";
 
 export default async function OurMediaPage() {
-    const { success, msg } = await signinValidation();
+    const { success, msg, data } = await signinValidation();
 
     if (!success) return <ErrorMessage description={msg} />;
 
     await updateWebVisits();
-
-    const uploadedMedia = await fetchAllUploadedMedia();
 
     return (
         <Col
@@ -25,10 +23,10 @@ export default async function OurMediaPage() {
                 gap-2
             "
         >
-            <Row className="w-full flex-wrap">
-                {
-                    (uploadedMedia && uploadedMedia.length > 0) && uploadedMedia.map((media, i) => <MediaElement key={`media-${i}`} media={media} i={i} />)
-                }
+            <InfoPageTitle textContent="Media" />
+
+            <Row className="w-full">
+                <MediaPageSidebar user={data} />
             </Row>
         </Col>
     );
