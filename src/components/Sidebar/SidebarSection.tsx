@@ -6,7 +6,7 @@ import Col from "../Col";
 export default function SidebarSection({ label, children }: { label?: string, children?: ReactNode }) {
     return (
         <Col className="w-full items-center gap-2">
-            { label && <p className="text-sm text-primary-1/75 font-semibold">{label}</p>}
+            { label && <p className="text-xs text-primary-1/75 font-semibold">{label}</p>}
 
             <Col className="w-full gap-1">
                 {children}

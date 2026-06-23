@@ -41,7 +41,7 @@ export default function SigninForm() {
         >
             <InfoHeader textContent="Sign In" />
 
-            <p className="text-xs">New here? <Link href="/account/register" className="underline">Create an account</Link>.</p>
+            <p className="text-xs">New here? <Link href="/dashboard/account/register" className="underline">Create an account</Link>.</p>
 
             <Col className="w-full gap-2">
 

@@ -26,27 +26,27 @@ export default function Sidebar() {
             <SidebarSection label="C.O.U.G.A.R.">
                 <SidebarButtonStandard href="/dashboard">
                     <HomeIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-xs text-primary-1">Home</p>
+                    <p className="text-md text-primary-1">Home</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/team">
                     <UserGroupIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-xs text-primary-1">Our Team</p>
+                    <p className="text-md text-primary-1">Our Team</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/outlooks">
                     <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-xs text-primary-1">Current Outlooks</p>
+                    <p className="text-md text-primary-1">Current Outlooks</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/chases">
                     <BookmarkIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-xs text-primary-1">Upcoming Chases</p>
+                    <p className="text-md text-primary-1">Upcoming Chases</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/media">
                     <VideoCameraIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-xs text-primary-1">Our Media</p>
+                    <p className="text-md text-primary-1">Our Media</p>
                 </SidebarButtonStandard>
             </SidebarSection>
 

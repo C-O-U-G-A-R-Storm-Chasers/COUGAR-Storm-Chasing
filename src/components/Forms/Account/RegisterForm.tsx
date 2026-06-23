@@ -1,7 +1,7 @@
 "use client";
 
 import { NewUserAction } from "@/_Actions/Users/RegisterAction";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InputTextMain from "@/components/Inputs/InputText";
 import InputPasswordMain from "@/components/Inputs/InputPassword";
@@ -12,18 +12,32 @@ import Row from "@/components/Row";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
+import MediaUploadForm, { AllowedMediaUploadTypes } from "../Media/Upload/MediaUploadForm";
 
 export default function RegisterForm() {
     const [serverState, action] = useActionState(NewUserAction, {
         success: false
     });
     const [error, setError] = useState<string | null>(null);
+    const filesInput = useRef<HTMLInputElement>(null);
+    const [selectedFiles, setSelectedFiles] = useState<FileList>();
 
     useEffect(() => {
         if (!serverState.success && serverState.msg) {
             setError(serverState.msg);
         }
     }, [serverState]);
+
+    // Ensures form submits with the profile image if set
+    useEffect(() => {
+        if (!filesInput.current || !selectedFiles) return;
+
+        const dataTransfer = new DataTransfer();
+
+        for (const file of selectedFiles) dataTransfer.items.add(file);
+
+        filesInput.current.files = dataTransfer.files;
+    }, [selectedFiles]);
 
     return (
         <form
@@ -42,13 +56,26 @@ export default function RegisterForm() {
         >
             <InfoHeader textContent="Register" />
 
-            <p className="text-xs">Already have an account? <Link href="/account/signin" className="underline">Sign in instead</Link>.</p>
+            <p className="text-xs">Already have an account? <Link href="/dashboard/account/signin" className="underline">Sign in instead</Link>.</p>
 
             <Col className="w-full gap-2">
 
                 {error && <ErrorMessage description={error} />}
 
                 {serverState.success && <SuccessMessage description="You have successfully created an account! Please wait..." />}
+                
+                <MediaUploadForm
+                    customLabel="Select Profile Image"
+                    selectedFileList={setSelectedFiles}
+                    allowedTypes={AllowedMediaUploadTypes.SINGLE_IMAGE}
+                />
+
+                <input
+                    ref={filesInput}
+                    type="file"
+                    name="profileImage"
+                    hidden
+                />
 
                 <Col>
                     <label htmlFor="first" className="text-xs">First Name</label>
