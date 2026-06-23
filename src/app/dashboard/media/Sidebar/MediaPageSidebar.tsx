@@ -30,7 +30,7 @@ export default function MediaPageSidebar({ user }: { user: User | null }) {
                 </MediaPageSidebarSection>
             }
             <MediaPageSidebarSection label="C.O.U.G.A.R.">
-                <MediaPageSidebarButtonStandard href="/dashboard/media">
+                <MediaPageSidebarButtonStandard href="/dashboard/media/view">
                     <VideoCameraIcon className="w-5 h-5 text-primary-1" />
                     <p className="text-md text-primary-1">View Our Media</p>
                 </MediaPageSidebarButtonStandard>
