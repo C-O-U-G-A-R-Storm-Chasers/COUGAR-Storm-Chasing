@@ -8,7 +8,7 @@ export interface User {
     first: string,
     last: string,
     email: string,
-    profileImage: ProfileImage,
+    profileImage: ProfileImage | null,
     created_timestamp: number,
     perm_level: PermissionLevels,
     last_signin: number | null

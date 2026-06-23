@@ -1,8 +1,6 @@
 "use server";
 
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { SelectedFile } from "@/_Interfaces/Files/SelectedFile";
-import { UploadedFile } from "@/_Interfaces/Files/UploadedFile";
 import { User } from "@/_Interfaces/Users/User";
 import { insertFile } from "@/lib/database/files/insertFile";
 import { cookies } from "next/headers";

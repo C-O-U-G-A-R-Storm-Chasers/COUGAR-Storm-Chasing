@@ -10,6 +10,7 @@ import { fetchUserByUsername } from "@/lib/database/users/fetchUserByUsername";
 import { insertUser } from "@/lib/database/users/insertUser";
 import { UUID } from "crypto";
 import { redirect } from "next/navigation";
+import { ProfileImageUploadAction } from "../File/Upload/ProfileImageUploadAction";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export async function NewUserAction(prevState: any, data: FormData): Promise<BasicResult> {
@@ -19,6 +20,7 @@ export async function NewUserAction(prevState: any, data: FormData): Promise<Bas
     const email = data.get("email") as string;
     const pass = data.get("password") as string;
     const repeatPass = data.get("rpt-password") as string;
+    const profileImage = data.get("profileImage") as File | null;
 
     // Verify username doesn't already have an account
     const usernameResult = await fetchUserByUsername(username);
@@ -58,13 +60,19 @@ export async function NewUserAction(prevState: any, data: FormData): Promise<Bas
     // Hash password
     const hashedPass = await hashPass(pass);
 
+    const uid = safeUUID() as UUID;
+
+    // Upload profile image
+    const profileImageResult = profileImage ? await ProfileImageUploadAction(uid, profileImage) : null;
+
     // Insert user
     const user: UserWithHashedPassword = {
-        uid: safeUUID() as UUID,
+        uid,
         first,
         last,
         username,
         email,
+        profileImage: profileImageResult?.data ?? null,
         created_timestamp: Date.now(),
         perm_level: PermissionLevels.MEM,
         last_signin: null,
@@ -79,5 +87,5 @@ export async function NewUserAction(prevState: any, data: FormData): Promise<Bas
         data: null
     };
 
-    redirect("/account/signin");
+    redirect("/dashboard/account/signin");
 }

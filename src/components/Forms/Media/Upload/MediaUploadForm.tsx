@@ -20,12 +20,14 @@ export default function MediaUploadForm(
         allowedTypes,
         selectedFileList,
         customLabel,
+        customInputName,
 
     }:
     {
         allowedTypes: AllowedMediaUploadTypes,
         selectedFileList: (files: FileList) => void,
         customLabel?: string,
+        customInputName?: string,
     }
 ) {
     const filesInput = useRef<HTMLInputElement>(null);
@@ -70,8 +72,7 @@ export default function MediaUploadForm(
                 <input
                     ref={filesInput}
                     type="file"
-                    name="files"
-                    id="files"
+                    name={customInputName ?? "files"}
                     accept="image/*,video/*"
                     className="hidden"
                     onChange={handleSelectedMedia}

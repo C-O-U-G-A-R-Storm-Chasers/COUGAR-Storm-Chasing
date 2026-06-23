@@ -5,5 +5,6 @@ import { SupportedImageExtension } from "./Images/SupportedImageExtension";
 export interface ProfileImage {
     id: UUID,
     uid: User["uid"],
-    ext: SupportedImageExtension
+    ext: SupportedImageExtension,
+    uploadedAt: number
 }

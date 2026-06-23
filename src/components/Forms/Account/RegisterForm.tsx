@@ -68,13 +68,7 @@ export default function RegisterForm() {
                     customLabel="Select Profile Image"
                     selectedFileList={setSelectedFiles}
                     allowedTypes={AllowedMediaUploadTypes.SINGLE_IMAGE}
-                />
-
-                <input
-                    ref={filesInput}
-                    type="file"
-                    name="profileImage"
-                    hidden
+                    customInputName="profileImage"
                 />
 
                 <Col>
