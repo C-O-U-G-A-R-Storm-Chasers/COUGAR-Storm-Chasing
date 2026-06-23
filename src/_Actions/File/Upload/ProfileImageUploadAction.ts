@@ -8,7 +8,7 @@ import config from "../../../lib/cougar-config.json";
 import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
 import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
 import { safeUUID } from "@/lib/crypto/crypto";
-import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
+import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
 import { UUID } from "node:crypto";
 import { SupportedImageExtension } from "@/_Interfaces/Files/Images/SupportedImageExtension";
 import { insertProfileImage } from "@/lib/database/files/insertProfileImage";

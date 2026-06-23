@@ -1,6 +1,6 @@
 import { UUID } from "crypto";
-import { User } from "../Users/User";
-import { SupportedImageExtension } from "./Images/SupportedImageExtension";
+import { User } from "../../Users/User";
+import { SupportedImageExtension } from "./SupportedImageExtension";
 
 export interface ProfileImage {
     id: UUID,
