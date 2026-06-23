@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export default function MediaPageSidebarSection({ label, children }: { label?: string, children?: ReactNode }) {
     return (
         <Col className="w-full items-center gap-2">
-            { label && <p className="text-xs text-primary-1/75 font-semibold">{label}</p>}
+            { label && <p className="text-md text-primary-1/75 font-semibold">{label}</p>}
 
             <Col className="w-full gap-1">
                 {children}
