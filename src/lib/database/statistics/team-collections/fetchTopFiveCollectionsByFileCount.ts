@@ -1,13 +1,17 @@
 import { TeamCollection } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { getMongo } from "@/lib/mongo/getmongo";
-import { UUID } from "crypto";
 
-export async function fetchTopFiveCollectionsByFileCount(): Promise<TeamCollection["id"][]> {
+interface Result {
+    id: TeamCollection["id"],
+    title: TeamCollection["title"]
+}
+
+export async function fetchTopFiveCollectionsByFileCount(): Promise<Result[]> {
     const mongo = getMongo();
 
     const collections = await mongo.database
         .collection<TeamCollection>("team-collections")
-        .aggregate<{ id: UUID }>([
+        .aggregate<Result>([
             {
                 $addFields: {
                     fileCount: { $size: "$files" },
@@ -25,10 +29,16 @@ export async function fetchTopFiveCollectionsByFileCount(): Promise<TeamCollecti
                 $project: {
                     _id: 0,
                     id: 1,
+                    title: 1,
                 },
             },
         ])
         .toArray();
 
-    return collections.map(collection => collection.id);
+    return collections.map(collection => {
+        return {
+            id: collection.id,
+            title: collection.title
+        }
+    });
 }
