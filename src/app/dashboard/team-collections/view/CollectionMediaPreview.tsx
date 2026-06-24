@@ -1,11 +1,11 @@
 "use client";
-import { TeamMediaCollectionWithFullRecords } from "@/_Interfaces/Files/Media/TeamMediaCollection";
 import config from "../../../../lib/cougar-config.json";
 import Col from "@/components/Col";
 import Image from "next/image";
 import Row from "@/components/Row";
+import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 
-export default function CollectionMediaPreview({ fileRecords }: { fileRecords: TeamMediaCollectionWithFullRecords["files"]}) {
+export default function CollectionMediaPreview({ fileRecords }: { fileRecords: TeamCollectionWithFullRecords["files"]}) {
     const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
     const videosExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
 

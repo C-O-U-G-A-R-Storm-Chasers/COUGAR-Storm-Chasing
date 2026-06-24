@@ -1,24 +1,24 @@
 "use server";
 
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { TeamMediaCollectionWithFullRecords } from "@/_Interfaces/Files/Media/TeamMediaCollection";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import Row from "@/components/Row";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
-import { fetchAllTeamMediaCollections } from "@/lib/database/files/fetchAllTeamMediaCollections";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import { unixToUTC } from "@/lib/utils/unixToUTC";
 import CollectionMediaPreview from "./CollectionMediaPreview";
+import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
+import { fetchAllTeamCollections } from "@/lib/database/files/fetchAllTeamCollections";
 
-export default async function MediaViewPage() {
+export default async function TeamCollectionViewPage() {
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
 
     if (!success) return <ErrorMessage description={msg} />;
 
     await updateWebVisits();
 
-    const collections: TeamMediaCollectionWithFullRecords[] = await fetchAllTeamMediaCollections();
+    const collections: TeamCollectionWithFullRecords[] = await fetchAllTeamCollections();
 
     return (
         <Col className="w-full h-full items-center gap-2">

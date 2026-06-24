@@ -1,9 +1,9 @@
 import { User } from "@/_Interfaces/Users/User";
 import { DateString } from "@/_Types/DateString";
 import { UUID } from "crypto";
-import { FileRecord } from "../FileRecord";
+import { FileRecord } from "../Files/FileRecord";
 
-export interface TeamMediaCollection {
+export interface TeamCollection {
     id: UUID,
     uploader: User["uid"],
     uploadedAt: number,
@@ -13,6 +13,6 @@ export interface TeamMediaCollection {
     files: FileRecord["id"][],
 }
 
-export interface TeamMediaCollectionWithFullRecords extends Omit<TeamMediaCollection, "files"> {
+export interface TeamCollectionWithFullRecords extends Omit<TeamCollection, "files"> {
     files: FileRecord[],
 }

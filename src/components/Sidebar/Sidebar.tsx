@@ -44,9 +44,9 @@ export default function Sidebar() {
                     <p className="text-md text-primary-1">Storm Chases</p>
                 </SidebarButtonStandard>
 
-                <SidebarButtonStandard href="/dashboard/media">
+                <SidebarButtonStandard href="/dashboard/team-collections">
                     <VideoCameraIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Media</p>
+                    <p className="text-md text-primary-1">Collections</p>
                 </SidebarButtonStandard>
             </SidebarSection>
 

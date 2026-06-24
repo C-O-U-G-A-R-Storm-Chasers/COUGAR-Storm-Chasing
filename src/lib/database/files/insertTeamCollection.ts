@@ -1,11 +1,11 @@
-import { TeamMediaCollection } from "@/_Interfaces/Files/Media/TeamMediaCollection";
+import { TeamCollection } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function insertTeamMediaCollection(collection: TeamMediaCollection): Promise<TeamMediaCollection | null> {
+export async function insertTeamCollection(collection: TeamCollection): Promise<TeamCollection | null> {
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<TeamMediaCollection>("team-media-collections")
+        .collection<TeamCollection>("team-collections")
         .findOneAndUpdate(
             { id: collection.id },
             {

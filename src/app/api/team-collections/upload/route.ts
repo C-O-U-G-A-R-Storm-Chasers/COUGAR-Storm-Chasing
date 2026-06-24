@@ -1,40 +1,39 @@
 "use server";
 
-import { BasicResult } from "@/_Interfaces/BasicResult";
-import { FileRecord } from "@/_Interfaces/Files/FileRecord";
-import { redirect } from "next/navigation";
-import { TeamMediaFileUploadAction } from "./TeamMediaFileUploadAction";
-import { deleteTeamMediaFile } from "@/lib/database/files/deleteTeamMediaFile";
-import deleteFile from "@/lib/utils/media/deleteFile";
-import { TeamMediaCollection } from "@/_Interfaces/Files/Media/TeamMediaCollection";
-import { safeUUID } from "@/lib/crypto/crypto";
-import { UUID } from "crypto";
-import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { insertTeamMediaCollection } from "@/lib/database/files/insertTeamMediaCollection";
+import { FileRecord } from "@/_Interfaces/Files/FileRecord";
+import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
+import { safeUUID } from "@/lib/crypto/crypto";
+import deleteFile from "@/lib/utils/media/deleteFile";
+import { UUID } from "crypto";
+import { NextRequest, NextResponse } from "next/server";
+import { uploadTeamCollectionFile } from "./uploadTeamCollectionFile";
+import { TeamCollection } from "@/_Interfaces/TeamCollections/TeamCollection";
+import { insertTeamCollection } from "@/lib/database/files/insertTeamCollection";
+import { deleteTeamCollectionFile } from "@/lib/database/files/deleteTeamCollectionFile";
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export async function TeamMediaCollectionUploadAction(prevState: any, data: FormData): Promise<BasicResult<TeamMediaCollection | null> | void> {
+export async function POST(request: NextRequest) {
     let failureDetected = false;
     let failureMsg = "";
 
     const { success, msg, data: user } = await signinValidation(PermissionLevels.ADMIN);
         
-    if (!success || !user) return {
+    if (!success || !user) return NextResponse.json({
         success: false,
         msg: `The user is not signed in or doesn't have sufficient permissions to upload team collections!: ${msg}`
-    };
+    });
 
+    const data = await request.formData();
     const title = data.get("title") as string;
     const description = data.get("description") as string;
     const captureDate = data.get("capture-date") as string;
     const media = data.getAll("team-media") as File[] | null;
 
     // Abort if no media was uploaded (shouldn't happen)
-    if (!media) return {
+    if (!media) return NextResponse.json({
         success: false,
         msg: "There must be media included in the collection!"
-    };
+    });
 
     // Initialize to collect uploaded fileRecord IDs
     const collectedFileRecords: FileRecord[] = [];
@@ -45,7 +44,7 @@ export async function TeamMediaCollectionUploadAction(prevState: any, data: Form
     await Promise.all(files.map(async file => {
         if (failureDetected) return;
 
-        const { success, msg, data: fileRecord } = await TeamMediaFileUploadAction(file);
+        const { success, msg, data: fileRecord } = await uploadTeamCollectionFile(file);
 
         if (fileRecord) collectedFileRecords.push(fileRecord);
 
@@ -58,18 +57,18 @@ export async function TeamMediaCollectionUploadAction(prevState: any, data: Form
     }));
 
     // Upload the record
-    const collection: TeamMediaCollection = {
+    const collection: TeamCollection = {
         id: safeUUID() as UUID,
         uploader: user.uid,
         uploadedAt: Date.now(),
-        captureDate: captureDate as TeamMediaCollection["captureDate"],
+        captureDate: captureDate as TeamCollection["captureDate"],
         title,
         description,
         files: collectedFileRecords.map(record => record.id)
     };
 
     if (!failureDetected) {
-        const collectionInsertResult = await insertTeamMediaCollection(collection);
+        const collectionInsertResult = await insertTeamCollection(collection);
 
         if (!collectionInsertResult) {
             failureDetected = true;
@@ -80,15 +79,19 @@ export async function TeamMediaCollectionUploadAction(prevState: any, data: Form
     // Delete all files & records if any failures occur
     if (failureDetected) {
         await Promise.all(collectedFileRecords.map(async record => {
-            await deleteTeamMediaFile(record.id);
+            await deleteTeamCollectionFile(record.id);
             await deleteFile("/team_media", record.id + "." + record.ext);
         }));
 
-        return {
+        return NextResponse.json({
             success: false,
             msg: failureMsg
-        };
+        });
     }
 
-    if (!failureDetected) redirect("/dashboard/media/view");
+    if (!failureDetected) return NextResponse.json({
+        success: true,
+        msg: "Collection successfully submitted! Please wait...",
+        data: collection.id
+    });
 }

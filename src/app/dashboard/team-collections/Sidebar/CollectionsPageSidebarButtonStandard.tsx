@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
-export default function MediaPageSidebarButtonStandard({ children, href }: { children: ReactNode, href: string }) {
+export default function CollectionsPageSidebarButtonStandard({ children, href }: { children: ReactNode, href: string }) {
     const pathname = usePathname();
 
     return (

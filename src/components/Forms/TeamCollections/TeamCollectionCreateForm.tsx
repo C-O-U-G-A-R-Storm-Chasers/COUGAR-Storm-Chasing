@@ -1,30 +1,33 @@
 "use client";
 
-import { ChangeEvent, useActionState, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import Col from "@/components/Col";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Row from "@/components/Row";
-import config from "../../../../lib/cougar-config.json";
+import config from "../../../lib/cougar-config.json";
 import InputText from "@/components/Inputs/InputText";
 import InputTextarea from "@/components/Inputs/InputTextarea";
 import InputDate from "@/components/Inputs/InputDate";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import FormResetButton from "@/components/Buttons/FormResetButton";
-import { TeamMediaCollectionUploadAction } from "@/_Actions/File/Upload/TeamMediaCollectionUploadAction";
+import { BasicResult } from "@/_Interfaces/BasicResult";
+import SuccessMessage from "@/components/Messages/SuccessMessage";
+import { redirect } from "next/navigation";
 
-export default function TeamMediaCollectionUploadForm() {
+export default function TeamCollectionCreateForm() {
     const filesInput = useRef<HTMLInputElement>(null);
     const [selectedFiles, setSelectedFiles] = useState<FileList>();
-    const [serverState, action] = useActionState(TeamMediaCollectionUploadAction, {
-        success: false
-    });
-    const [error, setError] = useState<string | null>(null);
+    const [result, setResult] = useState<BasicResult | null>(null);
 
     useEffect(() => {
-        if (serverState) if (!serverState.success && serverState.msg) setError(serverState.msg);
-    }, [serverState]);
+        if (result?.success && result.data) {
+            const timeout = setTimeout(() => redirect(`/dashboard/team-collections/${result.data}`), 3000);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [result]);
 
     const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
         const media = e.target.files;
@@ -34,13 +37,26 @@ export default function TeamMediaCollectionUploadForm() {
         setSelectedFiles(media);
     };
 
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const response = await fetch("/api/team-collections/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        setResult(await response.json());
+    };
+
     const handleClick = () => filesInput.current?.click();
 
     const acceptedMimes = [...config.supported_image_mimes, config.supported_video_mimes].join(",");
 
     return (
         <form
-            action={action}
+            onSubmit={handleSubmit}
             className="
                 flex
                 flex-col
@@ -118,7 +134,15 @@ export default function TeamMediaCollectionUploadForm() {
                 </Col>
             </Col>
 
-            {error && <ErrorMessage description={error} />}
+            {
+                (result && !result.success) &&
+                <ErrorMessage description={result.msg ?? "Unknown result"} />
+            }
+
+            {
+                (result && result.success) &&
+                <SuccessMessage description={result.msg ?? "Unknown result"} />
+            }
 
             <Col className="w-full gap-2">
                 <Col>

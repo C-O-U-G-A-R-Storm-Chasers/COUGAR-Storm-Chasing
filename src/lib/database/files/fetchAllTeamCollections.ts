@@ -1,15 +1,15 @@
-import { TeamMediaCollection, TeamMediaCollectionWithFullRecords } from "@/_Interfaces/Files/Media/TeamMediaCollection";
+import { TeamCollection, TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function fetchAllTeamMediaCollections(): Promise<TeamMediaCollectionWithFullRecords[]> {
+export async function fetchAllTeamCollections(): Promise<TeamCollectionWithFullRecords[]> {
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<TeamMediaCollection>("team-media-collections")
-        .aggregate<TeamMediaCollectionWithFullRecords>([
+        .collection<TeamCollection>("team-collections")
+        .aggregate<TeamCollectionWithFullRecords>([
             {
                 $lookup: {
-                    from: "team-media-files",
+                    from: "team-collection-files",
                     localField: "files",
                     foreignField: "id",
                     as: "files",
