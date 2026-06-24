@@ -27,12 +27,12 @@ export default async function TeamCollectionViewByIDPage({ params }: { params: P
         <Col className="w-full gap-2">
             <Col className="w-full p-2 bg-cyan-400 text-primary-11 gap-2 rounded-md">
                 <Col>
-                    <p className="text-2xl">{collection.title}</p>
+                    <p className="text-5xl">{collection.title}</p>
                     <p className="text-xs text-primary-11/75 font-semibold">Capture Date: {collection.captureDate}</p>
                     <p className="text-xs text-primary-11/75 font-semibold">Uploaded: {unixToUTC(collection.uploadedAt)}</p>
                 </Col>
 
-                <p className="text-xs">{collection.description}</p>
+                <p className="text-md">{collection.description}</p>
             </Col>
 
             <Col className="items-center w-full p-2 bg-primary-7 gap-2 rounded-md">
