@@ -35,7 +35,7 @@ export default async function TeamCollectionViewPage() {
                     <Row key={collection.id}>
                         <Col className="w-3/8 p-2 bg-cyan-400 text-primary-11 rounded-tl-md rounded-bl-md gap-2">
                             <Col>
-                                <Link href={`/dashboard/team-collections/view/${collection.id}`} className="text-2xl hover:underline">{collection.title}</Link>
+                                <Link href={`/dashboard/team-collections/${collection.id}`} className="text-2xl hover:underline">{collection.title}</Link>
                                 <p className="text-xs text-primary-11/75 font-semibold">Capture Date: {collection.captureDate}</p>
                                 <p className="text-xs text-primary-11/75 font-semibold">Uploaded: {unixToUTC(collection.uploadedAt)}</p>
                             </Col>
