@@ -1,28 +1,18 @@
 "use server";
 
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { User } from "@/_Interfaces/Users/User";
+import { FileRecord } from "@/_Interfaces/Files/FileRecord";
+import { insertTeamMediaFile } from "@/lib/database/files/insertTeamMediaFile";
 import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
 import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
-import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
-import { insertProfileImage } from "@/lib/database/files/insertProfileImage";
 import uploadFile from "@/lib/utils/media/uploadFile";
-import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
 
-export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage | null>> {
-    const fileWriteResult = await uploadFile(selectedFile, "/profile_images");
-
+export async function TeamMediaFileUploadAction(file: File): Promise<BasicResult<FileRecord | null>> {
+    const fileWriteResult = await uploadFile(file, "/team_media");
+    
     if (!fileWriteResult.success || !fileWriteResult.data?.id || !fileWriteResult.data?.ext) return {
         success: fileWriteResult.success,
         msg: fileWriteResult.msg
-    };
-
-    // Configure the ProfileImage object
-    const profileImage: ProfileImage = {
-        id: fileWriteResult.data.id,
-        uid,
-        ext: fileWriteResult.data.ext as SupportedImageExtension,
-        uploadedAt: Date.now()
     };
 
     // Update web webStats
@@ -34,7 +24,7 @@ export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: F
     });
 
     // Write to database
-    const writeToDatabaseResult = await insertProfileImage(profileImage);
+    const writeToDatabaseResult = await insertTeamMediaFile(fileWriteResult.data);
 
     if (!writeToDatabaseResult) return {
         success: false,

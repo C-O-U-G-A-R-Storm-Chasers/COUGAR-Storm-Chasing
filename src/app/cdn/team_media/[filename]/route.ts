@@ -6,7 +6,7 @@ import { join } from "node:path";
 export async function GET(req: NextRequest, { params }: { params: Promise<{ filename: string }> }) {
     const { filename } = await params;
 
-    const rootLocation = process.env.NODE_ENV === "development" ? "F:/profile_images" : "/data/profile_images";
+    const rootLocation = process.env.NODE_ENV === "development" ? "F:/team_media" : "/data/team_media";
     const filePath = join(rootLocation, filename);
 
     if (process.env.NODE_ENV === "development") console.log("CDN FILE PATH:", filePath);

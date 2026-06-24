@@ -5,7 +5,7 @@ export async function insertProfileImage(profileImage: ProfileImage): Promise<Pr
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<ProfileImage>("files")
+        .collection<ProfileImage>("profile-images")
         .findOneAndUpdate(
             { uid: profileImage.uid },
             {

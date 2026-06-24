@@ -33,5 +33,22 @@
             "name": "Nicholas Parlmer",
             "primary_title": "Lead Atmospheric Analyst & Systems Engineer"
         }
-    }
+    },
+    "supported_image_mimes": [
+        "image/jpg",
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg",
+        "image/bmp"
+    ],
+    "supported_video_mimes": [
+        "video/mp4",
+        "video/mov",
+        "video/mkv",
+        "video/webm",
+        "video/avi",
+        "video/wmv"
+    ]
 }

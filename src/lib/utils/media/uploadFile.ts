@@ -1,0 +1,59 @@
+"use server";
+
+import { BasicResult } from "@/_Interfaces/BasicResult";
+import { FileRecord } from "@/_Interfaces/Files/FileRecord";
+import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
+import { SupportedVideoExtension } from "@/_Types/SupportedVideoExtension";
+import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
+import { safeUUID } from "@/lib/crypto/crypto";
+import { UUID } from "node:crypto";
+import { writeFile, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+
+export default async function uploadFile(file: File, location: string,): Promise<BasicResult<FileRecord | null>> {
+    const { success, msg, data: user } = await signinValidation();
+    
+    if (!success || !user) return {
+        success: false,
+        msg: `A technical error occurred. Error Code: File-0 [The user is not signed in]: ${msg}`
+    };
+
+    if (!file) return {
+        success: false,
+        msg: "A technical error occurred. Error Code: File-1 [No file was passed to uploader action]"
+    };
+
+    // Ensure dir exists
+    const dir = join(location);
+
+    await mkdir(dir, { recursive: true });
+
+    // Convert to buffer & write it
+    const ext = file.name.split(".").pop() as SupportedImageExtension | SupportedVideoExtension | null;
+
+    if (!ext) return {
+        success: false,
+        msg: "A technical error occurred. Error Code: File-2 [File extension could not be parsed]"
+    };
+    
+    const fileNameNoExt = safeUUID() as UUID;
+    const fileNameWithExt = fileNameNoExt + "." + ext;
+    const filePath = join(dir, fileNameWithExt);
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    await writeFile(filePath, buffer);
+
+    const record: FileRecord = {
+        id: fileNameNoExt,
+        uploader: user.uid,
+        uploadedAt: Date.now(),
+        ext
+    };
+
+    return {
+        success: true,
+        msg: "Successfully uploaded file",
+        data: record
+    };
+}

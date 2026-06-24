@@ -1,0 +1,164 @@
+"use client";
+
+import { ChangeEvent, useActionState, useEffect, useRef, useState } from "react";
+import Col from "@/components/Col";
+import { PaperClipIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Row from "@/components/Row";
+import config from "../../../../lib/cougar-config.json";
+import InputText from "@/components/Inputs/InputText";
+import InputTextarea from "@/components/Inputs/InputTextarea";
+import InputDate from "@/components/Inputs/InputDate";
+import ErrorMessage from "@/components/Messages/ErrorMessage";
+import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
+import FormResetButton from "@/components/Buttons/FormResetButton";
+import { TeamMediaCollectionUploadAction } from "@/_Actions/File/Upload/TeamMediaCollectionUploadAction";
+
+export default function TeamMediaCollectionUploadForm() {
+    const filesInput = useRef<HTMLInputElement>(null);
+    const [selectedFiles, setSelectedFiles] = useState<FileList>();
+    const [serverState, action] = useActionState(TeamMediaCollectionUploadAction, {
+        success: false
+    });
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (serverState) if (!serverState.success && serverState.msg) setError(serverState.msg);
+    }, [serverState]);
+
+    const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
+        const media = e.target.files;
+
+        if (!media) return;
+
+        setSelectedFiles(media);
+    };
+
+    const handleClick = () => filesInput.current?.click();
+
+    const acceptedMimes = [...config.supported_image_mimes, config.supported_video_mimes].join(",");
+
+    return (
+        <form
+            action={action}
+            className="
+                flex
+                flex-col
+                items-center
+                w-1/2
+                p-2
+
+                rounded-md
+                
+                gap-2
+            "
+        >
+            <Col className="items-center w-full">
+                <input
+                    ref={filesInput}
+                    type="file"
+                    name="team-media"
+                    accept={acceptedMimes}
+                    className="hidden"
+                    onChange={handleSelectedMedia}
+                    multiple
+                />
+
+                <Col
+                    className="
+                        items-center
+                        justify-center
+                        w-50
+                        h-50
+
+                        border-3
+                        border-dashed
+                        border-primary-1/50
+
+                        text-primary-1/50
+
+                        hover:border-primary-1
+                        hover:text-primary-1
+
+                        cursor-pointer
+
+                        rounded-4xl
+                    "
+                    onClick={handleClick}
+                >
+                    {
+                        (selectedFiles && selectedFiles.length > 0) ?
+                        <>
+                            <Image
+                                src={URL.createObjectURL(Array.from(selectedFiles)[0])}
+                                alt="Selected File"
+                                width={2048}
+                                height={2048}
+                                className="relative w-full h-full rounded-4xl"
+                                onClick={handleClick}
+                            />
+                            {
+                                selectedFiles.length > 1 &&
+                                <Row className="absolute items-center justify-center text-primary-1">
+                                    <p className="text-2xl">+{selectedFiles.length - 1} attachments</p>
+                                </Row>
+                            }
+                        </>
+                        :
+                        <>
+                            <PaperClipIcon className="w-8 h-8" />
+                            <p className="text-md">Select Media</p>
+                        </>
+                    }
+                </Col>
+
+                <Col className="items-center">
+                    <p className="text-md text-primary-1/75">Supported Filetypes:</p>
+                    <p className="text-xs text-primary-1/25">{acceptedMimes.replaceAll("image/", "").replaceAll("video/", "").replaceAll(",", ", ")}</p>
+                </Col>
+            </Col>
+
+            {error && <ErrorMessage description={error} />}
+
+            <Col className="w-full gap-2">
+                <Col>
+                    <label htmlFor="title" className="text-xs">Collection Title</label>
+                    <InputText
+                        name="title"
+                        id="title"
+                        placeholder="Storm Chase #1"
+                        required
+                    />
+                </Col>
+
+                <Col>
+                    <label htmlFor="capture-date" className="text-xs font-semibold">Date of Capture</label>
+                    <InputDate
+                        type="date"
+                        name="capture-date"
+                        id="capture-date"
+                        required
+                    />
+                </Col>
+
+                <Col>
+                    <label htmlFor="description" className="text-xs">Collection Description</label>
+                    <InputTextarea
+                        name="description"
+                        id="description"
+                        rows={10}
+                    />
+                </Col>
+
+                <Col>
+                    <FormSubmitButton>Submit Media Collection</FormSubmitButton>
+                </Col>
+
+                <Row>
+                    <FormResetButton />
+                </Row>
+            </Col>
+
+        </form>
+    );
+}
