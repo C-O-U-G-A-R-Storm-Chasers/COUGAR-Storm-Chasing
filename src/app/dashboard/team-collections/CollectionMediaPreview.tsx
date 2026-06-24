@@ -20,8 +20,6 @@ export default function CollectionMediaPreview({ fileRecords }: { fileRecords: T
                     const isImage = imageExtensions.includes(record.ext.toLowerCase());
                     const isVideo = videosExtensions.includes(record.ext.toLowerCase());
 
-                    console.log("isImage:", isImage, "isVideo:", isVideo);
-
                     if (isImage) return (
                         <Image
                             key={recordIndex}

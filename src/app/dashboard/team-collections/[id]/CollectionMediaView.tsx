@@ -16,8 +16,6 @@ export default function CollectionMediaView({ records }: { records: TeamCollecti
                     const isImage = imageExtensions.includes(record.ext.toLowerCase());
                     const isVideo = videosExtensions.includes(record.ext.toLowerCase());
 
-                    console.log("isImage:", isImage, "isVideo:", isVideo);
-
                     if (isImage) return (
                         <Link
                             key={recordIndex}
