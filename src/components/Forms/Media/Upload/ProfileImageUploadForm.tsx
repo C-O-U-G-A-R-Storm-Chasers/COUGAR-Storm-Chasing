@@ -5,6 +5,7 @@ import Col from "@/components/Col";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Row from "@/components/Row";
+import config from "../../../../lib/cougar-config.json";
 
 export enum AllowedMediaUploadTypes {
     SINGLE_IMAGE = 1,
@@ -59,6 +60,11 @@ export default function ProfileImageUploadForm(
         "Upload Videos" :
         "Upload Media";
 
+    const acceptedMimes = (allowedTypes === AllowedMediaUploadTypes.SINGLE_IMAGE || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_IMAGES) ?
+        config.supported_image_mimes.join(",") :
+    (allowedTypes === AllowedMediaUploadTypes.SINGLE_VIDEO || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_VIDEOS) ?
+        config.supported_video_mimes.join(",") : [...config.supported_image_mimes, config.supported_video_mimes].join(",");
+
     return (
         <Col
             className="
@@ -73,7 +79,7 @@ export default function ProfileImageUploadForm(
                     ref={filesInput}
                     type="file"
                     name={customInputName ?? "files"}
-                    accept="image/*,video/*"
+                    accept={acceptedMimes}
                     className="hidden"
                     onChange={handleSelectedMedia}
                     multiple={allowedTypes === AllowedMediaUploadTypes.MULTIPLE_IMAGES || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_VIDEOS || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_ANY}
