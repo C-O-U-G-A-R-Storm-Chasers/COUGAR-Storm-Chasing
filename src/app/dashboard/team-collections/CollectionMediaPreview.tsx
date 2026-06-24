@@ -1,5 +1,5 @@
 "use client";
-import config from "../../../../lib/cougar-config.json";
+import config from "../../../lib/cougar-config.json";
 import Col from "@/components/Col";
 import Image from "next/image";
 import Row from "@/components/Row";

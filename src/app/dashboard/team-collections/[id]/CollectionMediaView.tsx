@@ -1,5 +1,5 @@
 "use client";
-import config from "../../../../../lib/cougar-config.json";
+import config from "../../../../lib/cougar-config.json";
 import Image from "next/image";
 import Row from "@/components/Row";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";

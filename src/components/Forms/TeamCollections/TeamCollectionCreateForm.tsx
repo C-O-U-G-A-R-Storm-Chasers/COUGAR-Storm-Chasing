@@ -26,7 +26,7 @@ export default function TeamCollectionCreateForm() {
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
-            if (result?.success && result.data) redirect(`/dashboard/team-collections/view/${result.data}`);
+            if (result?.success && result.data) redirect(`/dashboard/team-collections/${result.data}`);
         }
     }, [result, uploading]);
 
