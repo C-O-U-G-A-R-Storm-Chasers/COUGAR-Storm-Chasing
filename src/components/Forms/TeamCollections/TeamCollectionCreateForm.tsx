@@ -15,19 +15,20 @@ import FormResetButton from "@/components/Buttons/FormResetButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
 import { redirect } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function TeamCollectionCreateForm() {
     const filesInput = useRef<HTMLInputElement>(null);
     const [selectedFiles, setSelectedFiles] = useState<FileList>();
+    const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
 
     useEffect(() => {
-        if (result?.success && result.data) {
-            const timeout = setTimeout(() => redirect(`/dashboard/team-collections/${result.data}`), 3000);
-
-            return () => clearTimeout(timeout);
+        // Form submitted & finished processing
+        if (uploading.submitted && !uploading.pending) {
+            if (result?.success && result.data) redirect(`/dashboard/team-collections/view/${result.data}`);
         }
-    }, [result]);
+    }, [result, uploading]);
 
     const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
         const media = e.target.files;
@@ -38,16 +39,21 @@ export default function TeamCollectionCreateForm() {
     };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        setUploading({ submitted: true, pending: true });
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
 
-        const response = await fetch("/api/team-collections/upload", {
-            method: "POST",
-            body: formData
-        });
+        try {
+            const response = await fetch("/api/team-collections/upload", {
+                method: "POST",
+                body: formData
+            });
 
-        setResult(await response.json());
+            setResult(await response.json());
+        } finally {
+            setUploading({ submitted: true, pending: false });
+        }
     };
 
     const handleClick = () => filesInput.current?.click();
@@ -135,11 +141,13 @@ export default function TeamCollectionCreateForm() {
             </Col>
 
             {
+                (uploading.submitted && !uploading.pending) &&
                 (result && !result.success) &&
                 <ErrorMessage description={result.msg ?? "Unknown result"} />
             }
 
             {
+                (uploading.submitted && !uploading.pending) &&
                 (result && result.success) &&
                 <SuccessMessage description={result.msg ?? "Unknown result"} />
             }
@@ -175,7 +183,11 @@ export default function TeamCollectionCreateForm() {
                 </Col>
 
                 <Col>
-                    <FormSubmitButton>Submit Media Collection</FormSubmitButton>
+                    {
+                        uploading.submitted && uploading.pending ?
+                            <LoadingSpinner loadingText="Submitting collection, please wait..." /> :
+                            <FormSubmitButton>Submit Collection</FormSubmitButton>
+                    }
                 </Col>
 
                 <Row>
