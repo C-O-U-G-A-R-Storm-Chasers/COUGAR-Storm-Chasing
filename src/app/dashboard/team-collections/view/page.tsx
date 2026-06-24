@@ -9,7 +9,7 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import { unixToUTC } from "@/lib/utils/unixToUTC";
 import CollectionMediaPreview from "./CollectionMediaPreview";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
-import { fetchAllTeamCollections } from "@/lib/database/files/fetchAllTeamCollections";
+import { fetchAllTeamCollections } from "@/lib/database/team-collections/fetchAllTeamCollections";
 
 export default async function TeamCollectionViewPage() {
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);

@@ -9,8 +9,8 @@ import { UUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { uploadTeamCollectionFile } from "./uploadTeamCollectionFile";
 import { TeamCollection } from "@/_Interfaces/TeamCollections/TeamCollection";
-import { insertTeamCollection } from "@/lib/database/files/insertTeamCollection";
-import { deleteTeamCollectionFile } from "@/lib/database/files/deleteTeamCollectionFile";
+import { insertTeamCollection } from "@/lib/database/team-collections/insertTeamCollection";
+import { deleteTeamCollectionFile } from "@/lib/database/team-collections/deleteTeamCollectionFile";
 
 export async function POST(request: NextRequest) {
     let failureDetected = false;
