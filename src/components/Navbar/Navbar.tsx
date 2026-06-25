@@ -10,9 +10,14 @@ import Link from "next/link";
 import config from "../../lib/cougar-config.json";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import UserNavButton from "./UserNavButton";
+import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
+import { safeUUID } from "@/lib/crypto/crypto";
+import { UUID } from "crypto";
 
 export default async function Navbar() {
     const { data: user } = await signinValidation();
+
+    const profileImage = await fetchUserProfileImage(user?.profileImage ?? safeUUID() as UUID);
 
     return (
         <Row
@@ -64,7 +69,7 @@ export default async function Navbar() {
                     {
                         user ?
                         <>
-                            <UserNavButton user={user} />
+                            <UserNavButton user={user} profileImage={profileImage} />
 
                             <NavbarButtonStandard href="/dashboard">
                                 <HomeModernIcon className="w-5 h-5 text-primary-1" />

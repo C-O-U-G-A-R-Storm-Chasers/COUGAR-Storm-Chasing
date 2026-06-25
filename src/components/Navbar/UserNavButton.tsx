@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Col from "../Col";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
 
-export default function UserNavButton({ user }: { user: User }) {
+export default function UserNavButton({ user, profileImage }: { user: User, profileImage: ProfileImage | null }) {
     return (
         <Link
             href={`/dashboard/account/${user.handle ?? user.uid}`}
@@ -24,10 +25,10 @@ export default function UserNavButton({ user }: { user: User }) {
             "
         >
             {
-                user.profileImage ?
+                profileImage ?
                 <Col className="items-center justify-center w-5 h-5 bg-teal-700 rounded-md">
                     <Image
-                        src={`/cdn/profile_images/${user.profileImage.id}.${user.profileImage.ext}`}
+                        src={`/cdn/profile_images/${profileImage.id}.${profileImage.ext}`}
                         alt={`${user.username}'s Profile Image`}
                         width={512}
                         height={512}
