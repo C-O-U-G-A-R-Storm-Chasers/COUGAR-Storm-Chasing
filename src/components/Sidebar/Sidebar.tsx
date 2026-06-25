@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserGroupIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
@@ -27,11 +27,6 @@ export default function Sidebar() {
                 <SidebarButtonStandard href="/dashboard">
                     <HomeIcon className="w-5 h-5 text-primary-1" />
                     <p className="text-md text-primary-1">Home</p>
-                </SidebarButtonStandard>
-
-                <SidebarButtonStandard href="/team">
-                    <UserGroupIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Our Team</p>
                 </SidebarButtonStandard>
 
                 <SidebarButtonStandard href="/dashboard/outlooks">

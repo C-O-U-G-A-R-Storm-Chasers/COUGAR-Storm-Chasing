@@ -4,7 +4,7 @@ import Image from "next/image";
 import Row from "../Row";
 import NavbarSection from "./NavbarSection";
 import NavbarButtonStandard from "./NavbarButtonStandard";
-import { HomeModernIcon } from "@heroicons/react/24/solid";
+import { HomeModernIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 import { ArrowRightEndOnRectangleIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import config from "../../lib/cougar-config.json";
@@ -63,6 +63,11 @@ export default async function Navbar() {
                         
                         <p className="text-sm">Cyclone Observation Unit for General Atmospheric Research</p>
                     </Link>
+
+                    <NavbarButtonStandard href="/team">
+                        <UserGroupIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs text-primary-1">Our Team</p>
+                    </NavbarButtonStandard>
                 </NavbarSection>
 
                 <NavbarSection>
