@@ -4,66 +4,24 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Col from "@/components/Col";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import Row from "@/components/Row";
 import config from "../../../../lib/cougar-config.json";
 
-export enum AllowedMediaUploadTypes {
-    SINGLE_IMAGE = 1,
-    MULTIPLE_IMAGES = 2,
-    SINGLE_VIDEO = 3,
-    MULTIPLE_VIDEOS = 4,
-    SINGLE_ANY = 5,
-    MULTIPLE_ANY = 6
-}
-
-export default function ProfileImageUploadForm(
-    {
-        allowedTypes,
-        selectedFileList,
-        customLabel,
-        customInputName,
-
-    }:
-    {
-        allowedTypes: AllowedMediaUploadTypes,
-        selectedFileList: (files: FileList) => void,
-        customLabel?: string,
-        customInputName?: string,
-    }
-) {
+export default function ProfileImageUploadForm({ defaultValue, setChanged }: { defaultValue: string | null, setChanged?: (changed: boolean) => void }) {
     const filesInput = useRef<HTMLInputElement>(null);
-    const [selectedFiles, setSelectedFiles] = useState<FileList>();
+    const [selectedFile, setSelectedFile] = useState<File>();
 
     useEffect(() => {
-        if (selectedFiles && selectedFiles.length > 0) selectedFileList(selectedFiles);
-    }, [selectedFileList, selectedFiles]);
+        if (setChanged && selectedFile) {
+            setChanged(true);
 
-    const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
-        const media = e.target.files;
+            if (process.env.NODE_ENV === "development") console.log("Profile image input changed!")
+        }
+        
+    }, [selectedFile, setChanged]);
 
-        if (!media) return;
-
-        setSelectedFiles(media);
-    };
+    const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => setSelectedFile(e.target.files?.[0]);
 
     const handleClick = () => filesInput.current?.click();
-
-    const label = customLabel ?
-        customLabel :
-    allowedTypes === AllowedMediaUploadTypes.SINGLE_IMAGE ?
-        "Upload Image" :
-    allowedTypes === AllowedMediaUploadTypes.MULTIPLE_IMAGES ?
-        "Upload Images" :
-    allowedTypes === AllowedMediaUploadTypes.SINGLE_VIDEO ?
-        "Upload Video" :
-    allowedTypes === AllowedMediaUploadTypes.MULTIPLE_VIDEOS ?
-        "Upload Videos" :
-        "Upload Media";
-
-    const acceptedMimes = (allowedTypes === AllowedMediaUploadTypes.SINGLE_IMAGE || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_IMAGES) ?
-        config.supported_image_mimes.join(",") :
-    (allowedTypes === AllowedMediaUploadTypes.SINGLE_VIDEO || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_VIDEOS) ?
-        config.supported_video_mimes.join(",") : [...config.supported_image_mimes, config.supported_video_mimes].join(",");
 
     return (
         <Col
@@ -78,11 +36,10 @@ export default function ProfileImageUploadForm(
                 <input
                     ref={filesInput}
                     type="file"
-                    name={customInputName ?? "files"}
-                    accept={acceptedMimes}
+                    name="profile-image"
+                    accept={config.supported_image_mimes.join(",")}
                     className="hidden"
                     onChange={handleSelectedMedia}
-                    multiple={allowedTypes === AllowedMediaUploadTypes.MULTIPLE_IMAGES || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_VIDEOS || allowedTypes === AllowedMediaUploadTypes.MULTIPLE_ANY}
                 />
 
                 <Col
@@ -106,31 +63,32 @@ export default function ProfileImageUploadForm(
                         rounded-4xl
                     "
                     onClick={handleClick}
-                    title={label}
+                    title="Select Profile Image"
                 >
                     {
-                        (selectedFiles && selectedFiles.length > 0) ?
-                        <>
-                            <Image
-                                src={URL.createObjectURL(Array.from(selectedFiles)[0])}
-                                alt="Selected File"
-                                width={2048}
-                                height={2048}
-                                className="relative w-full h-full rounded-4xl"
-                                onClick={handleClick}
-                                title={label}
-                            />
-                            {
-                                selectedFiles.length > 1 &&
-                                <Row className="absolute items-center justify-center text-primary-1">
-                                    <p className="text-2xl">+{selectedFiles.length - 1} attachments</p>
-                                </Row>
-                            }
-                        </>
+                        defaultValue && !selectedFile ?
+                        <Image
+                            src={defaultValue}
+                            alt="Current profile image"
+                            width={2048}
+                            height={2048}
+                            className="relative w-full h-full rounded-4xl"
+                            title="Select Profile Image"
+                        />
+                        :
+                        selectedFile ?
+                        <Image
+                            src={URL.createObjectURL(selectedFile)}
+                            alt="Selected File"
+                            width={2048}
+                            height={2048}
+                            className="relative w-full h-full rounded-4xl"
+                            title="Select Profile Image"
+                        />
                         :
                         <>
                             <PaperClipIcon className="w-8 h-8" />
-                            <p className="text-md">{label}</p>
+                            <p className="text-md">Select Profile Image</p>
                         </>
                     }
                 </Col>

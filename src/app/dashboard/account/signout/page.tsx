@@ -6,7 +6,7 @@ import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 
 export default async function SignoutPage() {
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success, msg } = await signinValidation(PermissionLevels.MEM);
     
     if (!success) return <ErrorMessage description={msg} />;
 

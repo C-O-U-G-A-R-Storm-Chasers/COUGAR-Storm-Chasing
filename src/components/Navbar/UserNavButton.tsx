@@ -9,7 +9,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 export default function UserNavButton({ user }: { user: User }) {
     return (
         <Link
-            href="/dashboard/account"
+            href={`/dashboard/account/${user.handle ?? user.uid}`}
             className="
                 flex
                 flex-row

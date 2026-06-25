@@ -13,7 +13,7 @@ import Link from "next/link";
 import CollectionMediaPreview from "./CollectionMediaPreview";
 
 export default async function TeamCollectionViewPage() {
-    const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
+    const { success, msg } = await signinValidation(PermissionLevels.MEM);
 
     if (!success) return <ErrorMessage description={msg} />;
 

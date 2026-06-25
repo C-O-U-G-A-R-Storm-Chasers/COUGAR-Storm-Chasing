@@ -4,14 +4,14 @@ import { getMongo } from "@/lib/mongo/getmongo";
 export async function insertUser(user: UserWithHashedPassword): Promise<User | null> {
     const mongo = getMongo();
 
-    const { password, created_timestamp, ...updateData } = user;
+    const { password, created_timestamp, email, ...updateData } = user;
 
     return await mongo.database
         .collection<UserWithHashedPassword>("users")
         .findOneAndUpdate(
             { uid: updateData.uid },
             {
-                $setOnInsert: { password, created_timestamp },
+                $setOnInsert: { password, created_timestamp, email },
                 $set: { ...updateData as User },
             },
             {

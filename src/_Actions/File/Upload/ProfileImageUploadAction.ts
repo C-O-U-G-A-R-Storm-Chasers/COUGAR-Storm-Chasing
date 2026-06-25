@@ -9,7 +9,7 @@ import { insertProfileImage } from "@/lib/database/files/insertProfileImage";
 import uploadFile from "@/lib/utils/media/uploadFile";
 import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
 
-export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage | null>> {
+export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage>> {
     const fileWriteResult = await uploadFile(selectedFile, "/profile_images");
 
     if (!fileWriteResult.success || !fileWriteResult.data?.id || !fileWriteResult.data?.ext) return {
@@ -36,13 +36,13 @@ export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: F
     // Write to database
     const writeToDatabaseResult = await insertProfileImage(profileImage);
 
-    if (!writeToDatabaseResult) return {
+    if (!writeToDatabaseResult.acknowledged || !writeToDatabaseResult.insertedId) return {
         success: false,
         msg: "A technical error occurred. Error Code: FileDB-3 [Unable to upload profile image record]"
     };
 
     return {
         success: true,
-        data: writeToDatabaseResult
+        data: profileImage
     };
 }

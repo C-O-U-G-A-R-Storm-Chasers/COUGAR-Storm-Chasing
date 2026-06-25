@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export async function SignoutAction(): Promise<BasicResult> {
     (await cookies()).delete("user");
 
-    redirect("/account/signin");
+    redirect("/dashboard/account/signin");
 
     return {
         success: true
