@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
         <Row className="w-full min-h-screen">
             <Sidebar />
             
-            <Col className="w-full text-primary-1">
+            <Col className="w-full text-primary-1 textured-background-1">
                 {children}
             </Col>
         </Row>
