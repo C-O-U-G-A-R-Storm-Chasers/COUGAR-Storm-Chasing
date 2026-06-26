@@ -4,6 +4,7 @@ import Image from "next/image";
 import Row from "@/components/Row";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import Link from "next/link";
+import { VideoCameraIcon } from "@heroicons/react/24/solid";
 
 export default function CollectionMediaView({ records }: { records: TeamCollectionWithFullRecords["files"]}) {
     const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
@@ -20,14 +21,9 @@ export default function CollectionMediaView({ records }: { records: TeamCollecti
                         <Link
                             key={recordIndex}
                             href={`/cdn/team_media/${record.id}.${record.ext}`}
-                            className="
-                                w-1/2
-                                aspect-square
-                                object-cover
-                            "
+                            className="w-1/2 aspect-square object-cover"
                         >
                             <Image
-                                
                                 src={`/cdn/team_media/${record.id}.${record.ext}`}
                                 alt={`Media ${record.id}`}
                                 width={2048}
@@ -38,14 +34,21 @@ export default function CollectionMediaView({ records }: { records: TeamCollecti
                     );
 
                     if (isVideo) return (
-                        <video
+                        <Link
                             key={recordIndex}
-                            playsInline
-                            className="max-w-1/2 aspect-square object-cover"
-                            controls
+                            href={`/cdn/team_media/${record.id}.${record.ext}`}
+                            className="relative w-1/2 aspect-square object-cover"
                         >
-                            <source src={`/cdn/team_media/${record.id}.${record.ext}`} type={`video/${record.ext}`} />
-                        </video>
+                            <Image
+                                src={`/cdn/team_media/${record.thumb.id}.${record.thumb.ext}`}
+                                alt={`Media ${record.id}`}
+                                width={2048}
+                                height={2048}
+                                className="w-full h-full object-cover"
+                            />
+
+                            <VideoCameraIcon className="absolute w-8 h-8 text-primary-1" />
+                        </Link>
                     );
                 })
             }
