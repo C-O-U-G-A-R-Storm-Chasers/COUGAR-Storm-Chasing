@@ -1,5 +1,6 @@
 "use server";
 
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import Col from "@/components/Col";
 import AccountDetailsForm from "@/components/Forms/Account/AccountDetailsForm";
 import ChangeAccountImageForm from "@/components/Forms/Account/ChangeAccountImageForm";
@@ -13,7 +14,7 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import { UUID } from "crypto";
 
 export default async function UserPage() {
-    const { success, msg, data: user } = await signinValidation();
+    const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
 
     if (!success || !user) return <ErrorMessage description={msg} />;
 

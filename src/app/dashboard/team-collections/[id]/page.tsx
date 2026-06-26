@@ -1,6 +1,5 @@
 "use server";
 
-import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
@@ -13,7 +12,7 @@ import CollectionMediaView from "./CollectionMediaView";
 export default async function TeamCollectionViewByIDPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     
-    const { success } = await signinValidation(PermissionLevels.MEM);
+    const { success } = await signinValidation();
 
     if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
 

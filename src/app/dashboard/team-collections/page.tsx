@@ -1,6 +1,5 @@
 "use server";
 
-import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import Row from "@/components/Row";
@@ -13,7 +12,7 @@ import Link from "next/link";
 import CollectionMediaPreview from "./CollectionMediaPreview";
 
 export default async function TeamCollectionViewPage() {
-    const { success, msg } = await signinValidation(PermissionLevels.MEM);
+    const { success, msg } = await signinValidation();
 
     if (!success) return <ErrorMessage description={msg} />;
 

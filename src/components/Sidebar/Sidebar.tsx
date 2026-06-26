@@ -1,11 +1,14 @@
-"use client";
+"use server";
 
 import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
+import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 
-export default function Sidebar() {
+export default async function Sidebar() {
+    const { data: user } = await signinValidation();
+
     return (
         <Col
             className="
@@ -45,12 +48,15 @@ export default function Sidebar() {
                 </SidebarButtonStandard>
             </SidebarSection>
 
-            <SidebarSection label="My Stuff">
-                <SidebarButtonStandard href="/dashboard/account">
-                    <UserIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">My Account</p>
-                </SidebarButtonStandard>
-            </SidebarSection>
+            {
+                user &&
+                <SidebarSection label="My Stuff">
+                    <SidebarButtonStandard href="/dashboard/account/edit">
+                        <UserIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-md text-primary-1">My Profile</p>
+                    </SidebarButtonStandard>
+                </SidebarSection>
+            }
         </Col>
     );
 }
