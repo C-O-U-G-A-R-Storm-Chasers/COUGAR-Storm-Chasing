@@ -1,14 +1,15 @@
 "use server";
 
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { FileRecord } from "@/_Interfaces/Files/FileRecord";
 import { insertTeamCollectionFile } from "@/lib/database/team-collections/insertTeamCollectionFile";
 import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
 import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
 import uploadFile from "@/lib/utils/media/uploadFile";
+import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
+import { insertThmbnail } from "@/lib/database/files/insertThumbnail";
 
-export async function uploadTeamCollectionFile(file: File): Promise<BasicResult<FileRecord | null>> {
-    const fileWriteResult = await uploadFile(file, "/team_media");
+export async function uploadTeamCollectionFile(file: File): Promise<BasicResult<CollectionFile | null>> {
+    const fileWriteResult = await uploadFile(file, "/team_media", { forceVideo: true });
     
     if (!fileWriteResult.success || !fileWriteResult.data?.id || !fileWriteResult.data?.ext) return {
         success: fileWriteResult.success,
@@ -28,7 +29,14 @@ export async function uploadTeamCollectionFile(file: File): Promise<BasicResult<
 
     if (!writeToDatabaseResult) return {
         success: false,
-        msg: "A technical error occurred. Error Code: FileDB-3 [Unable to upload profile image record]"
+        msg: "A technical error occurred. Error Code: FileDB-3 [Unable to upload collection file record]"
+    };
+
+    const writeThumbnailToDatabaseResult = await insertThmbnail(writeToDatabaseResult.thumb);
+
+    if (!writeThumbnailToDatabaseResult) return {
+        success: false,
+        msg: "A technical error occurred. Error Code: FileDB-4 [Unable to upload collection file thumbnail record]"
     };
 
     return {

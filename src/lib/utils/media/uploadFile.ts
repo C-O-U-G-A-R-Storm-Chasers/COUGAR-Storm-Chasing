@@ -9,8 +9,27 @@ import { safeUUID } from "@/lib/crypto/crypto";
 import { UUID } from "node:crypto";
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import config from "../../cougar-config.json";
+import { autoThumbnail } from "./autoThumbnail";
+import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
+import { Thumbnail } from "@/_Interfaces/Files/Thumbnails/Thumbnail";
 
-export default async function uploadFile(file: File, location: string,): Promise<BasicResult<FileRecord | null>> {
+export default async function uploadFile(
+    file: File,
+    location: string
+): Promise<BasicResult<FileRecord | null>>;
+
+export default async function uploadFile(
+    file: File,
+    location: string,
+    opts: { forceVideo: true }
+): Promise<BasicResult<CollectionFile | null>>;
+
+export default async function uploadFile(
+    file: File,
+    location: string,
+    opts?: { forceVideo?: boolean }
+): Promise<BasicResult<FileRecord | CollectionFile | null>> {
     const { success, msg, data: user } = await signinValidation();
     
     if (!success || !user) return {
@@ -44,12 +63,47 @@ export default async function uploadFile(file: File, location: string,): Promise
 
     await writeFile(filePath, buffer);
 
+    const currentTimestamp = Date.now();
+
     const record: FileRecord = {
         id: fileNameNoExt,
         uploader: user.uid,
-        uploadedAt: Date.now(),
+        uploadedAt: currentTimestamp,
         ext
     };
+
+    // Overload: If the file is a video, create a thumbnail for it
+    const videoExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
+    const isVideo = videoExtensions.includes(record.ext.toLowerCase());
+
+    if (isVideo || opts?.forceVideo) {
+        const thumbnailDir = join("/thumbnails");
+        const thumbnailExt = "png";
+        const thumbnailNameNoExt = safeUUID() as UUID;
+        const thumbnailNameWithExt = thumbnailNameNoExt + "." + thumbnailExt;
+        const thumbnailPath = join(thumbnailDir, thumbnailNameWithExt);
+
+        await autoThumbnail(filePath, thumbnailPath);
+
+        const thumb: Thumbnail = {
+            id: thumbnailNameNoExt,
+            uploader: user.uid,
+            uploadedAt: currentTimestamp,
+            ext: thumbnailExt as SupportedImageExtension
+        };
+
+        const videoRecord: CollectionFile = {
+            ...record,
+            ext: ext as SupportedVideoExtension,
+            thumb
+        };
+
+        return {
+            success: true,
+            msg: "Successfully uploaded video",
+            data: videoRecord
+        };
+    }
 
     return {
         success: true,

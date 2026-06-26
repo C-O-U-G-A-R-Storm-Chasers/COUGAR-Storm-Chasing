@@ -7,7 +7,7 @@ import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/Tea
 
 export default function CollectionMediaPreview({ fileRecords }: { fileRecords: TeamCollectionWithFullRecords["files"]}) {
     const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
-    const videosExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
+    const videoExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
 
     // Only select the first up-to-five records for previewing
     const records = fileRecords.slice(0, 5);
@@ -18,7 +18,7 @@ export default function CollectionMediaPreview({ fileRecords }: { fileRecords: T
             {
                 (records.length > 0) && records.map((record, recordIndex) => {
                     const isImage = imageExtensions.includes(record.ext.toLowerCase());
-                    const isVideo = videosExtensions.includes(record.ext.toLowerCase());
+                    const isVideo = videoExtensions.includes(record.ext.toLowerCase());
 
                     if (isImage) return (
                         <Image
