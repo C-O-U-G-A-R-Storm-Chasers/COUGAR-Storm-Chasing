@@ -12,6 +12,9 @@ export default function InputDate({ ...props }: & React.InputHTMLAttributes<HTML
                 border-slate-50/20
                 focus:border-slate-50
 
+                bg-neutral-100
+                text-neutral-950
+
                 text-md
                 rounded-sm
             "
