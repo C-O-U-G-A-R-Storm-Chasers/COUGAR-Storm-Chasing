@@ -7,7 +7,7 @@ import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/Tea
 import Link from "next/link";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
 
-export default function CollectionMediaPreview({ fileRecords }: { fileRecords: TeamCollectionWithFullRecords["files"]}) {
+export default function CollectionMediaPreview({ collectionID, fileRecords }: { collectionID: TeamCollectionWithFullRecords["id"], fileRecords: TeamCollectionWithFullRecords["files"]}) {
     const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
     const videoExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
 
@@ -78,10 +78,14 @@ export default function CollectionMediaPreview({ fileRecords }: { fileRecords: T
             }
             {
                 (remainingRecordCount > 0) &&
-                <Col className="items-center justify-center w-1/3 aspect-square bg-black">
+                <Link
+                    href={`/dashboard/team-collections/${collectionID}`}
+                    className="flex flex-col items-center justify-center w-1/3 aspect-square bg-black"
+                    title="View Entire Collection"
+                >
                     <p className="text-2xl">+{remainingRecordCount}</p>
                     <p className="text-xl">attachments</p>
-                </Col>
+                </Link>
             }
         </Row>
     );

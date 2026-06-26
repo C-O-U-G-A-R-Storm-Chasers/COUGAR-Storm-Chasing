@@ -43,7 +43,7 @@ export default async function TeamCollectionViewPage() {
                         </Col>
 
                         <Col className="w-5/8 bg-primary-7">
-                            <CollectionMediaPreview fileRecords={collection.files} />
+                            <CollectionMediaPreview collectionID={collection.id} fileRecords={collection.files} />
                         </Col>
                     </Row>
                 ))
