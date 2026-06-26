@@ -1,6 +1,6 @@
 "use server";
 
-import { BookmarkIcon, HomeIcon, PresentationChartLineIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ChartBarSquareIcon, PresentationChartLineIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
@@ -27,20 +27,25 @@ export default async function Sidebar() {
             "
         >
             <SidebarSection label="C.O.U.G.A.R.">
-                <SidebarButtonStandard href="/dashboard">
-                    <HomeIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Home</p>
-                </SidebarButtonStandard>
+                {
+                    user &&
+                    <>
+                        <SidebarButtonStandard href="/dashboard/statistics">
+                            <ChartBarSquareIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-md text-primary-1">Statistics</p>
+                        </SidebarButtonStandard>
 
-                <SidebarButtonStandard href="/dashboard/outlooks">
-                    <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Outlooks</p>
-                </SidebarButtonStandard>
+                        <SidebarButtonStandard href="/dashboard/outlooks">
+                            <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-md text-primary-1">Outlooks</p>
+                        </SidebarButtonStandard>
 
-                <SidebarButtonStandard href="/dashboard/chases">
-                    <BookmarkIcon className="w-5 h-5 text-primary-1" />
-                    <p className="text-md text-primary-1">Storm Chases</p>
-                </SidebarButtonStandard>
+                        <SidebarButtonStandard href="/dashboard/chases">
+                            <BookmarkIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-md text-primary-1">Storm Chases</p>
+                        </SidebarButtonStandard>
+                    </>
+                }
 
                 <SidebarButtonStandard href="/dashboard/team-collections">
                     <VideoCameraIcon className="w-5 h-5 text-primary-1" />

@@ -68,6 +68,11 @@ export default async function Navbar() {
                         <UserGroupIcon className="w-5 h-5 text-primary-1" />
                         <p className="text-xs text-primary-1">Our Team</p>
                     </NavbarButtonStandard>
+
+                    <NavbarButtonStandard href="/dashboard">
+                        <HomeModernIcon className="w-5 h-5 text-primary-1" />
+                        <p className="text-xs text-primary-1">{user ? "Dashboard" : "C.O.U.G.A.R."}</p>
+                    </NavbarButtonStandard>
                 </NavbarSection>
 
                 <NavbarSection>
@@ -75,11 +80,6 @@ export default async function Navbar() {
                         user ?
                         <>
                             <UserNavButton user={user} profileImage={profileImage} />
-
-                            <NavbarButtonStandard href="/dashboard">
-                                <HomeModernIcon className="w-5 h-5 text-primary-1" />
-                                <p className="text-xs text-primary-1">Dashboard</p>
-                            </NavbarButtonStandard>
 
                             <NavbarButtonStandard href="/dashboard/account/signout">
                                 <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-primary-1" />
