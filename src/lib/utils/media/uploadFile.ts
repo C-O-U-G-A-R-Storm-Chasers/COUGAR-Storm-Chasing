@@ -14,6 +14,11 @@ import { autoThumbnail } from "./autoThumbnail";
 import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { Thumbnail } from "@/_Interfaces/Files/Thumbnails/Thumbnail";
 
+interface UploadVideoFileReturn {
+    collectionFile: CollectionFile,
+    thumb: Thumbnail
+}
+
 export default async function uploadFile(
     file: File,
     location: string
@@ -23,13 +28,13 @@ export default async function uploadFile(
     file: File,
     location: string,
     opts: { forceVideo: true }
-): Promise<BasicResult<CollectionFile | null>>;
+): Promise<BasicResult<UploadVideoFileReturn | null>>;
 
 export default async function uploadFile(
     file: File,
     location: string,
     opts?: { forceVideo?: boolean }
-): Promise<BasicResult<FileRecord | CollectionFile | null>> {
+): Promise<BasicResult<FileRecord | UploadVideoFileReturn | null>> {
     const { success, msg, data: user } = await signinValidation();
     
     if (!success || !user) return {
@@ -79,11 +84,10 @@ export default async function uploadFile(
     if (isVideo || opts?.forceVideo) {
         const thumbnailDir = join("/thumbnails");
         const thumbnailExt = "png";
-        const thumbnailNameNoExt = safeUUID() as UUID;
+        const thumbnailNameNoExt = fileNameNoExt; // Ensure thumbnail shares parent's ID for easier matching and diag
         const thumbnailNameWithExt = thumbnailNameNoExt + "." + thumbnailExt;
-        const thumbnailPath = join(thumbnailDir, thumbnailNameWithExt);
 
-        await autoThumbnail(filePath, thumbnailPath);
+        await autoThumbnail(dir, fileNameWithExt, thumbnailDir, thumbnailNameWithExt);
 
         const thumb: Thumbnail = {
             id: thumbnailNameNoExt,
@@ -92,16 +96,16 @@ export default async function uploadFile(
             ext: thumbnailExt as SupportedImageExtension
         };
 
-        const videoRecord: CollectionFile = {
+        const collectionFile: CollectionFile = {
             ...record,
             ext: ext as SupportedVideoExtension,
-            thumb
+            thumb: thumb.id
         };
 
         return {
             success: true,
             msg: "Successfully uploaded video",
-            data: videoRecord
+            data: { collectionFile, thumb }
         };
     }
 
