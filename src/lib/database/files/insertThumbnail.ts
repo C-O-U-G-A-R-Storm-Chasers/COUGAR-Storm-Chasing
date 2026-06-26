@@ -5,6 +5,6 @@ export async function insertThumbnail(thumbnail: Thumbnail) {
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<Thumbnail>("profile-images")
+        .collection<Thumbnail>("thumbnails")
         .insertOne(thumbnail);
 }
