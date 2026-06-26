@@ -7,7 +7,7 @@ import config from "../lib/cougar-config.json";
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
     return (
-        <html lang="en" className="h-full bg-neutral-950 text-cyan-400">
+        <html lang="en" className="h-full bg-neutral-950 textured-background-1 text-cyan-400">
             <head>
                 <meta charSet="UTF-8" />
                 <link rel="shortcut icon" href={config["browser-tab-icon"]} type="image/x-icon"/>
