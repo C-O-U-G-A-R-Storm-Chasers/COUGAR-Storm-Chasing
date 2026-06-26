@@ -1,7 +1,7 @@
 import { User } from "@/_Interfaces/Users/User";
 import { DateString } from "@/_Types/DateString";
 import { UUID } from "crypto";
-import { FileRecord } from "../Files/FileRecord";
+import { CollectionFile } from "../Files/Collections/CollectionFile";
 
 export interface TeamCollection {
     id: UUID,
@@ -10,9 +10,9 @@ export interface TeamCollection {
     captureDate: DateString,
     title: string,
     description: string,
-    files: FileRecord["id"][],
+    files: CollectionFile["id"][],
 }
 
 export interface TeamCollectionWithFullRecords extends Omit<TeamCollection, "files"> {
-    files: FileRecord[],
+    files: CollectionFile[],
 }

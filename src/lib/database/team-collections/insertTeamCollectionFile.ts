@@ -1,11 +1,11 @@
-import { FileRecord } from "@/_Interfaces/Files/FileRecord";
+import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function insertTeamCollectionFile(fileRecord: FileRecord): Promise<FileRecord | null> {
+export async function insertTeamCollectionFile(fileRecord: CollectionFile): Promise<CollectionFile | null> {
     const mongo = getMongo();
 
     return await mongo.database
-        .collection<FileRecord>("team-collection-files")
+        .collection<CollectionFile>("team-collection-files")
         .findOneAndUpdate(
             { id: fileRecord.id },
             {
