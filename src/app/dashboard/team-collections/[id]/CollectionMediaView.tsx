@@ -5,6 +5,7 @@ import Row from "@/components/Row";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import Link from "next/link";
 import { VideoCameraIcon } from "@heroicons/react/24/solid";
+import Col from "@/components/Col";
 
 export default function CollectionMediaView({ records }: { records: TeamCollectionWithFullRecords["files"]}) {
     const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
@@ -40,14 +41,33 @@ export default function CollectionMediaView({ records }: { records: TeamCollecti
                             className="relative w-1/2 aspect-square object-cover"
                         >
                             <Image
-                                src={`/cdn/team_media/${record.thumb.id}.${record.thumb.ext}`}
+                                src={`/cdn/thumbnails/${record.thumb.id}.${record.thumb.ext}`}
                                 alt={`Media ${record.id}`}
                                 width={2048}
                                 height={2048}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full  object-cover"
                             />
 
-                            <VideoCameraIcon className="absolute w-8 h-8 text-primary-1" />
+                            <Col
+                                className="
+                                    absolute
+                                    justify-center
+                                    items-center
+                                    left-1/2
+                                    top-1/2
+                                    -translate-x-1/2
+                                    -translate-y-1/2
+                                    w-full
+                                    h-full
+
+                                    text-primary-1
+
+                                    bg-neutral-950/85
+                                "
+                            >
+                                <VideoCameraIcon className="w-10 p-1 border-1 border-primary-1 rounded-lg" />
+                                <p className="text-xl text-center">Click to view video</p>
+                            </Col>
                         </Link>
                     );
                 })
