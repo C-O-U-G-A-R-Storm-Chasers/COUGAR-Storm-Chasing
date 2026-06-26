@@ -1,7 +1,7 @@
 import { User } from "@/_Interfaces/Users/User";
 import { DateString } from "@/_Types/DateString";
 import { UUID } from "crypto";
-import { CollectionFile } from "../Files/Collections/CollectionFile";
+import { CollectionFile, CollectionFileWithFullThumbnails } from "../Files/Collections/CollectionFile";
 
 export interface TeamCollection {
     id: UUID,
@@ -14,5 +14,5 @@ export interface TeamCollection {
 }
 
 export interface TeamCollectionWithFullRecords extends Omit<TeamCollection, "files"> {
-    files: CollectionFile[],
+    files: CollectionFileWithFullThumbnails[],
 }

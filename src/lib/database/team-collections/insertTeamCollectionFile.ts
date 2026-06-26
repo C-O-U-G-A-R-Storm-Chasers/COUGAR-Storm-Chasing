@@ -1,21 +1,22 @@
 import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function insertTeamCollectionFile(fileRecord: CollectionFile): Promise<CollectionFile | null> {
+export async function insertTeamCollectionFile(collectionFile: CollectionFile): Promise<CollectionFile | null> {
     const mongo = getMongo();
 
     return await mongo.database
         .collection<CollectionFile>("team-collection-files")
         .findOneAndUpdate(
-            { id: fileRecord.id },
+            { id: collectionFile.id },
             {
                 $setOnInsert: { 
-                    uploader: fileRecord.uploader
+                    uploader: collectionFile.uploader
                 },
                 $set: {
-                    id: fileRecord.id,
-                    ext: fileRecord.ext,
-                    uploadedAt: fileRecord.uploadedAt
+                    id: collectionFile.id,
+                    ext: collectionFile.ext,
+                    uploadedAt: collectionFile.uploadedAt,
+                    thumb: collectionFile.thumb
                 },
             },
             {

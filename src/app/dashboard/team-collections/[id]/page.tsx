@@ -20,6 +20,15 @@ export default async function TeamCollectionViewByIDPage({ params }: { params: P
 
     const collection = await fetchTeamCollection(id as UUID);
 
+    if (process.env.NODE_ENV === "development") collection?.files.forEach((file, i) => {
+        console.log({
+            collection,
+            fileNumber: i,
+            file,
+            thumb: file.thumb
+        });
+    });
+
     if (!collection) return <ErrorMessage description={`No collection exists with ID ${id}`} />;
 
     return (
