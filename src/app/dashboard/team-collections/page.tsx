@@ -2,14 +2,16 @@
 
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
-import Row from "@/components/Row";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
-import { unixToUTC } from "@/lib/utils/unixToUTC";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { fetchAllTeamCollections } from "@/lib/database/team-collections/fetchAllTeamCollections";
-import Link from "next/link";
-import CollectionMediaPreview from "./CollectionMediaPreview";
+import PostCard from "@/components/Posts/PostCard";
+import PostCardHeader from "@/components/Posts/PostCardHeader";
+import { unixToDate } from "@/lib/utils/unixToDate";
+import PostCardBody from "@/components/Posts/PostCardBody";
+import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
+import Row from "@/components/Row";
 
 export default async function TeamCollectionViewPage() {
     const { success, msg } = await signinValidation();
@@ -21,7 +23,7 @@ export default async function TeamCollectionViewPage() {
     const collections: TeamCollectionWithFullRecords[] = await fetchAllTeamCollections();
 
     return (
-        <Col className="w-full h-full items-center gap-2">
+        <Row className="w-full h-full items-start flex-wrap gap-2">
             {
                 !collections || collections.length === 0 ?
                 <Col className="w-2/3 items-center text-center">
@@ -31,23 +33,24 @@ export default async function TeamCollectionViewPage() {
                 </Col>
                 :
                 collections.map(collection => (
-                    <Row key={collection.id}>
-                        <Col className="w-3/8 p-2 bg-cyan-400 text-primary-11 rounded-tl-md rounded-bl-md gap-2">
-                            <Col>
-                                <Link href={`/dashboard/team-collections/${collection.id}`} className="text-2xl hover:underline">{collection.title}</Link>
-                                <p className="text-xs text-primary-11/75 font-semibold">Capture Date: {collection.captureDate}</p>
-                                <p className="text-xs text-primary-11/75 font-semibold">Uploaded: {unixToUTC(collection.uploadedAt)}</p>
-                            </Col>
+                    <PostCard key={collection.id}>
+                        <PostCardHeader
+                            title={collection.title}
+                            timestamp={unixToDate(collection.uploadedAt)}
+                            postedByUID={collection.uploader}
+                        />
+                        
+                        <PostCardBody body={collection.description} />
 
-                            <p className="text-xs">{collection.description}</p>
-                        </Col>
-
-                        <Col className="w-5/8 bg-primary-7">
-                            <CollectionMediaPreview collectionID={collection.id} fileRecords={collection.files} />
-                        </Col>
-                    </Row>
+                        <PostCardMedia
+                            collectionMedia={{
+                                collectionID: collection.id,
+                                collectionFiles: collection.files
+                            }}
+                        />
+                    </PostCard>
                 ))
             }
-        </Col>
+        </Row>
     );
 }
