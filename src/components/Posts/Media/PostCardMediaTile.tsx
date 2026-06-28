@@ -12,20 +12,20 @@ export default function PostCardMediaTile(
         preview,
         isImage,
         remainingRecordCount,
-        finalWithRemaining,
+        finalTile,
     }:
     {
         collectionID: TeamCollectionWithFullRecords["id"],
         preview: MediaFilePreview,
         isImage: boolean,
         remainingRecordCount: number
-        finalWithRemaining?: boolean,
+        finalTile?: boolean,
     }
 ) {
     return (
         <Link
             href={`/dashboard/team-collections/${collectionID}`}
-            className={`${finalWithRemaining && "relative"} flex flex-col max-w-full aspect-square`}
+            className={`${finalTile && "relative"} flex flex-col max-w-full aspect-square`}
         >
             <Image
                 src={isImage ? `/cdn/team_media/${preview.id}.${preview.ext}` : `/cdn/thumbnails/${preview.id}.${preview.ext}`}
@@ -36,7 +36,7 @@ export default function PostCardMediaTile(
             />
 
             {
-                finalWithRemaining &&
+                finalTile &&
                 <Col className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full justify-center items-center bg-neutral-950/75">
                     <p className="text-2xl">+{remainingRecordCount}</p>
                     <p className="text-xl">attachments</p>

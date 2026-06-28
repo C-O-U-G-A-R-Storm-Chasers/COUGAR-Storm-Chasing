@@ -30,7 +30,7 @@ export default async function PostCardMedia(
         const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
 
         // Only select the first up-to-five records for previewing
-        const files = collectionMedia.collectionFiles.slice(0, 20);
+        const files = collectionMedia.collectionFiles.slice(0, 6);
         const remainingRecordCount = collectionMedia.collectionFiles.length - files.length;
 
         // Collect files as previews and assign an index
@@ -57,7 +57,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[0]}
                                 isImage={previews[0].isImage}
-                                remainingRecordCount={remainingRecordCount}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={false}
                             />
                         }
                     </Col>
@@ -69,7 +70,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[1]}
                                 isImage={previews[1].isImage}
-                                remainingRecordCount={remainingRecordCount}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={false}
                             />
                         }
                         {
@@ -78,7 +80,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[2]}
                                 isImage={previews[2].isImage}
-                                remainingRecordCount={remainingRecordCount}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={false}
                             />
                         }
                     </Col>
@@ -92,7 +95,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[3]}
                                 isImage={previews[3].isImage}
-                                remainingRecordCount={remainingRecordCount}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={false}
                             />
                         }
                         {
@@ -101,7 +105,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[4]}
                                 isImage={previews[4].isImage}
-                                remainingRecordCount={remainingRecordCount}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={false}
                             />
                         }
                     </Col>
@@ -113,8 +118,8 @@ export default async function PostCardMedia(
                                 collectionID={collectionMedia.collectionID}
                                 preview={previews[5]}
                                 isImage={previews[5].isImage}
-                                remainingRecordCount={remainingRecordCount}
-                                finalWithRemaining={remainingRecordCount > 0}
+                                remainingRecordCount={remainingRecordCount + 1}
+                                finalTile={previews.length === 6}
                             />
                         }
                     </Col>
