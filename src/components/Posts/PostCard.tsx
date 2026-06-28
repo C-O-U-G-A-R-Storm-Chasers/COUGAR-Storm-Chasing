@@ -7,9 +7,8 @@ export default async function PostCard({ children }: { children: ReactNode }) {
     return (
         <Col
             className="
-                w-full
-                min-w-100
-                max-w-120
+                w-3/10
+                max-w-140
                 p-1
                 px-2
                 
