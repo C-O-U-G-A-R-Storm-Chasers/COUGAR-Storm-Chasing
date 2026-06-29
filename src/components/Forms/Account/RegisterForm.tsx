@@ -35,7 +35,7 @@ export default function RegisterForm() {
         const formData = new FormData(e.currentTarget);
 
         try {
-            const response = await fetch("/api/users/edit-account", {
+            const response = await fetch("/api/users/register", {
                 method: "POST",
                 body: formData
             });
