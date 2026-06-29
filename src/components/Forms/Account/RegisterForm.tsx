@@ -66,18 +66,6 @@ export default function RegisterForm() {
             <p className="text-xs">Already have an account? <Link href="/dashboard/account/signin" className="underline">Sign in instead</Link>.</p>
 
             <Col className="w-full gap-2">
-
-                {
-                    (uploading.submitted && !uploading.pending) &&
-                    (result && !result.success) &&
-                    <ErrorMessage description={result.msg ?? "Unknown result"} />
-                }
-    
-                {
-                    (uploading.submitted && !uploading.pending) &&
-                    (result && result.success) &&
-                    <SuccessMessage description={result.msg ?? "Unknown result"} />
-                }
                 
                 <ProfileImageUploadForm defaultValue={null} />
 
@@ -144,6 +132,18 @@ export default function RegisterForm() {
                         required
                     />
                 </Col>
+                
+                {
+                    (uploading.submitted && !uploading.pending) &&
+                    (result && !result.success) &&
+                    <ErrorMessage description={result.msg ?? "Unknown result"} />
+                }
+    
+                {
+                    (uploading.submitted && !uploading.pending) &&
+                    (result && result.success) &&
+                    <SuccessMessage description={result.msg ?? "Unknown result"} />
+                }
 
                 <Col className="w-full">
                     {
