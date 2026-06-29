@@ -1,3 +1,4 @@
+import getRootPath from "@/lib/utils/getRootPath";
 import mime from "mime";
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, readFileSync } from "node:fs";
@@ -6,8 +7,8 @@ import { join } from "node:path";
 export async function GET(req: NextRequest, { params }: { params: Promise<{ filename: string }> }) {
     const { filename } = await params;
 
-    const rootLocation = process.env.NODE_ENV === "development" ? "F:/team_media" : "/data/team_media";
-    const filePath = join(rootLocation, filename);
+    const rootPath = getRootPath();
+    const filePath = join(rootPath, filename);
 
     if (process.env.NODE_ENV === "development") console.log("CDN FILE PATH:", filePath);
 
