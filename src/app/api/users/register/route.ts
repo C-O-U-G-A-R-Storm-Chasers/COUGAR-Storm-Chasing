@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
         data: null
     });
 
-    NextResponse.json({
+    return NextResponse.json({
         success: true,
         msg: "Account successfully created! Please wait..."
     });
