@@ -4,10 +4,11 @@ import { spawn } from "child_process";
 import { existsSync } from "fs";
 import { mkdir } from "fs/promises";
 import { join } from "path";
+import getRootPath from "../getRootPath";
 
 export async function autoThumbnail(inputPathWithoutFile: string, inputFileNameWithExt: string, outputPathWithoutFile: string, outputFileNameWithExt: string): Promise<void> {
     // Get root path based on environment
-    const rootPath = process.env.NODE_ENV === "development" ? "F:/" : "/data/";
+    const rootPath = getRootPath();
     const fullInputPathWithoutFile = join(rootPath, inputPathWithoutFile);
     const fullOutputPathWithoutFile = join(rootPath, outputPathWithoutFile);
     const fullInputPath = join(fullInputPathWithoutFile, inputFileNameWithExt);

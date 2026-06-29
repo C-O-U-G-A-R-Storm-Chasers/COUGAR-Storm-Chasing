@@ -9,7 +9,7 @@ import { hashPass } from "@/lib/auth/hashPass";
 import { safeUUID } from "@/lib/crypto/crypto";
 import { UUID } from "crypto";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { processProfileImage } from "../edit-account/image/processProfileImage";
+import { processProfileImage } from "../processProfileImage";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();

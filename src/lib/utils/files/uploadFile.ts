@@ -13,6 +13,7 @@ import config from "../../cougar-config.json";
 import { autoThumbnail } from "./autoThumbnail";
 import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { Thumbnail } from "@/_Interfaces/Files/Thumbnails/Thumbnail";
+import getRootPath from "../getRootPath";
 
 interface UploadVideoFileReturn {
     collectionFile: CollectionFile,
@@ -48,7 +49,8 @@ export default async function uploadFile(
     };
 
     // Ensure dir exists
-    const dir = join(location);
+    const rootPath = getRootPath();
+    const dir = join(rootPath, location);
 
     await mkdir(dir, { recursive: true });
 
@@ -82,7 +84,7 @@ export default async function uploadFile(
     const isVideo = videoExtensions.includes(record.ext.toLowerCase());
 
     if (isVideo || opts?.forceVideo) {
-        const thumbnailDir = join("/thumbnails");
+        const thumbnailDir = join(rootPath, "/thumbnails");
         const thumbnailExt = "png";
         const thumbnailNameNoExt = fileNameNoExt; // Ensure thumbnail shares parent's ID for easier matching and diag
         const thumbnailNameWithExt = thumbnailNameNoExt + "." + thumbnailExt;

@@ -7,7 +7,7 @@ import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import { insertUser } from "@/lib/database/users/insertUser";
 import { cookies } from "next/headers";
-import { processProfileImage } from "./processProfileImage";
+import { processProfileImage } from "../../processProfileImage";
 
 export async function POST(request: NextRequest) {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);

@@ -2,9 +2,9 @@
 
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import { insertTeamCollectionFile } from "@/lib/database/team-collections/insertTeamCollectionFile";
-import uploadFile from "@/lib/utils/media/uploadFile";
 import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { insertThumbnail } from "@/lib/database/files/insertThumbnail";
+import uploadFile from "@/lib/utils/files/uploadFile";
 
 export async function uploadTeamCollectionFile(file: File): Promise<BasicResult<CollectionFile | null>> {
     // Write the video file itself
