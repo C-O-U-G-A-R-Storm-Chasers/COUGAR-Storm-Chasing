@@ -24,7 +24,12 @@ export default function RegisterForm() {
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
-            if (result?.success && result.data) redirect("/dashboard/account/signin");
+            if (result?.success) {
+                // Add delay so it's not so abrupt
+                const timeout = setTimeout(redirect("/dashboard/account/signin"), 3000);
+
+                return () => clearTimeout(timeout);
+            }
         }
     }, [result, uploading]);
 
