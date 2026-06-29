@@ -111,11 +111,13 @@ export default async function uploadFile(
     const videoExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
     const isVideo = videoExtensions.includes(record.ext.toLowerCase());
 
-    if (isVideo && (opts?.userRegistrationMode && opts?.uid) && user) {
+    if (isVideo && (!opts?.userRegistrationMode && !opts?.uid) && user) {
         const thumbnailDir = join(rootPath, "/thumbnails");
         const thumbnailExt = "png";
         const thumbnailNameNoExt = fileNameNoExt; // Ensure thumbnail shares parent's ID for easier matching and diag
         const thumbnailNameWithExt = thumbnailNameNoExt + "." + thumbnailExt;
+
+        console.log("DIRS:", dir, fileNameWithExt, thumbnailDir, thumbnailNameWithExt)
 
         await autoThumbnail(dir, fileNameWithExt, thumbnailDir, thumbnailNameWithExt);
 
