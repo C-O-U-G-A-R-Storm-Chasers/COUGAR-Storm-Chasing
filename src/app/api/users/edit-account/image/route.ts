@@ -3,11 +3,11 @@
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { NextRequest, NextResponse } from "next/server";
-import { ProfileImageUploadAction } from "@/_Actions/File/Upload/ProfileImageUploadAction";
 import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import { insertUser } from "@/lib/database/users/insertUser";
 import { cookies } from "next/headers";
+import { processProfileImage } from "../../processProfileImage";
 
 export async function POST(request: NextRequest) {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Upload profile image
-    const profileImageResult = await ProfileImageUploadAction(user.uid, profileImage);
+    const profileImageResult = await processProfileImage(user.uid, profileImage);
 
     if (!profileImageResult.success || !profileImageResult.data) return NextResponse.json({
         success: false,

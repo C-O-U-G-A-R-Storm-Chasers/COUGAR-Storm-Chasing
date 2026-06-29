@@ -6,11 +6,11 @@ import { fetchWebStats } from "@/lib/database/statistics/fetchWebStats";
 import { updateWebStats } from "@/lib/database/statistics/updateWebStats";
 import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
 import { insertProfileImage } from "@/lib/database/files/insertProfileImage";
-import uploadFile from "@/lib/utils/media/uploadFile";
 import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
+import uploadFile from "@/lib/utils/files/uploadFile";
 
-export async function ProfileImageUploadAction(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage>> {
-    const fileWriteResult = await uploadFile(selectedFile, "/profile_images");
+export async function processProfileImage(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage>> {
+    const fileWriteResult = await uploadFile(selectedFile, "/profile_images", { userRegistrationMode: true, uid });
 
     if (!fileWriteResult.success || !fileWriteResult.data?.id || !fileWriteResult.data?.ext) return {
         success: fileWriteResult.success,

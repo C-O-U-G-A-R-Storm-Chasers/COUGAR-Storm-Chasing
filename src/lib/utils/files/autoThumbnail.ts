@@ -7,14 +7,12 @@ import { join } from "path";
 
 export async function autoThumbnail(inputPathWithoutFile: string, inputFileNameWithExt: string, outputPathWithoutFile: string, outputFileNameWithExt: string): Promise<void> {
     // Get root path based on environment
-    const rootPath = process.env.NODE_ENV === "development" ? "F:/" : "/data/";
-    const fullInputPathWithoutFile = join(rootPath, inputPathWithoutFile);
-    const fullOutputPathWithoutFile = join(rootPath, outputPathWithoutFile);
+    const fullInputPathWithoutFile = join(inputPathWithoutFile);
+    const fullOutputPathWithoutFile = join(outputPathWithoutFile);
     const fullInputPath = join(fullInputPathWithoutFile, inputFileNameWithExt);
     const fullOutputPath = join(fullOutputPathWithoutFile, outputFileNameWithExt);
 
     const debug = {
-        rootPath,
         fullInputPathWithoutFile,
         fullOutputPathWithoutFile,
         fullInputPath,

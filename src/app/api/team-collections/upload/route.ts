@@ -4,13 +4,13 @@ import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { FileRecord } from "@/_Interfaces/Files/FileRecord";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { safeUUID } from "@/lib/crypto/crypto";
-import deleteFile from "@/lib/utils/media/deleteFile";
 import { UUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { uploadTeamCollectionFile } from "./uploadTeamCollectionFile";
 import { TeamCollection } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { insertTeamCollection } from "@/lib/database/team-collections/insertTeamCollection";
 import { deleteTeamCollectionFile } from "@/lib/database/team-collections/deleteTeamCollectionFile";
+import deleteFile from "@/lib/utils/files/deleteFile";
 
 export async function POST(request: NextRequest) {
     let failureDetected = false;

@@ -13,6 +13,9 @@ import config from "../../cougar-config.json";
 import { autoThumbnail } from "./autoThumbnail";
 import { CollectionFile } from "@/_Interfaces/Files/Collections/CollectionFile";
 import { Thumbnail } from "@/_Interfaces/Files/Thumbnails/Thumbnail";
+import getRootPath from "../getRootPath";
+import { User } from "@/_Interfaces/Users/User";
+import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
 
 interface UploadVideoFileReturn {
     collectionFile: CollectionFile,
@@ -27,20 +30,38 @@ export default async function uploadFile(
 export default async function uploadFile(
     file: File,
     location: string,
-    opts: { forceVideo: true }
+    opts?: {
+        userRegistrationMode: true,
+        uid: User["uid"]
+    }
+): Promise<BasicResult<ProfileImage | null>>;
+
+export default async function uploadFile(
+    file: File,
+    location: string,
+    opts?: { forceVideo: true }
 ): Promise<BasicResult<UploadVideoFileReturn | null>>;
 
 export default async function uploadFile(
     file: File,
     location: string,
-    opts?: { forceVideo?: boolean }
-): Promise<BasicResult<FileRecord | UploadVideoFileReturn | null>> {
-    const { success, msg, data: user } = await signinValidation();
+    opts?: {
+        userRegistrationMode?: true,
+        uid?: User["uid"]
+        forceVideo?: boolean
+    }
+): Promise<BasicResult<FileRecord | UploadVideoFileReturn | ProfileImage | null>> {
+    // Only bypass authentification if options say so
+    let user = null;
+    if (!opts?.userRegistrationMode && !opts?.uid) {
+        const { success, msg, data } = await signinValidation();
+        user = data;
     
-    if (!success || !user) return {
-        success: false,
-        msg: `A technical error occurred. Error Code: File-0 [The user is not signed in]: ${msg}`
-    };
+        if (!success || !user) return {
+            success: false,
+            msg: `A technical error occurred. Error Code: File-0 [The user is not signed in]: ${msg}`
+        };
+    }
 
     if (!file) return {
         success: false,
@@ -48,7 +69,8 @@ export default async function uploadFile(
     };
 
     // Ensure dir exists
-    const dir = join(location);
+    const rootPath = getRootPath();
+    const dir = join(rootPath, location);
 
     await mkdir(dir, { recursive: true });
 
@@ -70,22 +92,32 @@ export default async function uploadFile(
 
     const currentTimestamp = Date.now();
 
-    const record: FileRecord = {
+    let record = {} as FileRecord | ProfileImage;
+
+    if ((!opts?.userRegistrationMode && !opts?.uid) && user) record = {
         id: fileNameNoExt,
         uploader: user.uid,
         uploadedAt: currentTimestamp,
         ext
-    };
+    } as FileRecord;
 
-    // Overload: If the file is a video, create a thumbnail for it
+    if ((opts?.userRegistrationMode && opts?.uid) && !user) record = {
+        id: fileNameNoExt,
+        uid: opts.uid,
+        uploadedAt: currentTimestamp,
+        ext
+    } as ProfileImage;
+
     const videoExtensions = config.supported_video_mimes.map(mime => mime.replace("video/", ""));
     const isVideo = videoExtensions.includes(record.ext.toLowerCase());
 
-    if (isVideo || opts?.forceVideo) {
-        const thumbnailDir = join("/thumbnails");
+    if (isVideo && (!opts?.userRegistrationMode && !opts?.uid) && user) {
+        const thumbnailDir = join(rootPath, "/thumbnails");
         const thumbnailExt = "png";
         const thumbnailNameNoExt = fileNameNoExt; // Ensure thumbnail shares parent's ID for easier matching and diag
         const thumbnailNameWithExt = thumbnailNameNoExt + "." + thumbnailExt;
+
+        console.log("DIRS:", dir, fileNameWithExt, thumbnailDir, thumbnailNameWithExt)
 
         await autoThumbnail(dir, fileNameWithExt, thumbnailDir, thumbnailNameWithExt);
 
@@ -97,7 +129,7 @@ export default async function uploadFile(
         };
 
         const collectionFile: CollectionFile = {
-            ...record,
+            ...record as FileRecord,
             ext: ext as SupportedVideoExtension,
             thumb: thumb.id
         };

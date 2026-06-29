@@ -1,27 +1,62 @@
+import getRootPath from "@/lib/utils/getRootPath";
 import mime from "mime";
 import { NextRequest, NextResponse } from "next/server";
-import { existsSync, readFileSync } from "node:fs";
+import { createReadStream, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ filename: string }> }) {
     const { filename } = await params;
 
-    const rootLocation = process.env.NODE_ENV === "development" ? "F:/team_media" : "/data/team_media";
-    const filePath = join(rootLocation, filename);
+    const rootPath = getRootPath();
+    const filePath = join(rootPath, "team_media", filename);
 
-    if (process.env.NODE_ENV === "development") console.log("CDN FILE PATH:", filePath);
+    if (!existsSync(filePath)) {
+        return new NextResponse("Not found", { status: 404 });
+    }
 
-    if (!existsSync(filePath)) return new NextResponse("Not found", { status: 404 });
+    const stat = statSync(filePath);
+    const fileSize = stat.size;
+    const contentType =
+        mime.getType(filePath) ?? "application/octet-stream";
 
-    const buffer = await readFileSync(filePath);
+    const range = req.headers.get("range");
 
-    return new NextResponse(
-        buffer,
-        {
+    if (range) {
+        const parts = range.replace(/bytes=/, "").split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parts[1]
+            ? parseInt(parts[1], 10)
+            : fileSize - 1;
+
+        const chunkSize = end - start + 1;
+
+        const stream = createReadStream(filePath, {
+            start,
+            end,
+        });
+
+        return new NextResponse(stream as any, { /* eslint-disable-line @typescript-eslint/no-explicit-any */
+            status: 206,
             headers: {
-                "Content-Type": mime.getType(filePath) ?? "application/octet-stream",
-                "Cache-Control": "public, max-age=31536000, immutable",
+                "Content-Type": contentType,
+                "Accept-Ranges": "bytes",
+                "Content-Length": chunkSize.toString(),
+                "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+                "Cache-Control":
+                    "public, max-age=31536000, immutable",
             },
-        }
-    );
+        });
+    }
+
+    const stream = createReadStream(filePath);
+
+    return new NextResponse(stream as any, { /* eslint-disable-line @typescript-eslint/no-explicit-any */
+        headers: {
+            "Content-Type": contentType,
+            "Content-Length": fileSize.toString(),
+            "Accept-Ranges": "bytes",
+            "Cache-Control":
+                "public, max-age=31536000, immutable",
+        },
+    });
 }
