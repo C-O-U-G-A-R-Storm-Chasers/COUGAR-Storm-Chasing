@@ -5,6 +5,7 @@ import { MediaFilePreview } from "./PostCardMedia";
 import Image from "next/image";
 import Col from "@/components/Col";
 import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
+import { VideoCameraIcon } from "@heroicons/react/24/outline";
 
 export default function PostCardMediaTile(
     {
@@ -25,7 +26,7 @@ export default function PostCardMediaTile(
     return (
         <Link
             href={`/dashboard/team-collections/${collectionID}`}
-            className={`${finalTile && "relative"} flex flex-col max-w-full aspect-square`}
+            className={`${(finalTile || !isImage) && "relative"} flex flex-col max-w-full aspect-square`}
         >
             <Image
                 src={isImage ? `/cdn/team_media/${preview.id}.${preview.ext}` : `/cdn/thumbnails/${preview.id}.${preview.ext}`}
@@ -34,6 +35,29 @@ export default function PostCardMediaTile(
                 height={2048}
                 className="w-full h-full object-cover"
             />
+
+            {
+                !isImage &&
+                <Col
+                    className="
+                        absolute
+                        justify-center
+                        items-center
+                        left-1/2
+                        top-1/2
+                        -translate-x-1/2
+                        -translate-y-1/2
+                        w-full
+                        h-full
+
+                        text-primary-1
+
+                        bg-neutral-950/75
+                    "
+                >
+                    <VideoCameraIcon className="w-1/6 p-1 border-1 border-primary-1 rounded-lg" />
+                </Col>
+            }
 
             {
                 finalTile &&
