@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ file
     const { filename } = await params;
 
     const rootPath = getRootPath();
-    const filePath = join(rootPath, filename);
+    const filePath = join(rootPath, "profile_images", filename);
 
     if (process.env.NODE_ENV === "development") console.log("CDN FILE PATH:", filePath);
 
