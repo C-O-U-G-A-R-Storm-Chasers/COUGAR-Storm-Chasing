@@ -1,7 +1,6 @@
 "use client";
 
-import { NewUserAction } from "@/_Actions/Users/RegisterAction";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { FormEvent,  useEffect,  useState } from "react";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InputTextMain from "@/components/Inputs/InputText";
 import InputPasswordMain from "@/components/Inputs/InputPassword";
@@ -13,35 +12,43 @@ import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
 import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
+import { BasicResult } from "@/_Interfaces/BasicResult";
+import { redirect } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function RegisterForm() {
-    const [serverState, action] = useActionState(NewUserAction, {
-        success: false
-    });
-    const [error, setError] = useState<string | null>(null);
-    const filesInput = useRef<HTMLInputElement>(null);
-    const [selectedFiles, setSelectedFiles] = useState<FileList>();
+    const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
+    const [result, setResult] = useState<BasicResult | null>(null);
+    const [edited, setEdited] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!serverState.success && serverState.msg) {
-            setError(serverState.msg);
+        // Form submitted & finished processing
+        if (uploading.submitted && !uploading.pending) {
+            if (result?.success && result.data) redirect("/dashboard/account/signin");
         }
-    }, [serverState]);
+    }, [result, uploading]);
 
-    // Ensures form submits with the profile image if set
-    useEffect(() => {
-        if (!filesInput.current || !selectedFiles) return;
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        setUploading({ submitted: true, pending: true });
+        e.preventDefault();
 
-        const dataTransfer = new DataTransfer();
+        const formData = new FormData(e.currentTarget);
 
-        for (const file of selectedFiles) dataTransfer.items.add(file);
+        try {
+            const response = await fetch("/api/users/edit-account", {
+                method: "POST",
+                body: formData
+            });
 
-        filesInput.current.files = dataTransfer.files;
-    }, [selectedFiles]);
+            setResult(await response.json());
+        } finally {
+            setUploading({ submitted: true, pending: false });
+        }
+    };
 
     return (
         <form
-            action={action}
+            onSubmit={handleSubmit}
             className="
                 flex
                 flex-col
@@ -60,49 +67,98 @@ export default function RegisterForm() {
 
             <Col className="w-full gap-2">
 
-                {error && <ErrorMessage description={error} />}
-
-                {serverState.success && <SuccessMessage description="You have successfully created an account! Please wait..." />}
+                {
+                    (uploading.submitted && !uploading.pending) &&
+                    (result && !result.success) &&
+                    <ErrorMessage description={result.msg ?? "Unknown result"} />
+                }
+    
+                {
+                    (uploading.submitted && !uploading.pending) &&
+                    (result && result.success) &&
+                    <SuccessMessage description={result.msg ?? "Unknown result"} />
+                }
                 
-                <ProfileImageUploadForm selectedFileList={setSelectedFiles} />
+                <ProfileImageUploadForm defaultValue={null} />
 
                 <Col>
                     <label htmlFor="first" className="text-xs">First Name</label>
-                    <InputTextMain name="first" id="first" placeholder="John" required />
+                    <InputTextMain
+                        name="first"
+                        id="first"
+                        placeholder="John"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="last" className="text-xs">Last Name</label>
-                    <InputTextMain name="last" id="last" placeholder="Doe" required />
+                    <InputTextMain
+                        name="last"
+                        id="last"
+                        placeholder="Doe"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="username" className="text-xs">Desired Username</label>
-                    <InputTextMain name="username" id="username" placeholder="John Doe 01" required />
+                    <InputTextMain
+                        name="username"
+                        id="username"
+                        placeholder="John Doe 01"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="email" className="text-xs">Email Address</label>
-                    <InputTextMain name="email" id="email" placeholder="johndoe@gmail.com" required />
+                    <InputTextMain
+                        name="email"
+                        id="email"
+                        placeholder="johndoe@gmail.com"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="password" className="text-xs">Desired Password</label>
-                    <InputPasswordMain name="password" id="password" required />
+                    <InputPasswordMain
+                        name="password"
+                        id="password"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="rpt-password" className="text-xs">Repeat Password</label>
-                    <InputPasswordMain name="rpt-password" id="rpt-password" required />
+                    <InputPasswordMain
+                        name="rpt-password"
+                        id="rpt-password"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
-                <Col>
-                    <FormSubmitButton>Create Account</FormSubmitButton>
+                <Col className="w-full">
+                    {
+                        uploading.submitted && uploading.pending ?
+                        <LoadingSpinner loadingText="Submitting changes, please wait..." /> :
+                        edited &&
+                        <>
+                            <FormSubmitButton>Update Account</FormSubmitButton>
+    
+                            <Row onClick={() => setEdited(false)}>
+                                <FormResetButton />
+                            </Row>
+                        </>
+                    }
                 </Col>
-
-                <Row>
-                    <FormResetButton />
-                </Row>
 
             </Col>
         </form>

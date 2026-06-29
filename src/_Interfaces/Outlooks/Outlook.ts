@@ -1,6 +1,6 @@
 import { ThreatTypes } from "@/_Enums/Threats/ThreatTypes";
 import { UUID } from "crypto";
-import { UploadedFile } from "../Files/UploadedFile";
+//import { UploadedFile } from "../Files/UploadedFile";
 import { DateString } from "@/_Types/DateString";
 
 export interface Outlook {
@@ -11,7 +11,7 @@ export interface Outlook {
     primaryThreat: ThreatTypes,
     secondaryThreat: ThreatTypes,
     discussion: string,
-    media: UploadedFile[],
+    //media: UploadedFile[],
     createdUnixTimestamp: number,
     createdTimestamp: string,
     validUntil: string

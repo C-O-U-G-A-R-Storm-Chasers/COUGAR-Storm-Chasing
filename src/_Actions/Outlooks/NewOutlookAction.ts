@@ -1,12 +1,7 @@
 "use server";
 
-import { ThreatTypes } from "@/_Enums/Threats/ThreatTypes";
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { UploadedFile } from "@/_Interfaces/Files/UploadedFile";
-import { Outlook } from "@/_Interfaces/Outlooks/Outlook";
 import { safeUUID } from "@/lib/crypto/crypto";
-import { insertOutlook } from "@/lib/database/outlooks/insertOutlook";
-import { getOutlookDate } from "@/lib/utils/getOutlookDate";
 import { UUID } from "crypto";
 import { redirect } from "next/navigation";
 
@@ -20,7 +15,7 @@ export async function NewOutlookAction(prevState: any, data: FormData): Promise<
     const discussion = data.get("discussion") as string;
     const mediaRaw = data.get("attached-media") as string | null;
 
-    let media: UploadedFile[] = [];
+    /*let media: UploadedFile[] = [];
 
     if (typeof mediaRaw === "string") media = JSON.parse(mediaRaw);
 
@@ -45,7 +40,7 @@ export async function NewOutlookAction(prevState: any, data: FormData): Promise<
     if (!insertOutlookResult.acknowledged || !insertOutlookResult.insertedId) return {
         success: false,
         msg: "A technical error occurred. Error Code: Insert-1"
-    };
+    };*/
 
     redirect(`/outlooks/day/${outlookDay}`);
 }

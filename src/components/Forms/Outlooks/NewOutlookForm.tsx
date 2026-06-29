@@ -16,7 +16,7 @@ import { ThreatTypes } from "@/_Enums/Threats/ThreatTypes";
 import { NewOutlookAction } from "@/_Actions/Outlooks/NewOutlookAction";
 
 export default function NewOutlookForm() {
-    const [serverState, action] = useActionState(NewOutlookAction, {
+    /*const [serverState, action] = useActionState(NewOutlookAction, {
         success: false
     });
     const [error, setError] = useState<string | null>(null);
@@ -146,5 +146,5 @@ export default function NewOutlookForm() {
 
             </Col>
         </form>
-    );
+    );*/
 }
