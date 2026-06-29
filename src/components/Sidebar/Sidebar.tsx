@@ -1,6 +1,6 @@
 "use server";
 
-import { BookmarkIcon, ChartBarSquareIcon, PresentationChartLineIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ChartBarSquareIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
@@ -33,11 +33,6 @@ export default async function Sidebar() {
                         <SidebarButtonStandard href="/dashboard/statistics">
                             <ChartBarSquareIcon className="w-5 h-5 text-primary-1" />
                             <p className="text-md text-primary-1">Statistics</p>
-                        </SidebarButtonStandard>
-
-                        <SidebarButtonStandard href="/dashboard/outlooks">
-                            <PresentationChartLineIcon className="w-5 h-5 text-primary-1" />
-                            <p className="text-md text-primary-1">Outlooks</p>
                         </SidebarButtonStandard>
 
                         <SidebarButtonStandard href="/dashboard/chases">
