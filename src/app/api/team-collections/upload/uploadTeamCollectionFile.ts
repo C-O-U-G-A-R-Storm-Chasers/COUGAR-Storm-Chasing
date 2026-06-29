@@ -9,7 +9,7 @@ import uploadFile from "@/lib/utils/files/uploadFile";
 export async function uploadTeamCollectionFile(file: File): Promise<BasicResult<CollectionFile | null>> {
     // Write the video file itself
     // With forceVideo, returns BasicResult with UploadVideoFileReturn
-    const fileWriteResult = await uploadFile(file, "/team_media", { forceVideo: true });
+    const fileWriteResult = await uploadFile(file, "/team_media", { bypassSigninValidation: false, forceVideo: true });
 
     if (process.env.NODE_ENV === "development") console.log({ collectionFile: fileWriteResult.data?.collectionFile });
     

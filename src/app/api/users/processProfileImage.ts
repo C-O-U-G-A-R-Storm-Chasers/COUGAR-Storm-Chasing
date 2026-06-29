@@ -10,7 +10,7 @@ import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
 import uploadFile from "@/lib/utils/files/uploadFile";
 
 export async function processProfileImage(uid: User["uid"], selectedFile: File): Promise<BasicResult<ProfileImage>> {
-    const fileWriteResult = await uploadFile(selectedFile, "/profile_images");
+    const fileWriteResult = await uploadFile(selectedFile, "/profile_images", { bypassSigninValidation: true });
 
     if (!fileWriteResult.success || !fileWriteResult.data?.id || !fileWriteResult.data?.ext) return {
         success: fileWriteResult.success,

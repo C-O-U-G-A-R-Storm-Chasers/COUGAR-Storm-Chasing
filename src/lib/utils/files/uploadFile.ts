@@ -22,19 +22,28 @@ interface UploadVideoFileReturn {
 
 export default async function uploadFile(
     file: File,
-    location: string
+    location: string,
+    opts: {
+        bypassSigninValidation: boolean, // For things like file upload via registration
+    }
 ): Promise<BasicResult<FileRecord | null>>;
 
 export default async function uploadFile(
     file: File,
     location: string,
-    opts: { forceVideo: true }
+    opts: {
+        bypassSigninValidation: boolean, // For things like file upload via registration
+        forceVideo?: true
+    }
 ): Promise<BasicResult<UploadVideoFileReturn | null>>;
 
 export default async function uploadFile(
     file: File,
     location: string,
-    opts?: { forceVideo?: boolean }
+    opts: {
+        bypassSigninValidation: boolean, // For things like file upload via registration
+        forceVideo?: boolean
+    }
 ): Promise<BasicResult<FileRecord | UploadVideoFileReturn | null>> {
     const { success, msg, data: user } = await signinValidation();
     
