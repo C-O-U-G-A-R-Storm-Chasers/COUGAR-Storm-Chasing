@@ -148,10 +148,10 @@ export default function RegisterForm() {
                 <Col className="w-full">
                     {
                         uploading.submitted && uploading.pending ?
-                        <LoadingSpinner loadingText="Submitting changes, please wait..." /> :
+                        <LoadingSpinner loadingText="Creating account, please wait..." /> :
                         edited &&
                         <>
-                            <FormSubmitButton>Update Account</FormSubmitButton>
+                            <FormSubmitButton>Create New Account</FormSubmitButton>
     
                             <Row onClick={() => setEdited(false)}>
                                 <FormResetButton />
