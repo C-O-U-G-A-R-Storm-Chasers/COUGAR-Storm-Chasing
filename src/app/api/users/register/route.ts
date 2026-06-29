@@ -8,8 +8,8 @@ import { fetchUserByEmail } from "@/lib/database/users/fetchUserByEmail";
 import { hashPass } from "@/lib/auth/hashPass";
 import { safeUUID } from "@/lib/crypto/crypto";
 import { UUID } from "crypto";
-import { ProfileImageUploadAction } from "@/_Actions/File/Upload/ProfileImageUploadAction";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
+import { processProfileImage } from "../edit-account/image/processProfileImage";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     const uid = safeUUID() as UUID;
 
     // Upload profile image
-    const profileImageResult = profileImage ? await ProfileImageUploadAction(uid, profileImage) : null;
+    const profileImageResult = profileImage ? await processProfileImage(uid, profileImage) : null;
 
     // Insert user
     const user: UserWithHashedPassword = {
