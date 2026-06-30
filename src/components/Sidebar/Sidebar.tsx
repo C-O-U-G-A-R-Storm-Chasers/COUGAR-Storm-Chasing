@@ -1,14 +1,14 @@
 "use client";
 
 import { BookmarkIcon, ChartBarSquareIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, DevicePhoneMobileIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
-import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
 import { User } from "@/_Interfaces/Users/User";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Sidebar({ currentUser }: { currentUser: User | null }) {
     const [collapsed, setCollapsed] = useState<boolean>(false);
+    const sidebarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -16,9 +16,34 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
         setCollapsed(isMobile);
     }, []);
 
+    useEffect(() => {
+        const isMobile = window.matchMedia("(max-width: 767px)").matches;
+        
+        if (isMobile) {
+            function handleClickOutside(event: MouseEvent) {
+            if (
+                !collapsed &&
+                sidebarRef.current &&
+                !sidebarRef.current.contains(event.target as Node)
+            ) {
+                setCollapsed(true);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+        }
+    }, [collapsed]);
+
     return (
-        <Col
+        <div
+            ref={sidebarRef}
             className={`
+                flex
+                flex-col
                 ${
                     collapsed ?
                     "w-auto"
@@ -131,6 +156,6 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                     }
                 </>
             }
-        </Col>
+        </div>
     );
 }
