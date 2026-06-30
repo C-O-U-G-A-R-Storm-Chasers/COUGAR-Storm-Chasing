@@ -46,7 +46,8 @@ export default async function Navbar() {
                     w-full
                     justify-between
                     items-center
-                    p-1
+                    p-2
+                    md:p-1
                     px-3
 
                     gap-1
