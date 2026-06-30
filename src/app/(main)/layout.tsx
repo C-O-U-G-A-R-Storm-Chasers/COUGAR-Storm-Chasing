@@ -5,6 +5,9 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
     return (
         <div
             className="
+                flex
+                flex-col
+                w-full
                 relative
                 flex-1
                 overflow-hidden
@@ -17,8 +20,11 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
                 loop
                 playsInline
                 className="
+                    flex
+                    flex-col
                     w-full
                     h-screen
+                    items-center
                     object-cover
                     pointer-events-none
                     select-none
@@ -27,8 +33,8 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
                 <source src={config["homepage-background-video"]} type="video/mp4" />
             </video>
 
-            <div className="absolute p-5 inset-0 z-10 overflow-y-auto">
-                <div className="min-h-full flex flex-col items-start">
+            <div className="absolute flex flex-col w-full justify-start items-center p-5 inset-0 z-10 overflow-y-auto">
+                <div className="flex flex-col w-full items-center">
                     {children}
                 </div>
             </div>

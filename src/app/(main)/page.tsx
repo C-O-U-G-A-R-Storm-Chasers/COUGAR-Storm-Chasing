@@ -1,7 +1,4 @@
 import Col from "@/components/Col";
-import InfoHomeTitle from "@/components/Text/Headers/InfoHomeTitle";
-import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
-import InfoSubheader from "@/components/Text/Headers/InfoSubheader";
 import Image from "next/image";
 import config from "../../lib/cougar-config.json";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
@@ -19,27 +16,29 @@ export default async function Home() {
         <Col
             id="home-page-wrapper"
             className="
+                justify-between
                 w-full
                 h-full
-                pt-8
-                pb-12
-                gap-10
+                p-2
+                gap-2
             "
         >
-            <Col className="items-center">
-                <InfoHomeTitle textContent="C.O.U.G.A.R. Storm Chasers" />
-                <InfoPageTitle textContent="Cyclone Observation Unit for General Atmospheric Research" />
-                <InfoSubheader textContent="Est. July 2024" />
+            <Col className="items-center text-center">
+                <p className="text-2xl md:text-4xl lg:text-6xl font-bold">C.O.U.G.A.R. Storm Chasers</p>
+                <p className="text-xs md:text-2xl lg:text-3xl font-semibold">Cyclone Observation Unit for General Atmospheric Research</p>
+                <p className="text-xs md:text-xl lg:text-2xl font-bold">Est. July 2024</p>
             </Col>
 
-            <Col className="items-center">
+            <Col className="justify-center items-center w-full">
                 <Image
                     src={config["homepage-overlay-banner"]}
                     alt="Banner for COUGAR Storm Chasing"
                     width={2967}
                     height={1413}
                     className="
-                        w-3/8
+                        w-full
+                        md:w-2/3
+                        lg:w-1/2
                         rounded-md
                     "
                 />

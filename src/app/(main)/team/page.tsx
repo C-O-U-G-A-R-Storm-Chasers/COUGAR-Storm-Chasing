@@ -21,10 +21,12 @@ export default async function TeamPage() {
     await updateWebVisits();
 
     return (
-        <Col className="w-full items-center">
+        <Col className="w-full justify-start items-center">
             <Col
                 className="
-                    w-1/2
+                    w-full
+                    md:w-2/3
+                    lg:w-1/2
                     items-center
                     p-2
                     px-5
