@@ -4,8 +4,9 @@ export default function InfoPageTitle({ textContent }: { textContent: string }) 
     return (
         <p
             className="
-                text-2xl
-                font-bold
+                text-md
+                md:text-xl
+                font-semibold
             "
         >
             {textContent}
