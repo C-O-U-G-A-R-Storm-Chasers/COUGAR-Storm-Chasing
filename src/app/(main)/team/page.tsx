@@ -44,6 +44,14 @@ export default async function TeamPage() {
             >
 
                 <InfoPageTitle textContent="Meet Our Team Members" />
+
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
                 
                 <InfoSectionseparator>
                     <InfoHeader textContent="Mario G" />
@@ -59,7 +67,16 @@ export default async function TeamPage() {
                     <InfoParagraph textContent="Mario is one of the chasers on the ground. His main job is to chase, but also to help forecast and to be the lead vehicle when leading the other chasers. He also edits most of our storm chasing videos on our YouTube!" />
                 </InfoSectionseparator>
 
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
+
                 <InfoSectionseparator>
+                    <InfoHeader textContent="Caleb H" />
                     <Image
                         src={config["team_headshots"]["chesse"]}
                         alt="Team member headshot"
@@ -67,7 +84,6 @@ export default async function TeamPage() {
                         height={512}
                         className="w-50 bg-slate-200 rounded-md"
                     />
-                    <InfoHeader textContent="Caleb H" />
                     <InfoSubheader textContent="Research & Technology Director" />
                     <InfoBulletStandard textContent="Field Chaser" />
                     <InfoBulletStandard textContent="Certified SKYWARN Spotter" />
@@ -79,6 +95,14 @@ export default async function TeamPage() {
                 <InfoSectionseparator>
                     <InfoParagraph textContent="Caleb is one of the four storm chasers on our team. He helps with choosing target areas and is helping with the development of our probe, and the development of this website! He also does most of the managing of the Facebook page and steps in to help review models for forecasting when Nicholas P is not available." />
                 </InfoSectionseparator>
+
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
 
                 <InfoSectionseparator>
                     <InfoHeader textContent="Nicholas P" />
@@ -92,7 +116,16 @@ export default async function TeamPage() {
                     <InfoParagraph textContent="Nicholas's primary role as overwatch is to be a second pair of eyes for all chasers out in the field and help with forecasting, positioning and making sure we're up to date while we're on the ground chasing and is also lead coder for our probe which is still in development." />
                 </InfoSectionseparator>
 
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
+
                 <InfoSectionseparator>
+                    <InfoHeader textContent="Chase C" />
                     <Image
                         src={config["team_headshots"]["cchesney"]}
                         alt="Team member headshot"
@@ -100,7 +133,6 @@ export default async function TeamPage() {
                         height={512}
                         className="w-50 bg-slate-200 rounded-md"
                     />
-                    <InfoHeader textContent="Chase C" />
                     <InfoSubheader textContent="Field Chaser & Social Media Coordinator" />
                     <InfoBulletStandard textContent="Field Chaser" />
                     <InfoBulletStandard textContent="Reed Timmer Jr. (This is an inside joke!)" />
@@ -113,6 +145,14 @@ export default async function TeamPage() {
                     <InfoParagraph textContent="Chase is one of our more aggressive chasers and is the one who got our amazing footage of the March 10th, 2026 Kankakee (Illinois) EF3; his more aggressive style of chasing is in contrast to the others who wish to stay further back which allows us to get a full picture of up close and far away shots of each storm when footage is captured." />
                 </InfoSectionseparator>
 
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
+
                 <InfoSectionseparator>
                     <InfoHeader textContent="Nicole G" />
                     <InfoSubheader textContent="Community Outreach & Field Support Specialist" />
@@ -124,6 +164,14 @@ export default async function TeamPage() {
                 <InfoSectionseparator>
                     <InfoParagraph textContent="Nicole storm chases primarily with Mario, as they are a mother-son duo. Nicole is the primary driver during their chases, while not being afraid to go into most environments to chase. Together, they have chased Wisconsin, Illinois, Iowa, Arkansas and Mississippi." />
                 </InfoSectionseparator>
+
+                <Image
+                    src="/assets/storm.png"
+                    alt="Storm separator icon"
+                    width={512}
+                    height={512}
+                    className="w-50 rounded-md opacity-25"
+                />
 
             </Col>
         </Col>
