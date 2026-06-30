@@ -7,7 +7,6 @@ import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import FormActionButton from "@/components/Buttons/FormActionButton";
-import InfoHeader from "@/components/Text/Headers/InfoHeader";
 
 export default function SignoutForm() {
     const [serverState, action] = useActionState(SignoutAction, {
@@ -29,7 +28,7 @@ export default function SignoutForm() {
                 flex
                 flex-col
                 items-center
-                w-1/2
+                w-full
                 p-2
 
                 rounded-md
@@ -37,9 +36,9 @@ export default function SignoutForm() {
                 gap-4
             "
         >
-            <InfoHeader textContent="Are you sure you want to sign out?" />
+            <p className="text-sm md:text-xl lg:text-2xl font-semibold">Are you sure you want to sign out?</p>
 
-            <Col className="w-full gap-2">
+            <Col className="w-full md:w-1/2 lg:w-1/3 gap-2">
 
                 {error && <ErrorMessage description={error} />}
 
