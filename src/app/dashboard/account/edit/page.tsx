@@ -5,7 +5,6 @@ import Col from "@/components/Col";
 import AccountDetailsForm from "@/components/Forms/Account/AccountDetailsForm";
 import ChangeAccountImageForm from "@/components/Forms/Account/ChangeAccountImageForm";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
-import Row from "@/components/Row";
 import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { safeUUID } from "@/lib/crypto/crypto";
@@ -40,7 +39,7 @@ export default async function UserPage() {
                     flex
                     flex-col
                     items-center
-                    w-1/2
+                    w-full
                     p-2
     
                     rounded-md
@@ -48,16 +47,16 @@ export default async function UserPage() {
                     gap-2
                 "
             >
-                <Row className="w-full flex-wrap items-start">
-                    <Col className="w-1/3 h-full p-1">
+                <div className="flex flex-col md:flex-row w-full">
+                    <Col className="w-full md:w-1/2 lg:w-1/3 h-full items-center p-1">
                         <ChangeAccountImageForm profileImageSrc={profileImageSrc} />
+                        <p className="text-xs">Click to change profile image</p>
                     </Col>
     
-                    <Col className="w-2/3 h-full p-1">
+                    <Col className="w-full md:w-1/2 lg:w-2/3 h-full p-1">
                         <AccountDetailsForm user={user} />
                     </Col>
-                </Row>
-    
+                </div>
             </Col>
         </Col>
     );

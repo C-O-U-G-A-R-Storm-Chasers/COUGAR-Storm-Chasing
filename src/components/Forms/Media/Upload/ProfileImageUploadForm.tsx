@@ -32,22 +32,22 @@ export default function ProfileImageUploadForm({ defaultValue, setChanged }: { d
                 gap-2
             "
         >
-            <Col className="items-center w-full">
-                <input
-                    ref={filesInput}
-                    type="file"
-                    name="profile-image"
-                    accept={config.supported_image_mimes.join(",")}
-                    className="hidden"
-                    onChange={handleSelectedMedia}
-                />
+            <input
+                ref={filesInput}
+                type="file"
+                name="profile-image"
+                accept={config.supported_image_mimes.join(",")}
+                className="hidden"
+                onChange={handleSelectedMedia}
+            />
 
+            <Col className="items-center w-full">
                 <Col
                     className="
                         items-center
                         justify-center
                         w-50
-                        h-50
+                        aspect-square
 
                         border-3
                         border-dashed
