@@ -33,7 +33,8 @@ export default function SidebarButtonStandard({ children, href }: { children: Re
                     hover:bg-sky-50/25
 
                     rounded-sm
-                    gap-2
+                    gap-1
+                    md:gap-2
                 `}
             >
                 {children}

@@ -36,43 +36,58 @@ export default async function Navbar() {
                 gap-2
             "
         >
-            <Row
+            <div
                 id="navbar-wrapper"
                 className="
-                    w-1/2
+                    flex
+                    flex-col
+                    md:flex-row
+
+                    w-full
                     justify-between
                     items-center
-                    p-1
+                    p-2
+                    md:p-1
                     px-3
-                    flex-wrap
 
-                    gap-4
+                    gap-1
+                    md:gap-4
                 "
             >
                 <NavbarSection>
-                    <Link href="/" className="flex flex-row items-center gap-2">
+                    <Link href="/" className="flex flex-col lg:flex-row  items-center gap-2">
                         <Row id="navbar-home-icon">
                             <Image
                                 src={config["navbar-home-icon"]}
-                                alt="Navbar Home Icon for COUGAR Storm Chasing"
+                                alt="Cyclone Observation Unit for General Atmospheric Research"
                                 width={512}
                                 height={512}
-                                className="w-6 h-6 bg-slate-200 rounded-md"
+                                className="
+                                    w-8
+                                    md:w-6
+                                    h-8
+                                    md:h-6
+                                    
+                                    bg-slate-200
+                                    rounded-md
+                                "
                             />
                         </Row>
                         
-                        <p className="text-sm">Cyclone Observation Unit for General Atmospheric Research</p>
+                        <p className="hidden lg:flex text-sm">Cyclone Observation Unit for General Atmospheric Research</p>
                     </Link>
 
-                    <NavbarButtonStandard href="/team">
-                        <UserGroupIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs text-primary-1">Our Team</p>
-                    </NavbarButtonStandard>
+                    <Row>
+                        <NavbarButtonStandard href="/team">
+                            <UserGroupIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-xs text-primary-1">Our Team</p>
+                        </NavbarButtonStandard>
 
-                    <NavbarButtonStandard href={user ? "/dashboard" : "/dashboard/team-collections"}>
-                        <HomeModernIcon className="w-5 h-5 text-primary-1" />
-                        <p className="text-xs text-primary-1">{user ? "Dashboard" : "C.O.U.G.A.R."}</p>
-                    </NavbarButtonStandard>
+                        <NavbarButtonStandard href={user ? "/dashboard" : "/dashboard/team-collections"}>
+                            <HomeModernIcon className="w-5 h-5 text-primary-1" />
+                            <p className="text-xs text-primary-1">{user ? "Dashboard" : "C.O.U.G.A.R."}</p>
+                        </NavbarButtonStandard>
+                    </Row>
                 </NavbarSection>
 
                 <NavbarSection>
@@ -93,7 +108,7 @@ export default async function Navbar() {
                         </NavbarButtonStandard>
                     }
                 </NavbarSection>
-            </Row>
+            </div>
         </Row>
     );
 }

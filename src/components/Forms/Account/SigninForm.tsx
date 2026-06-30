@@ -31,7 +31,8 @@ export default function SigninForm() {
                 flex
                 flex-col
                 items-center
-                w-1/2
+                w-full
+                md:w-2/3
                 p-2
 
                 rounded-md

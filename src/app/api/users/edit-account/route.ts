@@ -7,6 +7,7 @@ import { insertUser } from "@/lib/database/users/insertUser";
 import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { cookies } from "next/headers";
+import { fetchUserByHandle } from "@/lib/database/users/fetchUserByHandle";
 
 export async function POST(request: NextRequest) {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
@@ -28,6 +29,14 @@ export async function POST(request: NextRequest) {
     if (!oldUserWithPassword) return NextResponse.json({
         success: false,
         msg: "Could not fetch account from database! Please try again, or contact an administrator.",
+    });
+
+    // Verify that handle isn't in use
+    const handleInUse = await fetchUserByHandle(handle, false);
+
+    if (handleInUse) return NextResponse.json({
+        success: false,
+        msg: `The handle ${handle} is already in use! Please try a different handle.`,
     });
 
     // Construct new user

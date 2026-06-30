@@ -1,12 +1,18 @@
 import { TeamCollection, TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
+import { User } from "@/_Interfaces/Users/User";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-export async function fetchAllTeamCollections(): Promise<TeamCollectionWithFullRecords[]> {
+export async function fetchAllTeamCollectionsFromTeamMember(uid: User["uid"]): Promise<TeamCollectionWithFullRecords[]> {
     const mongo = getMongo();
 
     return await mongo.database
         .collection<TeamCollection>("team-collections")
         .aggregate<TeamCollectionWithFullRecords>([
+            {
+                $match: {
+                    uploader: uid,
+                },
+            },
             {
                 $lookup: {
                     from: "team-collection-files",
