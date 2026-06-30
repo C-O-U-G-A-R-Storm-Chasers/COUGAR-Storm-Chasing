@@ -29,7 +29,16 @@ export default async function DashboardStatisticsPage() {
         >
             <InfoPageTitle textContent="Statistics" />
 
-            <Row className="w-full flex-wrap gap-2">
+            <Col className="lg:hidden w-full flex-wrap gap-2">
+                {
+                    (user && user.perm_level < PermissionLevels.MOD) &&
+                    <UserStats />
+                }
+
+                <TeamCollectionStats />
+            </Col>
+
+            <Row className="hidden lg:flex w-full flex-wrap gap-2">
                 {
                     (user && user.perm_level < PermissionLevels.MOD) &&
                     <UserStats />
