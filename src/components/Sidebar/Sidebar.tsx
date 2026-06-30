@@ -104,10 +104,13 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                                     <p className="text-xs md:text-md text-primary-1">Statistics</p>
                                 </SidebarButtonStandard>
 
-                                <SidebarButtonStandard href="/dashboard/chases">
-                                    <BookmarkIcon className="w-5 aspect-square text-primary-1" />
-                                    <p className="text-xs md:text-md text-primary-1">Storm Chases</p>
-                                </SidebarButtonStandard>
+                                {
+                                    process.env.NODE_ENV === "development" &&
+                                    <SidebarButtonStandard href="/dashboard/chases">
+                                        <BookmarkIcon className="w-5 aspect-square text-primary-1" />
+                                        <p className="text-xs md:text-md text-primary-1">Storm Chases</p>
+                                    </SidebarButtonStandard>
+                                }
                             </>
                         }
 
