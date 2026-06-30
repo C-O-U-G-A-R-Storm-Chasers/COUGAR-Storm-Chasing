@@ -10,6 +10,7 @@ import { safeUUID } from "@/lib/crypto/crypto";
 import { UUID } from "crypto";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { processProfileImage } from "../processProfileImage";
+import { RegistrationResponses } from "@/_Enums/Registration/RegistrationResponses";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();
@@ -26,8 +27,7 @@ export async function POST(request: NextRequest) {
 
     if (usernameResult) return NextResponse.json({
         success: false,
-        msg: "That username is already in use. Please try a different one.",
-        data: null
+        data: RegistrationResponses.USERNAME_IN_USE
     });
 
     // Verify that the email doesn't already exist
@@ -35,25 +35,29 @@ export async function POST(request: NextRequest) {
 
     if (emailResult) return NextResponse.json({
         success: false,
-        msg: "That email address is already in use. Please try a different one.",
-        data: null
+        data: RegistrationResponses.EMAIL_IN_USE
     });
 
     // Verify password matches pattern
+    /**
+     * - At least 9 characters long
+     * - At least 1 uppercase letter
+     * - At least 2 special characters 
+     * - No special character may appear twice
+     * - Only letters, digits, and  special characters (! * & ^ % # @) are allowed
+     */
     const pattern: RegExp = /^(?=.{9,})(?=.*[A-Z])(?=(?:.*[!*&^%#@]){2,})(?!.*([!*&^%#@]).*\1.*\1)[A-Za-z\d!*&^%#@]+$/;
     const isValidPassword: boolean = pattern.test(pass);
 
     if (!isValidPassword) return NextResponse.json({
         success: false,
-        msg: "The given password is not valid. Please check the requirements.",
-        data: null
+        data: RegistrationResponses.INVALID_PASS
     });
 
     // Verify passwords match
     if (pass !== repeatPass) return NextResponse.json({
         success: false,
-        msg: "The given passwords do not match. Please try again.",
-        data: null
+        data: RegistrationResponses.PASS_MISMATCH
     });
 
     // Hash password
@@ -82,12 +86,11 @@ export async function POST(request: NextRequest) {
 
     if (!insertResult?.uid) return NextResponse.json({
         success: false,
-        msg: "A technical error occurred, and your account couldn't be created. Please try again, or contact support.",
-        data: null
+        data: RegistrationResponses.TECHNICAL_ERROR
     });
 
     return NextResponse.json({
         success: true,
-        msg: "Account successfully created! Please wait..."
+        data: RegistrationResponses.OK
     });
 }

@@ -15,6 +15,7 @@ import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import { redirect } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { RegistrationResponses } from "@/_Enums/Registration/RegistrationResponses";
 
 export default function RegisterForm() {
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
@@ -24,7 +25,7 @@ export default function RegisterForm() {
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
-            if (result?.success) {
+            if (result?.success && result?.data) {
                 // Add delay so it's not so abrupt
                 const timeout = setTimeout(redirect("/dashboard/account/signin"), 3000);
 
@@ -138,17 +139,56 @@ export default function RegisterForm() {
                         required
                     />
                 </Col>
-                
+
                 {
-                    (uploading.submitted && !uploading.pending) &&
-                    (result && !result.success) &&
-                    <ErrorMessage description={result.msg ?? "Unknown result"} />
-                }
-    
-                {
-                    (uploading.submitted && !uploading.pending) &&
-                    (result && result.success) &&
-                    <SuccessMessage description={result.msg ?? "Unknown result"} />
+                    (uploading.submitted && !uploading.pending && result) &&
+                    <>
+                        {
+                            // Error
+                            !result.success &&
+                            <>
+                                <ErrorMessage description={
+                                    result.data === RegistrationResponses.USERNAME_IN_USE ?
+                                        "Username is already in use! Please choose a different username." :
+                                    result.data === RegistrationResponses.EMAIL_IN_USE ?
+                                        "Email address is already in use! Please choose a different email address." :
+                                    result.data === RegistrationResponses.INVALID_PASS ?
+                                        "Password is invalid! Please review the password requirements." :
+                                    result.data === RegistrationResponses.PASS_MISMATCH ?
+                                        "Passwords must match!" :
+                                    result.data === RegistrationResponses.TECHNICAL_ERROR ?
+                                        "A technical error occurred creating the user. Please try again, or contact an administrator for assistance." :
+                                        "Unknown result"
+                                } />
+
+                                {
+                                    (result.data === RegistrationResponses.USERNAME_IN_USE || result.data === RegistrationResponses.EMAIL_IN_USE) &&
+                                    <Row className="p-2 text-xs bg-blue-500 rounded-sm gap-1">
+                                        <p className="text-xs">Already have an account?</p>
+                                        <Link href="/dashboard/account/signin" className="text-xs underline">Sign in instead.</Link>
+                                    </Row>
+                                }
+
+                                {
+                                    result.data === RegistrationResponses.INVALID_PASS &&
+                                    <Col className="p-2 text-xs bg-blue-500 rounded-sm gap-1">
+                                        <p className="text-sm font-semibold">Password must:</p>
+                                        <p className="text-xs">- Be at least 9 characters long</p>
+                                        <p className="text-xs">- Contain at least 1 uppercase letter</p>
+                                        <p className="text-xs">- Not use the same special character twice</p>
+                                        <p className="text-sm font-semibold">Allowed characters:</p>
+                                        <p className="text-xs">- Alphanumerics [a-Z] [0-9]</p>
+                                        <p className="text-xs">- Special Characters [! * & ^ % # @]</p>
+                                    </Col>
+                                }
+                            </>
+                        }
+                        {
+                            // Success
+                            result.success &&
+                            <SuccessMessage description={result.msg ?? "Unknown result"} />
+                        }
+                    </>
                 }
 
                 <Col className="w-full">
