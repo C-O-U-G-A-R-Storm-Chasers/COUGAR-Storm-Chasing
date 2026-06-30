@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkIcon, ChartBarSquareIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ComputerDesktopIcon, DevicePhoneMobileIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ChartBarSquareIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, DevicePhoneMobileIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import Col from "../Col";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
@@ -23,7 +23,7 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                     collapsed ?
                     "w-auto"
                     :
-                    "min-w-[100px] md:min-w-[200px] lg:min-w-[225px]"
+                    "min-w-[150px] md:min-w-[200px]"
                 }
                 
                 items-center
