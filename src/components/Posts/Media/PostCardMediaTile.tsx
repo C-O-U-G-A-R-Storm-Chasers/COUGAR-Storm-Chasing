@@ -55,7 +55,7 @@ export default function PostCardMediaTile(
                         bg-neutral-950/75
                     "
                 >
-                    <VideoCameraIcon className="w-1/6 p-1 border-1 border-primary-1 rounded-lg" />
+                    <VideoCameraIcon className="w-2/6 sm:w-1/6 md:w-2/6 lg:w-1/6 p-1 border-1 border-primary-1 rounded-lg" />
                 </Col>
             }
 

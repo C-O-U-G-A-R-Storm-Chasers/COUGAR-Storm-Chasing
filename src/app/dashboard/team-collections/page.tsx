@@ -11,7 +11,6 @@ import PostCardHeader from "@/components/Posts/PostCardHeader";
 import { unixToDate } from "@/lib/utils/unixToDate";
 import PostCardBody from "@/components/Posts/PostCardBody";
 import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
-import Row from "@/components/Row";
 
 export default async function TeamCollectionViewPage() {
     const { success, msg } = await signinValidation();
@@ -23,10 +22,10 @@ export default async function TeamCollectionViewPage() {
     const collections: TeamCollectionWithFullRecords[] = await fetchAllTeamCollections();
 
     return (
-        <Row className="w-full h-full items-start flex-wrap gap-2">
+        <Col className="w-full p-2 gap-2">
             {
                 !collections || collections.length === 0 ?
-                <Col className="w-2/3 items-center text-center">
+                <Col className="w-full items-center text-center">
                     <p className="text-4xl">Uh oh!</p>
                     <p className="text-xl">It appears that we have not uploaded any media to our website yet. This means something is wrong, or the website is very new. Please try refreshing the page!</p>
                     <p className="text-lg">If you believe this is an error, please report it.</p>
@@ -51,6 +50,6 @@ export default async function TeamCollectionViewPage() {
                     </PostCard>
                 ))
             }
-        </Row>
+        </Col>
     );
 }

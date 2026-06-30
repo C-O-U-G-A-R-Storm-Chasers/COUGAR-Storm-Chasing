@@ -23,8 +23,10 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                     collapsed ?
                     "w-auto"
                     :
-                    "min-w-[150px] md:min-w-[200px]"
+                    "w-40 md:w-55 lg:w-70"
                 }
+                flex-shrink-0
+                h-full
                 
                 items-center
                 
@@ -65,7 +67,7 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                         "
                         onClick={() => setCollapsed(false)}
                     >
-                        <ChevronDoubleRightIcon className="w-3 h-3" />
+                        <ChevronDoubleRightIcon className="w-5 h-5" />
                     </div>
                     :
                     <div
