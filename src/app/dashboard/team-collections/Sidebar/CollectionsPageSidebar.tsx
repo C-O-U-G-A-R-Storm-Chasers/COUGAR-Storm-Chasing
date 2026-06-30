@@ -11,11 +11,10 @@ export default function CollectionsPageSidebar({ user }: { user: User | null }) 
     return (
         <Col
             className="
-                w-1/6
+                min-w-[130px]
                 items-center
-                p-1
-                pl-0
-                pr-2
+                p-0
+                pr-1
 
                 gap-2
             "
@@ -24,15 +23,15 @@ export default function CollectionsPageSidebar({ user }: { user: User | null }) 
                 (user && user.perm_level <= PermissionLevels.LEAD_MOD) &&
                 <CollectionsPageSidebarSection label="Admin Controls">
                     <CollectionsPageSidebarButtonStandard href="/dashboard/team-collections/upload">
-                        <ArrowUpTrayIcon className="w-3 h-3 text-primary-1" />
-                        <p className="text-xs text-primary-1">Create Collection</p>
+                        <ArrowUpTrayIcon className="w-3 aspect-square text-primary-1" />
+                        <p className="text-2xs md:text-xs text-primary-1">Create Collection</p>
                     </CollectionsPageSidebarButtonStandard>
                 </CollectionsPageSidebarSection>
             }
             <CollectionsPageSidebarSection label="C.O.U.G.A.R.">
                 <CollectionsPageSidebarButtonStandard href="/dashboard/team-collections/">
-                    <VideoCameraIcon className="w-3 h-3 text-primary-1" />
-                    <p className="text-xs text-primary-1">View Our Collections</p>
+                    <VideoCameraIcon className="w-3 aspect-square text-primary-1" />
+                    <p className="text-2xs md:text-xs text-primary-1">View Our Collections</p>
                 </CollectionsPageSidebarButtonStandard>
             </CollectionsPageSidebarSection>
         </Col>

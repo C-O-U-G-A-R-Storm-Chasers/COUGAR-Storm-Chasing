@@ -12,6 +12,12 @@
     @apply text-lime-600;
 }
 
+.text-2xs {
+    font-size: 0.5rem;
+    font-size: 8px;
+    line-height: 0.75rem;
+}
+
 @theme {
     --color-primary-11: #0B1114;
     --color-primary-10: #172c38;
