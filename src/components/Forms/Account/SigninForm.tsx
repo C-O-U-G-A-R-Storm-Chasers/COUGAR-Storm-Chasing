@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { SigninAction } from "@/_Actions/Users/SigninAction";
+import { FormEvent, useEffect, useState } from "react";
 import Col from "@/components/Col";
 import Row from "@/components/Row";
 import InputTextMain from "@/components/Inputs/InputText";
@@ -11,22 +10,53 @@ import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
+import { BasicResult } from "@/_Interfaces/BasicResult";
+import { useRouter } from "next/navigation";
+import SuccessMessage from "@/components/Messages/SuccessMessage";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function SigninForm() {
-    const [serverState, action] = useActionState(SigninAction, {
-        success: false
-    });
-    const [error, setError] = useState<string | null>(null);
+    const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
+    const [result, setResult] = useState<BasicResult | null>(null);
+    const [edited, setEdited] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
-        if (!serverState.success && serverState.msg) {
-            setError(serverState.msg);
+        // Form submitted & finished processing
+        if (uploading.submitted && !uploading.pending) {
+            if (result?.success) {
+                // Add delay so it's not so abrupt
+                const timeout = setTimeout(() => {
+                    router.push("/dashboard");
+                    router.refresh();
+                }, 3000);
+
+                return () => clearTimeout(timeout);
+            }
         }
-    }, [serverState]);
+    }, [result, uploading, router]);
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        setUploading({ submitted: true, pending: true });
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            const response = await fetch("/api/users/signin", {
+                method: "POST",
+                body: formData
+            });
+
+            setResult(await response.json());
+        } finally {
+            setUploading({ submitted: true, pending: false });
+        }
+    };
 
     return (
         <form
-            action={action}
+            onSubmit={handleSubmit}
             className="
                 flex
                 flex-col
@@ -46,25 +76,59 @@ export default function SigninForm() {
 
             <Col className="w-full gap-2">
 
-                {error && <ErrorMessage description={error} />}
-
                 <Col>
                     <label htmlFor="login" className="text-xs">Your Username or Email Address</label>
-                    <InputTextMain name="login" id="login" placeholder="johndoe@gmail.com" required />
+                    <InputTextMain
+                        name="login"
+                        id="login"
+                        placeholder="johndoe@gmail.com"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
                 <Col>
                     <label htmlFor="password" className="text-xs">Your Password</label>
-                    <InputPasswordMain name="password" id="password" required />
+                    <InputPasswordMain
+                        name="password"
+                        id="password"
+                        onChange={() => setEdited(true)}
+                        required
+                    />
                 </Col>
 
-                <Col>
-                    <FormSubmitButton>Sign In</FormSubmitButton>
-                </Col>
+                {
+                    (uploading.submitted && !uploading.pending && result) &&
+                    <>
+                        {
+                            // Error
+                            !result.success &&
+                            <>
+                                <ErrorMessage description={result.msg ?? "Unknown response"} />
+                            </>
+                        }
+                        {
+                            // Success
+                            result.success &&
+                            <SuccessMessage description={result.msg ?? "Unknown result"} />
+                        }
+                    </>
+                }
 
-                <Row>
-                    <FormResetButton />
-                </Row>
+                <Col className="w-full">
+                    {
+                        uploading.submitted && uploading.pending ?
+                        <LoadingSpinner loadingText="Creating account, please wait..." /> :
+                        edited &&
+                        <>
+                            <FormSubmitButton>Create New Account</FormSubmitButton>
+    
+                            <Row onClick={() => setEdited(false)}>
+                                <FormResetButton />
+                            </Row>
+                        </>
+                    }
+                </Col>
 
             </Col>
         </form>

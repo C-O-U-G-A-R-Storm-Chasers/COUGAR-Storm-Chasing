@@ -1,0 +1,12 @@
+"use server";
+
+import { NextRequest, NextResponse } from "next/server";
+import signinUser from "./signinUser";
+
+export async function POST(request: NextRequest) {
+    const data = await request.formData();
+    const login = data.get("login") as string;
+    const password = data.get("password") as string;
+    
+    return NextResponse.json(await signinUser(login, password));
+}

@@ -13,7 +13,7 @@ import Link from "next/link";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
 import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
 import { BasicResult } from "@/_Interfaces/BasicResult";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { RegistrationResponses } from "@/_Enums/Registration/RegistrationResponses";
 
@@ -21,18 +21,22 @@ export default function RegisterForm() {
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
     const [edited, setEdited] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
             if (result?.success && result?.data) {
                 // Add delay so it's not so abrupt
-                const timeout = setTimeout(redirect("/dashboard/account/signin"), 3000);
+                const timeout = setTimeout(() => {
+                    router.push("/dashboard");
+                    router.refresh();
+                }, 3000);
 
                 return () => clearTimeout(timeout);
             }
         }
-    }, [result, uploading]);
+    }, [result, uploading, router]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         setUploading({ submitted: true, pending: true });
@@ -158,6 +162,8 @@ export default function RegisterForm() {
                                         "Passwords must match!" :
                                     result.data === RegistrationResponses.TECHNICAL_ERROR ?
                                         "A technical error occurred creating the user. Please try again, or contact an administrator for assistance." :
+                                    result.data === RegistrationResponses.TECHNICAL_ERROR ?
+                                        result.msg! :
                                         "Unknown result"
                                 } />
 
@@ -186,7 +192,7 @@ export default function RegisterForm() {
                         {
                             // Success
                             result.success &&
-                            <SuccessMessage description={result.msg ?? "Unknown result"} />
+                            <SuccessMessage description={"You've successfully created an account! Please wait..."} />
                         }
                     </>
                 }

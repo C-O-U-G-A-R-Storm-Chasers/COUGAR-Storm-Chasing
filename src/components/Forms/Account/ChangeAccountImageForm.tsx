@@ -8,7 +8,7 @@ import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import FormResetButton from "@/components/Buttons/FormResetButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
 
@@ -16,17 +16,17 @@ export default function ChangeAccountImageForm({ profileImageSrc }: { profileIma
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
     const [edited, setEdited] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
             if (result?.success && result.data) {
-                console.log("SUCCESS");
-
-                redirect("/dashboard/account");
+                router.push("/dashboard/account");
+                router.refresh();
             }
         }
-    }, [result, uploading]);
+    }, [result, uploading, router]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         setUploading({ submitted: true, pending: true });

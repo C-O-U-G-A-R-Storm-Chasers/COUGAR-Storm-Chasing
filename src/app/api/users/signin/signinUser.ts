@@ -9,13 +9,8 @@ import { fetchUserByEmail } from "@/lib/database/users/fetchUserByEmail";
 import { fetchUserByUsername } from "@/lib/database/users/fetchUserByUsername";
 import { updateLastSignin } from "@/lib/database/users/updateLastSignin";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export async function SigninAction(prevState: any, data: FormData): Promise<BasicResult> {
-    const login = data.get("login") as string;
-    const pass = data.get("password") as string;
-    
+export default async function signinUser(login: string, password: string): Promise<BasicResult> {
     // Check that the account exists
     let userExists = await fetchUserByUsername(login, true);
 
@@ -24,18 +19,16 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
 
         if (!userExists) return {
             success: false,
-            msg: "A user with the email or username provided does not exist. Please try again, or contact support if you believe this is an error.",
-            data: null
+            msg: "A user with the email or username provided does not exist. Please try again, or contact support if you believe this is an error."
         };
     }
 
     // Verify password
-    const passwordIsValid = await verifyPass(pass, (userExists as UserWithHashedPassword).password);
+    const passwordIsValid = await verifyPass(password, (userExists as UserWithHashedPassword).password);
 
     if (!passwordIsValid) return {
         success: false,
-        msg: "Incorrect password. Please try again, or contact support if you believe this is an error.",
-        data: null
+        msg: "Incorrect password. Please try again, or contact support if you believe this is an error."
     };
 
     const user = {
@@ -62,6 +55,9 @@ export async function SigninAction(prevState: any, data: FormData): Promise<Basi
         ...webStats,
         signinCount: webStats.signinCount + 1
     });
-    
-    redirect("/dashboard");
+
+    return {
+        success: true,
+        msg: "You've successfully signed in! Please wait..."
+    };
 }

@@ -14,7 +14,7 @@ import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
 import FormResetButton from "@/components/Buttons/FormResetButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function TeamCollectionCreateForm() {
@@ -22,13 +22,17 @@ export default function TeamCollectionCreateForm() {
     const [selectedFiles, setSelectedFiles] = useState<FileList>();
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
-            if (result?.success && result.data) redirect(`/dashboard/team-collections/${result.data}`);
+            if (result?.success && result.data) {
+                router.push(`/dashboard/team-collections/${result.data}`);
+                router.refresh();
+            }
         }
-    }, [result, uploading]);
+    }, [result, uploading, router]);
 
     const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
         const media = e.target.files;

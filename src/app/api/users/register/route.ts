@@ -11,6 +11,7 @@ import { UUID } from "crypto";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { processProfileImage } from "../processProfileImage";
 import { RegistrationResponses } from "@/_Enums/Registration/RegistrationResponses";
+import signinUser from "../signin/signinUser";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();
@@ -87,6 +88,15 @@ export async function POST(request: NextRequest) {
     if (!insertResult?.uid) return NextResponse.json({
         success: false,
         data: RegistrationResponses.TECHNICAL_ERROR
+    });
+
+    // Sign in automatically
+    const { success: signinSuccess, msg: signinMsg } = await signinUser(username, pass);
+
+    if (!signinSuccess) return NextResponse.json({
+        success: false,
+        msg: `Automatic signin error: ${signinMsg}`,
+        data: RegistrationResponses.SIGNIN_ERROR
     });
 
     return NextResponse.json({
