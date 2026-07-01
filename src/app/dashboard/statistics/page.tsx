@@ -27,7 +27,11 @@ export default async function DashboardStatisticsPage() {
                 gap-2
             "
         >
-            <InfoPageTitle textContent="Statistics" />
+            <Col className="w-full">
+                <InfoPageTitle textContent="Statistics" />
+
+                <p className="text-xs font-semibold">This page displays various website statistics for the website itself, our storm chases, our outlooks, your personal stats, and more.</p>
+            </Col>
 
             <Col className="lg:hidden w-full flex-wrap gap-2">
                 {
