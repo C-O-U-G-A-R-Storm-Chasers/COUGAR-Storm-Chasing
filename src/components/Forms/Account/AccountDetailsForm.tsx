@@ -23,7 +23,7 @@ export default function AccountDetailsForm({ user }: { user: User }) {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
             if (result?.success && result.data) {
-                router.push("/dashboard/account");
+                router.push("/dashboard/account/edit");
                 router.refresh();
             }
         }
