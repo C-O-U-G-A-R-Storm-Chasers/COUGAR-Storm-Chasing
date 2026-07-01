@@ -15,7 +15,19 @@ import { UUID } from "crypto";
 export default async function UserPage() {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success || !user) return <ErrorMessage description={msg} />;
+    if (!success || !user) return (
+        <Col
+            className="
+                w-full
+                items-start
+                p-2
+                
+                gap-2
+            "
+        >
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

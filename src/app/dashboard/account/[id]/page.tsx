@@ -38,7 +38,20 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
     // Ensure current user is signed in & member
     const { success, msg, data: currentUser } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success || !currentUser) return <ErrorMessage description={msg} />;
+    if (!success || !currentUser) return (
+        <Col
+            className="
+                w-full
+                items-start
+                p-2
+                
+                gap-2
+                overflow-y-auto
+            "
+        >
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

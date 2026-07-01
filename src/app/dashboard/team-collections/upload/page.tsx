@@ -10,7 +10,11 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 export default async function TeamCollectionCreatePage() {
     const { success, msg } = await signinValidation(PermissionLevels.ADMIN);
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return (
+        <Col className="w-full h-full items-center">
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

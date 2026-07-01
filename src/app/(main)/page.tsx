@@ -8,7 +8,20 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 export default async function Home() {
     const { success, msg } = await signinValidation();
         
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return (
+        <Col
+            id="home-page-wrapper"
+            className="
+                justify-between
+                w-full
+                h-full
+                p-2
+                gap-2
+            "
+        >
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

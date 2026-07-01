@@ -13,7 +13,11 @@ import { PermissionLevels } from "@/_Enums/PermissionLevels";
 export default async function LatestPlannedChasePage() {
     const { success } = await signinValidation(PermissionLevels.MEM);
 
-    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
+    if (!success) return (
+        <Col className="w-full h-full items-center justify-center">
+            <ErrorMessage description="You must be a member to access this feature!" />
+        </Col>
+    );
 
     await updateWebVisits();
 

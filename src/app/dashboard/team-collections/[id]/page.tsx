@@ -14,7 +14,11 @@ export default async function TeamCollectionViewByIDPage({ params }: { params: P
     
     const { success } = await signinValidation();
 
-    if (!success) return <ErrorMessage description="You must be a member to access this feature!" />;
+    if (!success) return (
+        <Col className="w-full gap-2">
+            <ErrorMessage description="You must be a member to access this feature!" />
+        </Col>
+    );
 
     await updateWebVisits();
 

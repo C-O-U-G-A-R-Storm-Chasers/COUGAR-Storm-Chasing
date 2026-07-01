@@ -15,7 +15,11 @@ import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
 export default async function TeamCollectionViewPage() {
     const { success, msg } = await signinValidation();
 
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return (
+        <Col className="w-full p-2 gap-2">
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

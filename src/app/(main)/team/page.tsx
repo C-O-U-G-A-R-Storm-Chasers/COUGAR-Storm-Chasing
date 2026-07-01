@@ -16,7 +16,11 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 export default async function TeamPage() {
     const { success, msg } = await signinValidation();
     
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return (
+        <Col className="w-full justify-start items-center">
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 

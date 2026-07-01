@@ -13,7 +13,19 @@ import UserStats from "@/components/DashboardStatistics/Cards/UserStats";
 export default async function DashboardStatisticsPage() {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
             
-    if (!success) return <ErrorMessage description={msg} />;
+    if (!success) return (
+        <Col
+            className="
+                w-full
+                items-start
+                p-2
+                
+                gap-2
+            "
+        >
+            <ErrorMessage description={msg} />
+        </Col>
+    );
 
     await updateWebVisits();
 
