@@ -8,6 +8,7 @@ import { fetchTopFiveOldestUsers } from "@/lib/database/statistics/users/fetchTo
 import StatisticsCardSectionLabel from "../StatisticsCardSectionLabel";
 import Link from "next/link";
 import { fetchTopFiveNewestUsers } from "@/lib/database/statistics/users/fetchTopFiveNewestUsers";
+import StatisticsCardNumberBlock from "../StatisticsCardNumberBlock";
 
 export default async function UserStats() {
     const userCount = await countUsers();
@@ -17,10 +18,10 @@ export default async function UserStats() {
     return (
         <StatisticsCard title="Users">
             <Row className="w-full flex-wrap gap-1">
-                <Col className="items-center p-1 bg-neutral-700 rounded-sm">
-                    <p className="text-xl">{userCount}</p>
-                    <p className="text-sm">users</p>
-                </Col>
+                <StatisticsCardNumberBlock
+                    count={userCount}
+                    label="users"
+                />
             </Row>
 
             <Col className="w-full p-1 bg-neutral-700 rounded-sm gap-1">

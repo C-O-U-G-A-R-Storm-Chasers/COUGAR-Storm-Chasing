@@ -9,6 +9,7 @@ import { fetchTopFiveCollectionsByFileCount } from "@/lib/database/statistics/te
 import { fetchTopFiveMostRecentCollections } from "@/lib/database/statistics/team-collections/fetchTopFiveMostRecentCollections";
 import StatisticsCardSectionLabel from "../StatisticsCardSectionLabel";
 import Link from "next/link";
+import StatisticsCardNumberBlock from "../StatisticsCardNumberBlock";
 
 export default async function TeamCollectionStats() {
     const teamCollectionsCount = await countTeamCollections();
@@ -19,14 +20,14 @@ export default async function TeamCollectionStats() {
     return (
         <StatisticsCard title="Collections">
             <Row className="w-full flex-wrap gap-1">
-                <Col className="items-center p-1 bg-neutral-700 rounded-sm">
-                    <p className="text-xl">{teamCollectionsCount}</p>
-                    <p className="text-sm">collections</p>
-                </Col>
-                <Col className="items-center p-1 bg-neutral-700 rounded-sm">
-                    <p className="text-xl">{teamCollectionFilesCount}</p>
-                    <p className="text-sm">media</p>
-                </Col>
+                <StatisticsCardNumberBlock
+                    count={teamCollectionsCount}
+                    label="collections"
+                />
+                <StatisticsCardNumberBlock
+                    count={teamCollectionFilesCount}
+                    label="media"
+                />
             </Row>
 
             <Col className="w-full p-1 bg-neutral-700 rounded-sm gap-1">

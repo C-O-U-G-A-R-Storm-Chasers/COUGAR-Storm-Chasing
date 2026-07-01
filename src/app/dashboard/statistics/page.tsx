@@ -6,9 +6,9 @@ import ErrorMessage from "@/components/Messages/ErrorMessage";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import Row from "@/components/Row";
 import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
-import TeamCollectionStats from "@/components/DashboardStatistics/TeamCollections/TeamCollectionsStats";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import UserStats from "@/components/DashboardStatistics/TeamCollections/UserStats";
+import TeamCollectionStats from "@/components/DashboardStatistics/Cards/TeamCollectionsStats";
+import UserStats from "@/components/DashboardStatistics/Cards/UserStats";
 
 export default async function DashboardStatisticsPage() {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
