@@ -10,7 +10,7 @@ import { BasicResult } from "@/_Interfaces/BasicResult";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
+import ProfileImageUploadForm from "./ProfileImageUploadForm";
 
 export default function ChangeAccountImageForm({ profileImageSrc }: { profileImageSrc: string | null }) {
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });

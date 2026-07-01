@@ -1,7 +1,7 @@
 "use server";
 
+import signinUser from "@/lib/auth/signinUser";
 import { NextRequest, NextResponse } from "next/server";
-import signinUser from "./signinUser";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();

@@ -4,19 +4,19 @@ import Link from "next/link";
 import { MediaFilePreview } from "./PostCardMedia";
 import Image from "next/image";
 import Col from "@/components/Col";
-import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
+import { Post } from "@/_Interfaces/Posts/Post";
 
 export default function PostCardMediaTile(
     {
-        collectionID,
+        postID,
         preview,
         isImage,
         remainingRecordCount,
         finalTile,
     }:
     {
-        collectionID: TeamCollectionWithFullRecords["id"],
+        postID: Post["id"],
         preview: MediaFilePreview,
         isImage: boolean,
         remainingRecordCount: number
@@ -25,7 +25,7 @@ export default function PostCardMediaTile(
 ) {
     return (
         <Link
-            href={`/dashboard/team-collections/${collectionID}`}
+            href={`/dashboard/posts/${postID}`}
             className={`${(finalTile || !isImage) && "relative"} flex flex-col max-w-full aspect-square`}
         >
             <Image

@@ -7,7 +7,7 @@ import { UserWithHashedPassword } from "@/_Interfaces/Users/User";
 import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import { insertUser } from "@/lib/database/users/insertUser";
 import { cookies } from "next/headers";
-import { processProfileImage } from "../../processProfileImage";
+import { uploadProfileImage } from "@/lib/utils/files/uploadProfileImage";
 
 export async function POST(request: NextRequest) {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
@@ -22,11 +22,11 @@ export async function POST(request: NextRequest) {
 
     if (!profileImage) return NextResponse.json({
         success: false,
-        msg: "Profile image field is empty, cannot update!"
+        msg: "Profile image field cannot be empty!"
     });
 
     // Upload profile image
-    const profileImageResult = await processProfileImage(user.uid, profileImage);
+    const profileImageResult = await uploadProfileImage(user.uid, profileImage);
 
     if (!profileImageResult.success || !profileImageResult.data) return NextResponse.json({
         success: false,

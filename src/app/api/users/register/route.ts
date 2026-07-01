@@ -9,9 +9,9 @@ import { hashPass } from "@/lib/auth/hashPass";
 import { safeUUID } from "@/lib/crypto/crypto";
 import { UUID } from "crypto";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { processProfileImage } from "../processProfileImage";
 import { RegistrationResponses } from "@/_Enums/Registration/RegistrationResponses";
-import signinUser from "../signin/signinUser";
+import { uploadProfileImage } from "@/lib/utils/files/uploadProfileImage";
+import signinUser from "@/lib/auth/signinUser";
 
 export async function POST(request: NextRequest) {
     const data = await request.formData();
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     const uid = safeUUID() as UUID;
 
     // Upload profile image
-    const profileImageResult = profileImage ? await processProfileImage(uid, profileImage) : null;
+    const profileImageResult = profileImage ? await uploadProfileImage(uid, profileImage) : null;
 
     // Insert user
     const user: UserWithHashedPassword = {

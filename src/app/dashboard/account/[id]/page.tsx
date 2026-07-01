@@ -1,7 +1,8 @@
 "use server";
 
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
+import { MediaFile } from "@/_Interfaces/Files/MediaFile";
+import { Post } from "@/_Interfaces/Posts/Post";
 import { User } from "@/_Interfaces/Users/User";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
@@ -12,7 +13,7 @@ import PostCardHeader from "@/components/Posts/PostCardHeader";
 import Row from "@/components/Row";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { safeUUID } from "@/lib/crypto/crypto";
-import { fetchAllTeamCollectionsFromTeamMember } from "@/lib/database/team-collections/fetchAllTeamCollectionsFromTeamMember";
+import { fetchAllPostsFromUser } from "@/lib/database/posts/fetchAllPostsFromUser";
 import { fetchUserByHandle } from "@/lib/database/users/fetchUserByHandle";
 import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
@@ -58,7 +59,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
     const profileImage = await fetchUserProfileImage(user.profileImage ?? safeUUID() as UUID);
     const profileImageSrc = profileImage ? `/cdn/profile_images/${profileImage.id}.${profileImage.ext}` : null;
 
-    const collections: TeamCollectionWithFullRecords[] = await fetchAllTeamCollectionsFromTeamMember(user.uid);
+    const posts: Post[] = await fetchAllPostsFromUser(user.uid);
 
     return (
         <Col
@@ -184,24 +185,23 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
 
             <Col className="w-full gap-2">
                 {
-                    collections.map(collection => (
-                        <PostCard key={collection.id}>
-                            <PostCardHeader
-                                title={collection.title}
-                                timestamp={unixToDate(collection.uploadedAt)}
-                                postedByUID={collection.uploader}
-                            />
-                            
-                            <PostCardBody body={collection.description} />
-    
-                            <PostCardMedia
-                                collectionMedia={{
-                                    collectionID: collection.id,
-                                    collectionFiles: collection.files
-                                }}
-                            />
-                        </PostCard>
-                    ))
+                    posts.map(post => {
+                        const title = `${post.body.slice(0, 16)}...`;
+
+                        return (
+                            <PostCard key={post.id}>
+                                <PostCardHeader
+                                    title={title}
+                                    timestamp={unixToDate(post.uploadedAt)}
+                                    postedByUID={post.uploader}
+                                />
+                                
+                                <PostCardBody body={post.body} />
+
+                                <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
+                            </PostCard>
+                        );
+                    })
                 }
             </Col>
         </Col>

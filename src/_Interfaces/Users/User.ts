@@ -1,6 +1,6 @@
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import { PasswordHash } from "../Auth/PasswordHash";
-import { ProfileImage } from "../Files/Images/ProfileImage";
+import { ProfileImage } from "../Files/ProfileImage";
 
 export interface User {
     uid: string,

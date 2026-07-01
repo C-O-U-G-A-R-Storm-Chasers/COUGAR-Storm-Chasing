@@ -1,4 +1,4 @@
-import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
+import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
 import { getMongo } from "@/lib/mongo/getmongo";
 
 export async function fetchUserProfileImage(id: ProfileImage["id"]): Promise<ProfileImage | null> {

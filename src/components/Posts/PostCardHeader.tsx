@@ -7,7 +7,7 @@ import { fetchUserByID } from "@/lib/database/users/fetchUserByID";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
-import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
+import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
 
 function ProfileImageLink({ user, profileImage }: { user: User, profileImage: ProfileImage }) {
     return (
@@ -55,7 +55,7 @@ export default async function PostCardHeader(
         postedByUID,
     }:
     {
-        title: string,
+        title?: string,
         timestamp: string,
         postedByUID: User["uid"],
     }
@@ -87,8 +87,13 @@ export default async function PostCardHeader(
                 <p className="text-xs">null</p>
             }
             
-            <p className="md:hidden text-xs font-semibold">{title}</p>
-            <p className="hidden md:flex text-sm font-semibold">{title}</p>
+            {
+                title &&
+                <>
+                    <p className="md:hidden text-xs font-semibold">{title}</p>
+                    <p className="hidden md:flex text-sm font-semibold">{title}</p>
+                </>
+            }
         </Col>
     );
 }

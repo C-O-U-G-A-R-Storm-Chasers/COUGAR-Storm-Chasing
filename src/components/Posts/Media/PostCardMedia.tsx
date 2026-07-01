@@ -1,37 +1,37 @@
 "use server";
 
-import { TeamCollectionWithFullRecords } from "@/_Interfaces/TeamCollections/TeamCollection";
 import config from "../../../lib/cougar-config.json";
 import { UUID } from "crypto";
 import { SupportedImageExtension } from "@/_Types/SupportedImageExtension";
 import Row from "@/components/Row";
 import Col from "@/components/Col";
 import PostCardMediaTile from "./PostCardMediaTile";
+import { ImageFile, MediaFile } from "@/_Interfaces/Files/MediaFile";
+import { Post } from "@/_Interfaces/Posts/Post";
 
 export interface MediaFilePreview {
     index: number,
     id: UUID,
-    ext: SupportedImageExtension // This shouldn't ever need to use SupportedVideoExtension, because previews only use thumbnails,
+    ext: SupportedImageExtension // This shouldn't ever need to use SupportedVideoExtension, because previews only use thumbnails
     isImage: boolean
 }
 
 export default async function PostCardMedia(
     {
-        collectionMedia
+        postID,
+        media
     }:
     {
-        collectionMedia?: {
-            collectionID: TeamCollectionWithFullRecords["id"],
-            collectionFiles: TeamCollectionWithFullRecords["files"]
-        }
+        postID: Post["id"],
+        media: MediaFile[]
     }
 ) {
-    if (collectionMedia && collectionMedia.collectionFiles.length > 0) {
+    if (media && media.length > 0) {
         const imageExtensions = config.supported_image_mimes.map(mime => mime.replace("image/", ""));
 
         // Only select the first up-to-five records for previewing
-        const files = collectionMedia.collectionFiles.slice(0, 6);
-        const remainingRecordCount = collectionMedia.collectionFiles.length - files.length;
+        const files = media.slice(0, 6);
+        const remainingRecordCount = media.length - files.length;
 
         // Collect files as previews and assign an index
         const previews = files.map((file, index) => {
@@ -39,8 +39,8 @@ export default async function PostCardMedia(
 
             const preview: MediaFilePreview = {
                 index,
-                id: isImage ? file.id : file.thumb.id,
-                ext: isImage ? file.ext as SupportedImageExtension : file.thumb.ext,
+                id: isImage ? file.id : (file.thumb as ImageFile).id,
+                ext: isImage ? file.ext as SupportedImageExtension : (file.thumb as ImageFile).ext,
                 isImage
             };
 
@@ -54,7 +54,7 @@ export default async function PostCardMedia(
                         {
                             previews[0] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[0]}
                                 isImage={previews[0].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}
@@ -67,7 +67,7 @@ export default async function PostCardMedia(
                         {
                             previews[1] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[1]}
                                 isImage={previews[1].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}
@@ -77,7 +77,7 @@ export default async function PostCardMedia(
                         {
                             previews[2] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[2]}
                                 isImage={previews[2].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}
@@ -92,7 +92,7 @@ export default async function PostCardMedia(
                         {
                             previews[3] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[3]}
                                 isImage={previews[3].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}
@@ -102,7 +102,7 @@ export default async function PostCardMedia(
                         {
                             previews[4] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[4]}
                                 isImage={previews[4].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}
@@ -115,7 +115,7 @@ export default async function PostCardMedia(
                         {
                             previews[5] &&
                             <PostCardMediaTile
-                                collectionID={collectionMedia.collectionID}
+                                postID={postID}
                                 preview={previews[5]}
                                 isImage={previews[5].isImage}
                                 remainingRecordCount={remainingRecordCount + 1}

@@ -3,44 +3,44 @@
 import Row from "@/components/Row";
 import StatisticsCard from "../StatisticsCard";
 import Col from "@/components/Col";
-import { countTeamCollections } from "@/lib/database/statistics/team-collections/countTeamCollections";
-import { countTeamCollectionFiles } from "@/lib/database/statistics/team-collections/countTeamCollectionFiles";
-import { fetchTopFiveCollectionsByFileCount } from "@/lib/database/statistics/team-collections/fetchTopFiveCollectionsByFileCount";
-import { fetchTopFiveMostRecentCollections } from "@/lib/database/statistics/team-collections/fetchTopFiveMostRecentCollections";
 import StatisticsCardSectionLabel from "../StatisticsCardSectionLabel";
 import Link from "next/link";
 import StatisticsCardNumberBlock from "../StatisticsCardNumberBlock";
+import { countPosts } from "@/lib/database/statistics/posts/countPosts";
+import { countMediaFiles } from "@/lib/database/statistics/posts/countMediaFiles";
+import { fetchTopFivePostsByFileCount } from "@/lib/database/statistics/posts/fetchTopFivePostsByFileCount";
+import { fetchTopFiveMostRecentPosts } from "@/lib/database/statistics/posts/fetchTopFiveMostRecentCollections";
 
 export default async function TeamCollectionStats() {
-    const teamCollectionsCount = await countTeamCollections();
-    const teamCollectionFilesCount = await countTeamCollectionFiles();
-    const topFiveCollectionsByFileCount = await fetchTopFiveCollectionsByFileCount();
-    const topFiveMostRecentCollections = await fetchTopFiveMostRecentCollections();
+    const postsCount = await countPosts();
+    const mediaFilesCount = await countMediaFiles();
+    const topFiveMostRecentPosts = await fetchTopFiveMostRecentPosts();
+    const topFivePostsByFileCount = await fetchTopFivePostsByFileCount();
 
     return (
-        <StatisticsCard title="Collections">
+        <StatisticsCard title="Posts">
             <Row className="w-full flex-wrap gap-1">
                 <StatisticsCardNumberBlock
-                    count={teamCollectionsCount}
-                    label="collections"
+                    count={postsCount}
+                    label="posts"
                 />
                 <StatisticsCardNumberBlock
-                    count={teamCollectionFilesCount}
+                    count={mediaFilesCount}
                     label="media"
                 />
             </Row>
 
             <Col className="w-full p-1 bg-neutral-700 rounded-sm gap-1">
-                <StatisticsCardSectionLabel label="Most Recent Collections" />
+                <StatisticsCardSectionLabel label="Most Recent Posts" />
                 {
-                    (topFiveMostRecentCollections.length > 0) ?
-                    topFiveMostRecentCollections.map(collection => (
+                    (topFiveMostRecentPosts.length > 0) ?
+                    topFiveMostRecentPosts.map(post => (
                         <Link
-                            key={collection.id}
-                            href={`/dashboard/team-collections/${collection.id}`}
+                            key={post.id}
+                            href={`/dashboard/posts/${post.id}`}
                             className="text-xs hover:underline"
                         >
-                            {collection.title}
+                            {`${post.body.slice(0, 16)}...`}
                         </Link>
                     ))
                     :
@@ -49,16 +49,16 @@ export default async function TeamCollectionStats() {
             </Col>
 
             <Col className="w-full p-1 bg-neutral-700 rounded-sm gap-1">
-                <StatisticsCardSectionLabel label="Top Collections by Media Count" />
+                <StatisticsCardSectionLabel label="Top Posts by Media Count" />
                 {
-                    (topFiveCollectionsByFileCount.length > 0) ?
-                    topFiveCollectionsByFileCount.map(collection => (
+                    (topFivePostsByFileCount.length > 0) ?
+                    topFivePostsByFileCount.map(post => (
                         <Link
-                            key={collection.id}
-                            href={`/dashboard/team-collections/${collection.id}`}
+                            key={post.id}
+                            href={`/dashboard/posts/${post.id}`}
                             className="text-xs hover:underline"
                         >
-                            {collection.title}
+                            {`${post.body.slice(0, 16)}...`}
                         </Link>
                     ))
                     :

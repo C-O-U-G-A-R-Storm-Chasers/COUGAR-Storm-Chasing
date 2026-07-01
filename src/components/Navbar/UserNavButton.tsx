@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Col from "../Col";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import { ProfileImage } from "@/_Interfaces/Files/Images/ProfileImage";
+import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
 
 export default function UserNavButton({ user, profileImage }: { user: User, profileImage: ProfileImage | null }) {
     return (

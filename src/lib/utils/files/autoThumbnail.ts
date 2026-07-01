@@ -6,7 +6,6 @@ import { mkdir } from "fs/promises";
 import { join } from "path";
 
 export async function autoThumbnail(inputPathWithoutFile: string, inputFileNameWithExt: string, outputPathWithoutFile: string, outputFileNameWithExt: string): Promise<void> {
-    // Get root path based on environment
     const fullInputPathWithoutFile = join(inputPathWithoutFile);
     const fullOutputPathWithoutFile = join(outputPathWithoutFile);
     const fullInputPath = join(fullInputPathWithoutFile, inputFileNameWithExt);

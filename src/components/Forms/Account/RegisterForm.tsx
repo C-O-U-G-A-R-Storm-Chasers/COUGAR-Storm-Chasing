@@ -11,7 +11,7 @@ import Row from "@/components/Row";
 import InfoHeader from "@/components/Text/Headers/InfoHeader";
 import Link from "next/link";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
-import ProfileImageUploadForm from "../Media/Upload/ProfileImageUploadForm";
+import ProfileImageUploadForm from "./ProfileImageUploadForm";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
