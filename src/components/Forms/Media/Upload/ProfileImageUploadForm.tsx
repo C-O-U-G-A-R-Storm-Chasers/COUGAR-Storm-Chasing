@@ -44,6 +44,7 @@ export default function ProfileImageUploadForm({ defaultValue, setChanged }: { d
             <Col className="items-center w-full">
                 <Col
                     className="
+                        relative
                         items-center
                         justify-center
                         w-50
@@ -70,9 +71,8 @@ export default function ProfileImageUploadForm({ defaultValue, setChanged }: { d
                         <Image
                             src={defaultValue}
                             alt="Current profile image"
-                            width={2048}
-                            height={2048}
-                            className="relative w-full h-full rounded-4xl"
+                            className="object-cover rounded-4xl"
+                            fill
                             title="Select Profile Image"
                         />
                         :
@@ -80,9 +80,8 @@ export default function ProfileImageUploadForm({ defaultValue, setChanged }: { d
                         <Image
                             src={URL.createObjectURL(selectedFile)}
                             alt="Selected File"
-                            width={2048}
-                            height={2048}
-                            className="relative w-full h-full rounded-4xl"
+                            className="object-cover rounded-4xl"
+                            fill
                             title="Select Profile Image"
                         />
                         :

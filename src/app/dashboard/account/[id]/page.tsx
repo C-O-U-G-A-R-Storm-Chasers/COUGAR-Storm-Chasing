@@ -74,15 +74,14 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
                 "
             >
                 <Col className="md:hidden w-full items-center gap-2">
-                    <Col className="w-2/3 aspect-square border-2 border-dotted rounded-xl">
+                    <Col className="relative w-2/3 aspect-square border-2 border-dotted rounded-xl">
                         {
                             profileImageSrc ?
                             <Image
                                 src={profileImageSrc}
                                 alt={`${user.username}'s Profile`}
-                                width={512}
-                                height={512}
-                                className="w-full h-full rounded-xl"
+                                fill
+                                className="object-cover rounded-xl"
                                 priority={true}
                             />
                             :
@@ -122,15 +121,14 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
                 </Col>
 
                 <Row className="hidden md:flex w-full items-start gap-2">
-                    <Col className="w-2/8 aspect-square border-2 border-dotted rounded-xl">
+                    <Col className="relative w-2/8 aspect-square border-2 border-dotted rounded-xl">
                         {
                             profileImageSrc ?
                             <Image
                                 src={profileImageSrc}
                                 alt={`${user.username}'s Profile`}
-                                width={512}
-                                height={512}
-                                className="w-full h-full rounded-xl"
+                                fill
+                                className="object-cover rounded-xl"
                                 priority={true}
                             />
                             :
