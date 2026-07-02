@@ -29,7 +29,7 @@ export default function PostCardMediaTile(
             className={`${(finalTile || !isImage) && "relative"} flex flex-col max-w-full aspect-square`}
         >
             <Image
-                src={isImage ? `/cdn/team_media/${preview.id}.${preview.ext}` : `/cdn/thumbnails/${preview.id}.${preview.ext}`}
+                src={isImage ? `/cdn/user_media/${preview.id}.${preview.ext}` : `/cdn/thumbnails/${preview.id}.${preview.ext}`}
                 alt={`Media ${preview.id}`}
                 width={2048}
                 height={2048}

@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
     const body = data.get("body") as string;
     const files = data.getAll("media") as File[] | null;
 
+    if (process.env.NODE_ENV === "development") console.log({ body, files });
+
     // Upload media
     let media: MediaFile["id"][] = [];
     if (files && files.length > 0) {
@@ -49,6 +51,8 @@ export async function POST(request: NextRequest) {
         success: false,
         msg: `Unknown error: Unable to create post!`
     });
+
+    if (process.env.NODE_ENV === "development") console.log({ post });
 
     return NextResponse.json({
         success: true,

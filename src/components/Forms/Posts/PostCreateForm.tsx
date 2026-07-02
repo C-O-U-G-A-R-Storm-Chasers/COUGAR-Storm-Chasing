@@ -2,31 +2,35 @@
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import Col from "@/components/Col";
-import { PaperClipIcon } from "@heroicons/react/24/outline";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Row from "@/components/Row";
 import config from "../../../lib/cougar-config.json";
-import InputTextarea from "@/components/Inputs/InputTextarea";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
-import FormSubmitButton from "@/components/Buttons/FormSubmitButton";
-import FormResetButton from "@/components/Buttons/FormResetButton";
 import { BasicResult } from "@/_Interfaces/BasicResult";
 import SuccessMessage from "@/components/Messages/SuccessMessage";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
+import { User } from "@/_Interfaces/Users/User";
+import ProfileImagePlaceholder from "@/components/Users/ProfileImagePlaceholder";
+import PostCreateFormBodyInput from "./PostCreateFormBodyInput";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import PostCreateFormSelectedMedia from "./PostCreateFormSelectedMedia";
 
-export default function PostCreateForm() {
+export default function PostCreateForm({ currentUser, currentUserProfileImage }: { currentUser: User, currentUserProfileImage: ProfileImage | null }) {
+    const postForm = useRef<HTMLFormElement>(null);
     const filesInput = useRef<HTMLInputElement>(null);
     const [selectedFiles, setSelectedFiles] = useState<FileList>();
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
+    const [edited, setEdited] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
         // Form submitted & finished processing
         if (uploading.submitted && !uploading.pending) {
             if (result?.success && result.data) {
-                router.push(`/dashboard/posts/${result.data}`);
+                router.push(`/dashboard/posts`);
                 router.refresh();
             }
         }
@@ -39,12 +43,18 @@ export default function PostCreateForm() {
 
         setSelectedFiles(media);
     };
-
+    
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         setUploading({ submitted: true, pending: true });
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
+
+        if (selectedFiles) {
+            const files = Array.from(selectedFiles);
+
+            await Promise.all(files.map(file => formData.append("media", file)));
+        }
 
         try {
             const response = await fetch("/api/posts/create", {
@@ -58,125 +68,114 @@ export default function PostCreateForm() {
         }
     };
 
-    const handleClick = () => filesInput.current?.click();
+    const submitPost = () => postForm.current?.requestSubmit();
+
+    const selectMedia = () => filesInput.current?.click();
 
     const acceptedMimes = [...config.supported_image_mimes, config.supported_video_mimes].join(",");
 
     return (
         <form
+            ref={postForm}
             onSubmit={handleSubmit}
             className="
                 flex
                 flex-col
-                items-center
-                w-1/2
-                p-2
-
-                rounded-md
+                w-full
+                p-1
+                px-2
                 
+                bg-neutral-600
+
+                border-1
+                border-neutral-500
+                rounded-md
+
                 gap-2
             "
         >
-            <Col className="items-center w-full">
-                <input
-                    ref={filesInput}
-                    type="file"
-                    name="team-media"
-                    accept={acceptedMimes}
-                    className="hidden"
-                    onChange={handleSelectedMedia}
-                    multiple
-                />
+            <input
+                ref={filesInput}
+                type="file"
+                name="team-media"
+                accept={acceptedMimes}
+                className="hidden"
+                onChange={handleSelectedMedia}
+                multiple
+            />
 
-                <Col
-                    className="
-                        items-center
-                        justify-center
-                        w-50
-                        h-50
-
-                        border-3
-                        border-dashed
-                        border-primary-1/50
-
-                        text-primary-1/50
-
-                        hover:border-primary-1
-                        hover:text-primary-1
-
-                        cursor-pointer
-
-                        rounded-4xl
-                    "
-                    onClick={handleClick}
-                >
+            <Row className="justify-start items-start w-full gap-2">
+                <Col className="relative w-8 aspect-square">
                     {
-                        (selectedFiles && selectedFiles.length > 0) ?
-                        <>
-                            <Image
-                                src={URL.createObjectURL(Array.from(selectedFiles)[0])}
-                                alt="Selected File"
-                                width={2048}
-                                height={2048}
-                                className="relative w-full h-full rounded-4xl"
-                                onClick={handleClick}
-                            />
-                            {
-                                selectedFiles.length > 1 &&
-                                <Row className="absolute items-center justify-center text-primary-1">
-                                    <p className="text-2xl">+{selectedFiles.length - 1} attachments</p>
-                                </Row>
-                            }
-                        </>
+                        currentUserProfileImage ?
+                        <Image
+                            src={`/cdn/profile_images/${currentUserProfileImage.id}.${currentUserProfileImage.ext}`}
+                            alt={`${currentUser.username}'s Profile Image`}
+                            fill
+                            className="object-cover"
+                        />
                         :
-                        <>
-                            <PaperClipIcon className="w-8 h-8" />
-                            <p className="text-md">Select Media</p>
-                        </>
+                        <ProfileImagePlaceholder username={currentUser.username} />
                     }
                 </Col>
 
-                <Col className="items-center">
-                    <p className="text-md text-primary-1/75">Supported Filetypes:</p>
-                    <p className="text-xs text-primary-1/25">{acceptedMimes.replaceAll("image/", "").replaceAll("video/", "").replaceAll(",", ", ")}</p>
-                </Col>
-            </Col>
+                <Row className="flex-1 gap-2">
+                    <PostCreateFormBodyInput isEdited={setEdited}/>
 
+                    {
+                        edited &&
+                        <Col className="flex-1">
+                            <PaperAirplaneIcon
+                                title={"Submit post"}
+                                className="w-8 w-8 cursor-pointer text-cyan-600 hover:text-cyan-700"
+                                onClick={submitPost}
+                            />
+                        </Col>
+                    }
+                </Row>
+            </Row>
+            
             {
                 (uploading.submitted && !uploading.pending) &&
                 (result && !result.success) &&
-                <ErrorMessage description={result.msg ?? "Unknown result"} />
+                <Row className="justify-start items-start w-full gap-2">
+                    <ErrorMessage description={result.msg ?? "Unknown result"} />
+                </Row>
             }
 
             {
                 (uploading.submitted && !uploading.pending) &&
                 (result && result.success) &&
-                <SuccessMessage description={result.msg ?? "Unknown result"} />
-            }
-
-            <Col className="w-full gap-2">
-                <Col>
-                    <label htmlFor="body" className="text-xs">Post Body</label>
-                    <InputTextarea
-                        name="body"
-                        id="body"
-                        rows={10}
-                    />
-                </Col>
-
-                <Col>
-                    {
-                        uploading.submitted && uploading.pending ?
-                            <LoadingSpinner loadingText="Submitting post, please wait..." /> :
-                            <FormSubmitButton>Post</FormSubmitButton>
-                    }
-                </Col>
-
-                <Row>
-                    <FormResetButton />
+                <Row className="justify-start items-start w-full gap-2">
+                    <SuccessMessage description={result.msg ?? "Unknown result"} />
                 </Row>
-            </Col>
-
+            }
+            
+            {
+                edited &&
+                <Row className="justify-start items-start w-full gap-2">
+                    <Row className="justify-start items-start w-full px-2 border-2 border-neutral-300 rounded-full gap-2">
+                        <PhotoIcon
+                            title={`Attach media (Supported types: ${acceptedMimes.replaceAll("image/", "").replaceAll("video/", "").replaceAll(",", ", ")})`}
+                            className="w-8 w-8 cursor-pointer text-green-600 hover:text-green-700"
+                            onClick={selectMedia}
+                        />
+                    </Row>
+                </Row>
+            }
+            
+            {
+                (selectedFiles && selectedFiles.length > 0) &&
+                <Row className="justify-start items-start w-full gap-2">
+                    <Row className="w-full p-2 border-2 border-neutral-300 rounded-md">
+                        <PostCreateFormSelectedMedia
+                            file={selectedFiles[0]}
+                            filesCount={Array.from(selectedFiles).length}
+                            selectMedia={selectMedia}
+                        />
+                    </Row>
+                </Row>
+            }
         </form>
     );
 }

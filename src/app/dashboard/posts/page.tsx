@@ -12,11 +12,13 @@ import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
 import { Post } from "@/_Interfaces/Posts/Post";
 import { fetchAllPosts } from "@/lib/database/posts/fetchAllPosts";
 import { MediaFile } from "@/_Interfaces/Files/MediaFile";
+import PostCreateForm from "@/components/Forms/Posts/PostCreateForm";
+import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
 
 export default async function PostsViewPage() {
-    const { success, msg } = await signinValidation();
-
-    if (!success) return (
+    const { success, msg, data: currentUser } = await signinValidation();
+    
+    if (!success || !currentUser) return (
         <Col className="w-full p-2 gap-2">
             <ErrorMessage description={msg} />
         </Col>
@@ -24,32 +26,41 @@ export default async function PostsViewPage() {
 
     await updateWebVisits();
 
+    let currentUserProfileImage = null;
+
+    if (currentUser?.profileImage) currentUserProfileImage = await fetchUserProfileImage(currentUser.profileImage);
     const posts: Post[] = await fetchAllPosts();
 
     return (
-        <Col className="w-full p-2 gap-2">
-            {
-                !posts || posts.length === 0 ?
-                <Col className="w-full items-center text-center">
-                    <p className="text-4xl">Uh oh!</p>
-                    <p className="text-xl">It appears that we have not uploaded any media to our website yet. This means something is wrong, or the website is very new. Please try refreshing the page!</p>
-                    <p className="text-lg">If you believe this is an error, please report it.</p>
-                </Col>
-                :
-                posts.map(post => (
-                    <PostCard key={post.id}>
-                        <PostCardHeader
-                            title={`${post.body.slice(0, 16)}...`}
-                            timestamp={unixToDate(post.uploadedAt)}
-                            postedByUID={post.uploader}
-                        />
-                        
-                        <PostCardBody body={post.body} />
+        <Col className="w-full h-full items-center overflow-y-auto">
+            <Col className="w-full md:w-1/2 p-2">
+                <PostCreateForm currentUser={currentUser} currentUserProfileImage={currentUserProfileImage} />
 
-                        <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
-                    </PostCard>
-                ))
-            }
+                <Col className="w-full p-2 gap-2">
+                    {
+                        !posts || posts.length === 0 ?
+                        <Col className="w-full items-center text-center">
+                            <p className="text-4xl">Uh oh!</p>
+                            <p className="text-xl">It appears that we have not uploaded any media to our website yet. This means something is wrong, or the website is very new. Please try refreshing the page!</p>
+                            <p className="text-lg">If you believe this is an error, please report it.</p>
+                        </Col>
+                        :
+                        posts.map(post => (
+                            <PostCard key={post.id}>
+                                <PostCardHeader
+                                    title={`${post.body.slice(0, 16)}...`}
+                                    timestamp={unixToDate(post.uploadedAt)}
+                                    postedByUID={post.uploader}
+                                />
+                                
+                                <PostCardBody body={post.body} />
+
+                                <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
+                            </PostCard>
+                        ))
+                    }
+                </Col>
+            </Col>
         </Col>
     );
 }

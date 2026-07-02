@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ file
     const { filename } = await params;
 
     const rootPath = getRootPath();
-    const filePath = join(rootPath, "media", filename);
+    const filePath = join(rootPath, "user_media", filename);
 
     if (!existsSync(filePath)) {
         return new NextResponse("Not found", { status: 404 });

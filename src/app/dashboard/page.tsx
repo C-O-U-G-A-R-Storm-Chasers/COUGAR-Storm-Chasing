@@ -1,7 +1,7 @@
 "use server";
 
-import DashboardStatisticsPage from "./statistics/page";
+import PostsViewPage from "./posts/page";
 
 export default async function DashboardPage() {
-    return <DashboardStatisticsPage />;
+    return <PostsViewPage />;
 }

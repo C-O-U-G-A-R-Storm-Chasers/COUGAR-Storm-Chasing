@@ -12,6 +12,9 @@ export async function fetchAllPostsFromUser(uid: User["uid"]): Promise<Post[]> {
                 $match: {
                     uploader: uid,
                 },
+                $sort: {
+                    createdAt: -1,
+                },
             },
             {
                 $lookup: {

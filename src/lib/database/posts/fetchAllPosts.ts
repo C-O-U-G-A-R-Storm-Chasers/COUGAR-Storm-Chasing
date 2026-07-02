@@ -9,6 +9,11 @@ export async function fetchAllPosts(): Promise<Post[]> {
         .collection<Post>("posts")
         .aggregate<Post>([
             {
+                $sort: {
+                    createdAt: -1,
+                },
+            },
+            {
                 $lookup: {
                     from: "media-files",
                     let: { fileIds: "$files" },

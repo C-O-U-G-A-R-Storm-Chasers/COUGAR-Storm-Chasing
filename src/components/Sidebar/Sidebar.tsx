@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkIcon, ChartBarSquareIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, DevicePhoneMobileIcon, UserIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ChartBarSquareIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, DevicePhoneMobileIcon, HomeIcon, UserIcon } from "@heroicons/react/24/outline";
 import SidebarButtonStandard from "../Sidebar/SidebarButtonStandard";
 import SidebarSection from "./SidebarSection";
 import { User } from "@/_Interfaces/Users/User";
@@ -21,20 +21,12 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
         
         if (isMobile) {
             function handleClickOutside(event: MouseEvent) {
-            if (
-                !collapsed &&
-                sidebarRef.current &&
-                !sidebarRef.current.contains(event.target as Node)
-            ) {
-                setCollapsed(true);
+                if (!collapsed && sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) setCollapsed(true);
             }
-        }
 
-        document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
+            return () => document.removeEventListener("mousedown", handleClickOutside);
         }
     }, [collapsed]);
 
@@ -121,6 +113,11 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                 !collapsed &&
                 <>
                     <SidebarSection label="C.O.U.G.A.R." collapsed={collapsed}>
+                        <SidebarButtonStandard href="/dashboard">
+                            <HomeIcon className="w-5 aspect-square text-primary-1" />
+                            <p className="text-xs md:text-md text-primary-1">Posts</p>
+                        </SidebarButtonStandard>
+
                         {
                             currentUser &&
                             <>
@@ -138,11 +135,6 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
                                 }
                             </>
                         }
-
-                        <SidebarButtonStandard href="/dashboard/team-collections">
-                            <VideoCameraIcon className="w-5 aspect-square text-primary-1" />
-                            <p className="text-xs md:text-md text-primary-1">Collections</p>
-                        </SidebarButtonStandard>
                     </SidebarSection>
 
                     {

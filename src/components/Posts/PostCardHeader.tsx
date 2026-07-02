@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
 import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
+import ProfileImagePlaceholder from "../Users/ProfileImagePlaceholder";
 
 function ProfileImageLink({ user, profileImage }: { user: User, profileImage: ProfileImage }) {
     return (
@@ -67,25 +68,33 @@ export default async function PostCardHeader(
 
     return (
         <Col className="w-full">
-            {
-                (user && profileImage) ?
-                <>
-                    <Row className="w-full items-center gap-2">
-                        <Col>
-                            <ProfileImageLink user={user} profileImage={profileImage} />
-                        </Col>
+            <Row className="w-full items-center gap-2">
+                {
+                    user ?
+                    <>
+                        {
+                            profileImage ?
+                            <Col>
+                                <ProfileImageLink user={user} profileImage={profileImage} />
+                            </Col>
+                            :
+                            <Col className="w-6 h-6">
+                                <ProfileImagePlaceholder username={user.username} />
+                            </Col>
+                        }
                         
                         <Col>
                             <UsernameLink user={user} />
                             <p className="md:hidden text-xs font-semibold text-primary-1/50">{timestamp}</p>
                             <p className="hidden md:flex text-2xs font-semibold text-primary-1/50">{timestamp}</p>
                         </Col>
-                        
-                    </Row>
-                </>
-                :
-                <p className="text-xs">null</p>
-            }
+                    </>
+                    :
+                    <Col>
+                        <p className="text-xs">null</p>
+                    </Col>
+                }
+            </Row>
             
             {
                 title &&

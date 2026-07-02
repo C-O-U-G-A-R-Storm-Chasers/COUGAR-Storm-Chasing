@@ -4,8 +4,8 @@ import { User } from "@/_Interfaces/Users/User";
 import Image from "next/image";
 import Link from "next/link";
 import Col from "../Col";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
+import ProfileImagePlaceholder from "../Users/ProfileImagePlaceholder";
 
 export default function UserNavButton({ user, profileImage }: { user: User, profileImage: ProfileImage | null }) {
     return (
@@ -24,22 +24,20 @@ export default function UserNavButton({ user, profileImage }: { user: User, prof
                 gap-1
             "
         >
-            {
-                profileImage ?
-                <Col className="items-center justify-center w-5 h-5 bg-teal-700 rounded-md">
+            
+            <Col className="relative items-center justify-center w-5 aspect-square rounded-md">
+                {
+                    profileImage ?
                     <Image
                         src={`/cdn/profile_images/${profileImage.id}.${profileImage.ext}`}
                         alt={`${user.username}'s Profile Image`}
-                        width={512}
-                        height={512}
+                        fill
                         className="w-full h-full"
                     />
-                </Col>
-                :
-                <Col className="items-center justify-center w-5 h-5 bg-teal-700 rounded-md">
-                    <UserCircleIcon className="w-full h-full text-primary-1" />
-                </Col>
-            }
+                    :
+                    <ProfileImagePlaceholder username={user.username} />
+                }
+            </Col>
             
             <p className="text-xs font-semibold text-blue-500">{user.username}</p>
         </Link>
