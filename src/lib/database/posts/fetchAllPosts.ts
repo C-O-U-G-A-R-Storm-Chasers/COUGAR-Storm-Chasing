@@ -10,7 +10,7 @@ export async function fetchAllPosts(): Promise<Post[]> {
         .aggregate<Post>([
             {
                 $sort: {
-                    createdAt: -1,
+                    uploadedAt: -1,
                 },
             },
             {
