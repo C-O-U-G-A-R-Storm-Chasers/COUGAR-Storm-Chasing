@@ -2,13 +2,13 @@
 
 import { Post } from "@/_Interfaces/Posts/Post";
 
-export default function PostCardTitle({ body }: { body: Post["body"] }) {
-    const hasLineBreak = body.includes("\n");
+export default function PostCardTitle({ post }: { post: Post }) {
+    const hasLineBreak = post.body.includes("\n");
 
     let title: string | undefined;
 
     if (hasLineBreak) {
-        const firstPara = body.split("\n")[0].trim();
+        const firstPara = post.body.split("\n")[0].trim();
 
         const periodIndex = firstPara.indexOf(".");
 

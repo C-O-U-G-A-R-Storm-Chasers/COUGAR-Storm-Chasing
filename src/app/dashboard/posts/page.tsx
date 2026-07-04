@@ -5,13 +5,8 @@ import ErrorMessage from "@/components/Messages/ErrorMessage";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import PostCard from "@/components/Posts/PostCard";
-import PostCardHeader from "@/components/Posts/PostCardHeader";
-import { unixToDate } from "@/lib/utils/unixToDate";
-import PostCardBody from "@/components/Posts/PostCardBody";
-import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
 import { Post } from "@/_Interfaces/Posts/Post";
 import { fetchAllPosts } from "@/lib/database/posts/fetchAllPosts";
-import { MediaFile } from "@/_Interfaces/Files/MediaFile";
 import PostCreateForm from "@/components/Forms/Posts/PostCreateForm";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
@@ -46,19 +41,7 @@ export default async function PostsViewPage() {
                             <p className="text-lg">If you believe this is an error, please report it.</p>
                         </Col>
                         :
-                        posts.map(post => (
-                            <PostCard key={post.id}>
-                                <PostCardHeader
-                                    body={post.body}
-                                    timestamp={unixToDate(post.uploadedAt)}
-                                    postedByUID={post.uploader}
-                                />
-                                
-                                <PostCardBody body={post.body} />
-
-                                <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
-                            </PostCard>
-                        ))
+                        posts.map(post => <PostCard key={post.id} post={post} />)
                     }
                 </Col>
             </Col>

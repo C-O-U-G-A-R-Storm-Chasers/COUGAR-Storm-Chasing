@@ -1,15 +1,11 @@
 "use server";
 
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import { MediaFile } from "@/_Interfaces/Files/MediaFile";
 import { Post } from "@/_Interfaces/Posts/Post";
 import { User } from "@/_Interfaces/Users/User";
 import Col from "@/components/Col";
 import ErrorMessage from "@/components/Messages/ErrorMessage";
-import PostCardMedia from "@/components/Posts/Media/PostCardMedia";
 import PostCard from "@/components/Posts/PostCard";
-import PostCardBody from "@/components/Posts/PostCardBody";
-import PostCardHeader from "@/components/Posts/PostCardHeader";
 import Row from "@/components/Row";
 import { signinValidation } from "@/lib/auth/SigninValidation/signinValidation";
 import { safeUUID } from "@/lib/crypto/crypto";
@@ -185,23 +181,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
 
             <Col className="w-full gap-2">
                 {
-                    posts.map(post => {
-                        const title = `${post.body.slice(0, 16)}...`;
-
-                        return (
-                            <PostCard key={post.id}>
-                                <PostCardHeader
-                                    title={title}
-                                    timestamp={unixToDate(post.uploadedAt)}
-                                    postedByUID={post.uploader}
-                                />
-                                
-                                <PostCardBody body={post.body} />
-
-                                <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
-                            </PostCard>
-                        );
-                    })
+                    posts.map(post => <PostCard key={post.id} post={post} />)
                 }
             </Col>
         </Col>

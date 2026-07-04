@@ -1,9 +1,13 @@
 "use server";
 
-import { ReactNode } from "react";
 import Col from "../Col";
+import { Post } from "@/_Interfaces/Posts/Post";
+import PostCardHeader from "./Header/PostCardHeader";
+import PostCardBody from "./PostCardBody";
+import PostCardMedia from "./Media/PostCardMedia";
+import { MediaFile } from "@/_Interfaces/Files/MediaFile";
 
-export default async function PostCard({ children }: { children: ReactNode }) {
+export default async function PostCard({ post }: { post: Post }) {
     return (
         <Col
             className="
@@ -20,7 +24,11 @@ export default async function PostCard({ children }: { children: ReactNode }) {
                 gap-2
             "
         >
-            {children}
+            <PostCardHeader post={post} />
+            
+            <PostCardBody post={post} />
+
+            <PostCardMedia postID={post.id} media={post.files as MediaFile[]} />
         </Col>
     );
 }
