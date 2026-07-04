@@ -16,6 +16,7 @@ import ProfileImagePlaceholder from "@/components/Users/ProfileImagePlaceholder"
 import PostCreateFormBodyInput from "./PostCreateFormBodyInput";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import PostCreateFormSelectedMedia from "./PostCreateFormSelectedMedia";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function PostCreateForm({ currentUser, currentUserProfileImage }: { currentUser: User, currentUserProfileImage: ProfileImage | null }) {
     const postForm = useRef<HTMLFormElement>(null);
@@ -123,6 +124,8 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
                     <PostCreateFormBodyInput isEdited={setEdited}/>
 
                     {
+                        uploading.submitted && uploading.pending ?
+                        <LoadingSpinner size={28} /> :
                         edited &&
                         <Col className="flex-1">
                             <PaperAirplaneIcon
