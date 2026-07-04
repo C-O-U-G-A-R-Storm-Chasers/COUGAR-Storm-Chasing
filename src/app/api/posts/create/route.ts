@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
         success: true,
+        msg: "Post successfully created! Please wait...",
         data: post.id
     });
 }
