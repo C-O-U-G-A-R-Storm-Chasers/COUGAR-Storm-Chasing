@@ -14,9 +14,10 @@ import { fetchAllPosts } from "@/lib/database/posts/fetchAllPosts";
 import { MediaFile } from "@/_Interfaces/Files/MediaFile";
 import PostCreateForm from "@/components/Forms/Posts/PostCreateForm";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
+import { PermissionLevels } from "@/_Enums/PermissionLevels";
 
 export default async function PostsViewPage() {
-    const { success, msg, data: currentUser } = await signinValidation();
+    const { success, msg, data: currentUser } = await signinValidation(PermissionLevels.MEM);
     
     if (!success || !currentUser) return (
         <Col className="w-full p-2 gap-2">
