@@ -9,12 +9,10 @@ export async function fetchAllPostsFromUser(uid: User["uid"]): Promise<Post[]> {
         .collection<Post>("posts")
         .aggregate<Post>([
             {
-                $match: {
-                    uploader: uid,
-                },
-                $sort: {
-                    createdAt: -1,
-                },
+                $match: { uploader: uid },
+            },
+            {
+                $sort: { createdAt: -1 },
             },
             {
                 $lookup: {

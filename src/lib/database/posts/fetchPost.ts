@@ -10,7 +10,6 @@ export async function fetchPost(id: Post["id"]): Promise<Post | null> {
             {
                 $match: { id },
             },
-
             {
                 $lookup: {
                     from: "media-files",
