@@ -10,20 +10,35 @@ import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImag
 import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
 import ProfileImagePlaceholder from "../Users/ProfileImagePlaceholder";
 
-function ProfileImageLink({ user, profileImage }: { user: User, profileImage: ProfileImage }) {
+function ProfileImageLink({ user, profileImage }: { user: User, profileImage: ProfileImage | null }) {
+    const href = `/dashboard/account/${user.handle ?? user.uid}`;
+
+    if (profileImage) return (
+        <Col>
+            <Link
+                href={href}
+                className="w-6 h-6"
+            >
+                <Image
+                    src={`/cdn/profile_images/${profileImage.id}.${profileImage.ext}`}
+                    alt={`${user.username}'s Profile Image`}
+                    width={512}
+                    height={512}
+                    className="w-full h-full rounded-md"
+                />
+            </Link>
+        </Col>
+    );
+
     return (
-        <Link
-            href={`/dashboard/account/${user.handle ?? user.uid}`}
-            className="w-6 h-6"
-        >
-            <Image
-                src={`/cdn/profile_images/${profileImage.id}.${profileImage.ext}`}
-                alt={`${user.username}'s Profile Image`}
-                width={512}
-                height={512}
-                className="w-full h-full rounded-md"
-            />
-        </Link>
+        <Col className="w-6 h-6">
+            <Link
+                href={href}
+                className="w-full h-full"
+            >
+                <ProfileImagePlaceholder username={user.username} />
+            </Link>
+        </Col>
     );
 }
 
@@ -72,16 +87,7 @@ export default async function PostCardHeader(
                 {
                     user ?
                     <>
-                        {
-                            profileImage ?
-                            <Col>
-                                <ProfileImageLink user={user} profileImage={profileImage} />
-                            </Col>
-                            :
-                            <Col className="w-6 h-6">
-                                <ProfileImagePlaceholder username={user.username} />
-                            </Col>
-                        }
+                        <ProfileImageLink user={user} profileImage={profileImage} />
                         
                         <Col>
                             <UsernameLink user={user} />
