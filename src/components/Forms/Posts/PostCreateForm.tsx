@@ -127,7 +127,7 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
                         <Col className="flex-1">
                             <PaperAirplaneIcon
                                 title={"Submit post"}
-                                className="w-8 w-8 cursor-pointer text-cyan-600 hover:text-cyan-700"
+                                className="w-8 w-8 cursor-pointer text-cyan-400 hover:text-cyan-700"
                                 onClick={submitPost}
                             />
                         </Col>
