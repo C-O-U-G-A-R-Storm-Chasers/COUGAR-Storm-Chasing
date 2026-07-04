@@ -25,6 +25,7 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
     const [uploading, setUploading] = useState<{ submitted: boolean, pending: boolean }>({ submitted: false, pending: false });
     const [result, setResult] = useState<BasicResult | null>(null);
     const [edited, setEdited] = useState<boolean>(false);
+    const [key, setKey] = useState<number>(1);
     const router = useRouter();
 
     useEffect(() => {
@@ -33,9 +34,12 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
             if (result?.success && result.data) {
                 router.push(`/dashboard/posts`);
                 router.refresh();
+
+                // Reset form just in case
+                setKey(3 - key);
             }
         }
-    }, [result, uploading, router]);
+    }, [result, uploading, router]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleSelectedMedia = async (e: ChangeEvent<HTMLInputElement>) => {
         const media = e.target.files;
@@ -77,6 +81,7 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
 
     return (
         <form
+            key={key}
             ref={postForm}
             onSubmit={handleSubmit}
             className="
