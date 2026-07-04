@@ -39,7 +39,6 @@ export default function PostCreateFormBodyInput({ isEdited }: { isEdited: (value
                 text-md
                 text-neutral-950
 
-                cursor-pointer
                 outline-none
                 box-border
                 overflow-hidden
