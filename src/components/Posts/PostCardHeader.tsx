@@ -9,6 +9,8 @@ import Image from "next/image";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
 import { ProfileImage } from "@/_Interfaces/Files/ProfileImage";
 import ProfileImagePlaceholder from "../Users/ProfileImagePlaceholder";
+import { Post } from "@/_Interfaces/Posts/Post";
+import PostCardTitle from "./PostCardTitle";
 
 function ProfileImageLink({ user, profileImage }: { user: User, profileImage: ProfileImage | null }) {
     const href = `/dashboard/account/${user.handle ?? user.uid}`;
@@ -66,20 +68,24 @@ function UsernameLink({ user }: { user: User }) {
 
 export default async function PostCardHeader(
     {
-        title,
+        body,
         timestamp,
         postedByUID,
     }:
     {
-        title?: string,
+        body: Post["body"],
         timestamp: string,
-        postedByUID: User["uid"],
+        postedByUID: Post["uploader"],
     }
 ) {
     const user = await fetchUserByID(postedByUID);
 
     let profileImage = null;
     if (user?.profileImage) profileImage = await fetchUserProfileImage(user.profileImage);
+
+    const title = body.split("\n")[0];
+
+    console.log("Title:", title)
 
     return (
         <Col className="w-full">
@@ -102,13 +108,7 @@ export default async function PostCardHeader(
                 }
             </Row>
             
-            {
-                title &&
-                <>
-                    <p className="md:hidden text-xs font-semibold">{title}</p>
-                    <p className="hidden md:flex text-sm font-semibold">{title}</p>
-                </>
-            }
+            < PostCardTitle body={body} />
         </Col>
     );
 }

@@ -49,7 +49,7 @@ export default async function PostsViewPage() {
                         posts.map(post => (
                             <PostCard key={post.id}>
                                 <PostCardHeader
-                                    title={`${post.body.slice(0, 16)}...`}
+                                    body={post.body}
                                     timestamp={unixToDate(post.uploadedAt)}
                                     postedByUID={post.uploader}
                                 />
