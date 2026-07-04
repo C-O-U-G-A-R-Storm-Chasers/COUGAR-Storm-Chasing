@@ -23,7 +23,7 @@ export default async function PostCardHeader({ post }: { post: Post }) {
                         <Col>
                             <PostCardHeaderUsername user={user} />
                             <p className="md:hidden text-xs font-semibold text-primary-1/50">{unixToDate(post.uploadedAt)}</p>
-                            <p className="hidden md:flex text-2xs font-semibold text-primary-1/50">{unixToDate(post.uploadedAt)}</p>
+                            <p className="hidden md:flex text-xs font-semibold text-primary-1/50">{unixToDate(post.uploadedAt)}</p>
                         </Col>
                     </>
                     :
@@ -33,7 +33,7 @@ export default async function PostCardHeader({ post }: { post: Post }) {
                 }
             </Row>
             
-            < PostCardTitle post={post} />
+            <PostCardTitle post={post} />
         </Col>
     );
 }

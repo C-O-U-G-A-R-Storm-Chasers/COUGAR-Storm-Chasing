@@ -17,7 +17,7 @@ export default async function PostCardHeaderUsername({ user }: { user: User }) {
 
             <Link
                 href={href}
-                className="hidden md:flex text-xs font-semibold hover:underline"
+                className="hidden md:flex text-sm font-semibold hover:underline"
             >
                 {user.username}
             </Link>
