@@ -17,7 +17,7 @@ export default async function PostCardHeaderProfileImage({ user }: { user: User 
         <Col>
             <Link
                 href={href}
-                className="w-6 h-6"
+                className="w-6 h-6 md:w-8 md:h-8"
             >
                 <Image
                     src={`/cdn/profile_images/${profileImage.id}.${profileImage.ext}`}
@@ -31,7 +31,7 @@ export default async function PostCardHeaderProfileImage({ user }: { user: User 
     );
 
     return (
-        <Col className="w-6 h-6">
+        <Col className="w-6 h-6 md:w-8 md:h-8">
             <Link
                 href={href}
                 className="w-full h-full"
