@@ -37,7 +37,7 @@ export default async function PostsViewPage() {
             <Col className="w-full md:w-1/2 p-2">
                 <PostCreateForm currentUser={currentUser} currentUserProfileImage={currentUserProfileImage} />
 
-                <Col className="w-full p-2 gap-2">
+                <Col className="w-full pt-2 gap-2">
                     {
                         !posts || posts.length === 0 ?
                         <Col className="w-full items-center text-center">
