@@ -68,7 +68,7 @@ export default function ChangeAccountImageForm({ profileImageSrc }: { profileIma
                     <LoadingSpinner loadingText="Submitting changes, please wait..." /> :
                     edited &&
                     <>
-                        <FormSubmitButton>Update Account</FormSubmitButton>
+                        <FormSubmitButton>Update Profile Image</FormSubmitButton>
 
                         <Row onClick={() => setEdited(false)}>
                             <FormResetButton />

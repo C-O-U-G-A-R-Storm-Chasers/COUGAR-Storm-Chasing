@@ -118,10 +118,10 @@ export default function SigninForm() {
                 <Col className="w-full">
                     {
                         uploading.submitted && uploading.pending ?
-                        <LoadingSpinner loadingText="Creating account, please wait..." /> :
+                        <LoadingSpinner loadingText="Signin in, please wait..." /> :
                         edited &&
                         <>
-                            <FormSubmitButton>Create New Account</FormSubmitButton>
+                            <FormSubmitButton>Sign In</FormSubmitButton>
     
                             <Row onClick={() => setEdited(false)}>
                                 <FormResetButton />
