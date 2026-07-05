@@ -61,7 +61,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
     return (
         <Col
             className="w-full h-full items-center overflow-y-auto">
-            <Col className="w-full md:w-1/2 lg:w-1/3 p-2 gap-2">
+            <Col className="w-full md:w-3/4 lg:w-1/2 2xl:w-1/3 p-2 gap-2">
                 <Col
                     className="
                         w-full
@@ -148,7 +148,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
 
                         <Col className="w-6/8">
                             <Row className="w-full items-center gap-2">
-                                <p className="text-4xl font-semibold">{user.username}</p>
+                                <p className="text-lg xl:text-xl 2xl:text-sm font-semibold">{user.username}</p>
                                 <p className="text-xl font-semibold">·</p>
                                 {
                                     user.perm_level === PermissionLevels.MEM ?
