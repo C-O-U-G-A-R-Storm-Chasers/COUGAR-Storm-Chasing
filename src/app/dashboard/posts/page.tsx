@@ -29,7 +29,7 @@ export default async function PostsViewPage() {
 
     return (
         <Col className="w-full h-full items-center overflow-y-auto">
-            <Col className="w-full md:w-1/2 p-2">
+            <Col className="w-full md:w-1/2 lg:w-1/3 p-2">
                 {
                     currentUser ?
                     <PostCreateForm currentUser={currentUser} currentUserProfileImage={currentUserProfileImage} />
