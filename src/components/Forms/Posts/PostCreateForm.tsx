@@ -118,7 +118,7 @@ export default function PostCreateForm({ currentUser, currentUserProfileImage }:
                             src={`/cdn/profile_images/${currentUserProfileImage.id}.${currentUserProfileImage.ext}`}
                             alt={`${currentUser.username}'s Profile Image`}
                             fill
-                            className="object-cover"
+                            className="object-cover rounded-md"
                         />
                         :
                         <ProfileImagePlaceholder username={currentUser.username} />
