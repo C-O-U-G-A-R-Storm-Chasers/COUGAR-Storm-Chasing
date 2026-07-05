@@ -9,12 +9,12 @@ import { Post } from "@/_Interfaces/Posts/Post";
 import { fetchAllPosts } from "@/lib/database/posts/fetchAllPosts";
 import PostCreateForm from "@/components/Forms/Posts/PostCreateForm";
 import { fetchUserProfileImage } from "@/lib/database/users/fetchUserProfileImage";
-import { PermissionLevels } from "@/_Enums/PermissionLevels";
+import Link from "next/link";
 
 export default async function PostsViewPage() {
-    const { success, msg, data: currentUser } = await signinValidation(PermissionLevels.MEM);
+    const { success, msg, data: currentUser } = await signinValidation();
     
-    if (!success || !currentUser) return (
+    if (!success) return (
         <Col className="w-full p-2 gap-2">
             <ErrorMessage description={msg} />
         </Col>
@@ -30,7 +30,28 @@ export default async function PostsViewPage() {
     return (
         <Col className="w-full h-full items-center overflow-y-auto">
             <Col className="w-full md:w-1/2 p-2">
-                <PostCreateForm currentUser={currentUser} currentUserProfileImage={currentUserProfileImage} />
+                {
+                    currentUser ?
+                    <PostCreateForm currentUser={currentUser} currentUserProfileImage={currentUserProfileImage} />
+                    :
+                    <Col
+                        className="
+                            w-full
+                            p-1
+                            px-2
+                            
+                            bg-neutral-600
+
+                            border-1
+                            border-neutral-500
+                            rounded-md
+
+                            gap-2
+                        "
+                    >
+                        <div className="text-md font-semibold">Please <Link href="/dashboard/account/signin" className="underline">sign in</Link> to write a post!</div>
+                    </Col>
+                }
 
                 <Col className="w-full pt-2 gap-2">
                     {
