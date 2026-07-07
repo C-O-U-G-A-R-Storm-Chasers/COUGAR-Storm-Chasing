@@ -9,6 +9,7 @@ import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
 import TeamCollectionStats from "@/components/DashboardStatistics/Cards/TeamCollectionsStats";
 import UserStats from "@/components/DashboardStatistics/Cards/UserStats";
+import PaymentStats from "@/components/DashboardStatistics/Cards/PaymentStats";
 
 export default async function DashboardStatisticsPage() {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
@@ -51,7 +52,9 @@ export default async function DashboardStatisticsPage() {
                     <UserStats />
                 }
 
-                <TeamCollectionStats />
+                {/*<TeamCollectionStats />*/}
+
+                <PaymentStats />
             </Col>
 
             <Row className="hidden lg:flex w-full flex-wrap gap-2">
@@ -60,7 +63,9 @@ export default async function DashboardStatisticsPage() {
                     <UserStats />
                 }
 
-                <TeamCollectionStats />
+                {/*<TeamCollectionStats />*/}
+                
+                <PaymentStats />
             </Row>
         </Col>
     );

@@ -1,0 +1,8 @@
+import { getMongo } from "@/lib/mongo/getmongo";
+
+export async function countTours(): Promise<number> {
+    const mongo = getMongo();
+
+    return await mongo.database
+        .collection("payments").countDocuments({ paymentType: "tour" });
+}
