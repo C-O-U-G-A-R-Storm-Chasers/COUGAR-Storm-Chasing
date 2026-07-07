@@ -83,7 +83,7 @@ export default async function Navbar() {
                             <p className="text-xs text-primary-1">Our Team</p>
                         </NavbarButtonStandard>
 
-                        <NavbarButtonStandard href={user ? "/dashboard" : "/dashboard/team-collections"}>
+                        <NavbarButtonStandard href="/dashboard">
                             <HomeModernIcon className="w-5 h-5 text-primary-1" />
                             <p className="text-xs text-primary-1">{user ? "Dashboard" : "C.O.U.G.A.R."}</p>
                         </NavbarButtonStandard>
