@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
                 const userID = session.client_reference_id; // Your DB User ID
                 const amountUSCents = session.amount_total; // e.g., 5000 ($50.00)
                 const timestamp = session.created * 1000; // Stripe uses Unix timestamps (seconds), JS uses milliseconds
-                const paymentType = session.metadata?.payment_type; // "donation" or "tour"
+                const paymentType = session.metadata?.paymentType; // "donation" or "tour"
 
                 if (process.env.NODE_ENV === "development") {
                     console.log("Payment Succeeded for User:", userID);

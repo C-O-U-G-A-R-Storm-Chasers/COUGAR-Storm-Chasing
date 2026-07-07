@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         const stripe = new Stripe(process.env.STRIPE_KEY);
         const baseURL = process.env.NODE_ENV === "development" ? config["dev-hostname"] : config["prod-hostname"];
         const productDataName = paymentType === "donation" ? "Donation to C.O.U.G.A.R. Storm Chasers" : "C.O.U.G.A.R. Storm Chasers Storm Chasing Tour Payment";
-        const successURL = `${baseURL}/payments/thanks?session_id={CHECKOUT_SESSION_ID}`;
+        const successURL = `${baseURL}/payments/thanks/{CHECKOUT_SESSION_ID}`;
         const cancelURL = `${baseURL}/dashboard`;
 
         // Create Stripe session
