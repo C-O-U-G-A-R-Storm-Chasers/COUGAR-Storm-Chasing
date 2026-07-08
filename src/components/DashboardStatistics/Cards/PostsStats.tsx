@@ -10,8 +10,9 @@ import { countPosts } from "@/lib/database/statistics/posts/countPosts";
 import { countMediaFiles } from "@/lib/database/statistics/posts/countMediaFiles";
 import { fetchTopFivePostsByFileCount } from "@/lib/database/statistics/posts/fetchTopFivePostsByFileCount";
 import { fetchTopFiveMostRecentPosts } from "@/lib/database/statistics/posts/fetchTopFiveMostRecentCollections";
+import { generateTitleFromBody } from "@/lib/utils/text/generateTitleFromBody";
 
-export default async function TeamCollectionStats() {
+export default async function PostsStats() {
     const postsCount = await countPosts();
     const mediaFilesCount = await countMediaFiles();
     const topFiveMostRecentPosts = await fetchTopFiveMostRecentPosts();
@@ -38,9 +39,9 @@ export default async function TeamCollectionStats() {
                         <Link
                             key={post.id}
                             href={`/dashboard/posts/${post.id}`}
-                            className="text-xs hover:underline"
+                            className="text-xs hover:underline overflow-hidden text-ellipsis whitespace-nowrap"
                         >
-                            {`${post.body.slice(0, 16)}...`}
+                            {generateTitleFromBody(post.body)}
                         </Link>
                     ))
                     :
@@ -56,9 +57,9 @@ export default async function TeamCollectionStats() {
                         <Link
                             key={post.id}
                             href={`/dashboard/posts/${post.id}`}
-                            className="text-xs hover:underline"
+                            className="text-xs hover:underline overflow-hidden text-ellipsis whitespace-nowrap"
                         >
-                            {`${post.body.slice(0, 16)}...`}
+                            {generateTitleFromBody(post.body)}
                         </Link>
                     ))
                     :

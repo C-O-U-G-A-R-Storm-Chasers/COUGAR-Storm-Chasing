@@ -1,17 +1,12 @@
 import { Post } from "@/_Interfaces/Posts/Post";
 import { getMongo } from "@/lib/mongo/getmongo";
 
-interface Result {
-    id: Post["id"],
-    body: Post["body"]
-}
-
-export async function fetchTopFivePostsByFileCount(): Promise<Result[]> {
+export async function fetchTopFivePostsByFileCount(): Promise<Post[]> {
     const mongo = getMongo();
 
-    const collections = await mongo.database
+    return await mongo.database
         .collection<Post>("posts")
-        .aggregate<Result>([
+        .aggregate<Post>([
             {
                 $addFields: {
                     fileCount: { $size: "$files" },
@@ -28,17 +23,8 @@ export async function fetchTopFivePostsByFileCount(): Promise<Result[]> {
             {
                 $project: {
                     _id: 0,
-                    id: 1,
-                    title: 1,
                 },
             },
         ])
         .toArray();
-
-    return collections.map(collection => {
-        return {
-            id: collection.id,
-            body: collection.body
-        }
-    });
 }

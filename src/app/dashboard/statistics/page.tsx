@@ -7,9 +7,9 @@ import { updateWebVisits } from "@/lib/utils/statistics/updateWebStats";
 import Row from "@/components/Row";
 import InfoPageTitle from "@/components/Text/Headers/InfoPageTitle";
 import { PermissionLevels } from "@/_Enums/PermissionLevels";
-import TeamCollectionStats from "@/components/DashboardStatistics/Cards/TeamCollectionsStats";
 import UserStats from "@/components/DashboardStatistics/Cards/UserStats";
 import PaymentStats from "@/components/DashboardStatistics/Cards/PaymentStats";
+import PostsStats from "@/components/DashboardStatistics/Cards/PostsStats";
 
 export default async function DashboardStatisticsPage() {
     const { success, msg, data: user } = await signinValidation(PermissionLevels.MEM);
@@ -52,7 +52,7 @@ export default async function DashboardStatisticsPage() {
                     <UserStats />
                 }
 
-                {/*<TeamCollectionStats />*/}
+                <PostsStats />
 
                 <PaymentStats />
             </Col>
@@ -63,7 +63,7 @@ export default async function DashboardStatisticsPage() {
                     <UserStats />
                 }
 
-                {/*<TeamCollectionStats />*/}
+                <PostsStats />
                 
                 <PaymentStats />
             </Row>

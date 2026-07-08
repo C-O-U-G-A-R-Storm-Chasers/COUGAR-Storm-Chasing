@@ -1,19 +1,10 @@
 "use client";
 
 import { Post } from "@/_Interfaces/Posts/Post";
+import { generateTitleFromBody } from "@/lib/utils/text/generateTitleFromBody";
 
 export default function PostCardTitle({ post }: { post: Post }) {
-    const hasLineBreak = post.body.includes("\n");
-
-    let title: string | undefined;
-
-    if (hasLineBreak) {
-        const firstPara = post.body.split("\n")[0].trim();
-
-        const periodIndex = firstPara.indexOf(".");
-
-        title = periodIndex === -1 ? firstPara : firstPara.slice(0, periodIndex + 1);
-    }
+    const title = generateTitleFromBody(post.body);
 
     return (
         <>
